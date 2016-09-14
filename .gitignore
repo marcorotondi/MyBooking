@@ -1,1 +1,36 @@
-/target/
+# Eclipse
+.classpath
+.project
+.settings/
+.metadata/
+
+# Spring Plugins
+.springBeans
+
+# Intellij
+*.iml
+*.iws
+*.ipr
+.idea/
+.gradle/
+local.properties
+*/build/
+*~
+*.swp
+
+#NDK
+obj/
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target
+
+# Windows thumbnail db
+Thumbs.db
+
+# Other
+*.db.*
+classes/
