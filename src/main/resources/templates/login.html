@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>My booking Login</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+	
+	<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+	<link href="../css/app.css" th:href="@{/css/app.css}" rel="stylesheet" media="screen"/>
+</head>
+<body>
+	<form id="formLogin" th:formaction="/doLogin">
+	<div>
+		<input th:type="text" th:label="Username" th:name="username"/>
+	</div>
+	<div>
+		<input th:type="password" th:label="Password" th:name="password" />
+	</div>
+	<button th:type="submit">Login</button>
+	</form>
+</body>
+</html>

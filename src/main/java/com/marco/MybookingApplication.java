@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
-import com.marco.security.WebSecurityConfig;
+import com.marco.configuration.WebSecurityConfig;
 
 @SpringBootApplication
 @Import({WebSecurityConfig.class})

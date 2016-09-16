@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.marco.security;
+package com.marco.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -27,12 +27,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.logout()
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 		.invalidateHttpSession(true)
-		.logoutSuccessUrl("/index.jsp");
+		.logoutSuccessUrl("/index.html");
 
 		http.authorizeRequests()
 		.antMatchers("/").permitAll()
-		.antMatchers("/book/").permitAll()
 		.antMatchers("/admin/**").hasRole("ADMIN");
+
+		http.formLogin()
+		.loginPage("/login.html")
+		.defaultSuccessUrl("/admin/adminPanel.html")
+		.failureUrl("/logout");
 	}
 
 	@Autowired
