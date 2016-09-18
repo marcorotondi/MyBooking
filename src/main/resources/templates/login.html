@@ -10,7 +10,7 @@
 	<link href="../css/app.css" th:href="@{/css/app.css}" rel="stylesheet" media="screen"/>
 </head>
 <body>
-	<div>
+	<div th:fragment="login">
         <form name="f" th:action="@{/login}" method="post">               
             <fieldset>
                 <legend>My bookin Admin Login</legend>
