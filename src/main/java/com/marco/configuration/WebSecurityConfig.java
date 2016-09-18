@@ -23,20 +23,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 
-		// Logout and redirection:
-		http.logout()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.invalidateHttpSession(true)
-		.logoutSuccessUrl("/index.html");
 
 		http.authorizeRequests()
 		.antMatchers("/").permitAll()
-		.antMatchers("/admin/**").hasRole("ADMIN");
-
-		http.formLogin()
-		.loginPage("/login.html")
-		.defaultSuccessUrl("/admin/adminPanel.html")
-		.failureUrl("/logout");
+		.antMatchers("/admin/**").hasRole("ADMIN")
+		.and()
+		.formLogin().loginPage("/login")
+		.defaultSuccessUrl("/admin/adminPanel", Boolean.TRUE)
+		.permitAll()
+		.and()
+		.logout().permitAll()
+		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		.invalidateHttpSession(Boolean.TRUE)
+		.logoutSuccessUrl("/");
 	}
 
 	@Autowired
