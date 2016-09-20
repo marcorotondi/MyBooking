@@ -10,6 +10,9 @@
 	<link href="../../css/app.css" th:href="@{/css/app.css}" rel="stylesheet" media="screen"/>
 </head>
 <body>
+	<div class="container">
+		<div th:replace="navbar :: navigation"></div>
+	</div>
 	<p th:text="'My Booking App Admin Area'" />
 	
 	<script src="http://cdn.jsdelivr.net/webjars/angularjs/1.5.8/angular.min.js"

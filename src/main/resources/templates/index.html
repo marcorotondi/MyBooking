@@ -10,10 +10,17 @@
 	<link href="../css/app.css" th:href="@{/css/app.css}" rel="stylesheet" media="screen"/>
 </head>
 <body>
-	<header>
-		
-	</header>
-	<p class="center" th:text="'My Booking App'" />
+	<div class="container">
+		<div th:replace="navbar :: navigation"></div>
+		<div class="row">
+			<div class="col-md-12 col-lg-12">
+				<p th:text="'Test'" th:class="'lead'"/>
+			</div>
+			
+			<div class="clearfix visible-xs"></div>
+		</div>
+	</div>
+	
 	
 	
 	<footer>

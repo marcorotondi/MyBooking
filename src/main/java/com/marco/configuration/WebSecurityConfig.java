@@ -28,12 +28,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/").permitAll()
 		.antMatchers("/admin/**").hasRole("ADMIN")
 		.and()
-		.formLogin().loginPage("/login")
-		.defaultSuccessUrl("/admin/adminPanel", Boolean.TRUE)
+		.formLogin().loginPage("/login.html")
+		.defaultSuccessUrl("/admin/adminPanel.html", Boolean.TRUE)
+		.failureUrl("/login.html?error=true")
 		.permitAll()
 		.and()
 		.logout().permitAll()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		.logoutRequestMatcher(new AntPathRequestMatcher("/logout.html"))
 		.invalidateHttpSession(Boolean.TRUE)
 		.logoutSuccessUrl("/");
 	}
