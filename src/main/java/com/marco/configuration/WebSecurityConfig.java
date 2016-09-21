@@ -33,8 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.failureUrl("/login.html?error=true")
 		.permitAll()
 		.and()
-		.logout().permitAll()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout.html"))
+		.logout()
+		.logoutRequestMatcher(new AntPathRequestMatcher("/admin/logout.html"))
 		.invalidateHttpSession(Boolean.TRUE)
 		.logoutSuccessUrl("/");
 	}

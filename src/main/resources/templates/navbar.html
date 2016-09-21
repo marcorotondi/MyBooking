@@ -1,15 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <body>
 	<nav th:fragment="navigation" class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">My booking Application</a>
 		</div>
-		<div>
+		<div sec:authorize="isAnonymous()">
 			<p class="navbar-text navbar-right">
 				<a th:href="@{/login.html}" class="navbar-link">Login</a>
 			</p>
-			</div>
+		</div>
+		<div sec:authorize="isAuthenticated()">
+			<p class="navbar-text navbar-right">
+				<a th:href="@{/admin/logout.html}" class="btn-link">Logout</a>
+				<p class="navbar-text navbar-right" th:text="${#authentication.name}"/>
+			</p>
+		</div>
 	</nav>		
 </body>
 </html>
