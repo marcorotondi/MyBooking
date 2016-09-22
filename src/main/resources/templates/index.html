@@ -12,22 +12,13 @@
 <body>
 	<div class="container-fluid">
 		<div th:replace="navbar :: navigation"></div>
-		<div class="row">
-			<div class="col-md-12 col-lg-12">
-				<p th:text="'Test'" th:class="'lead'"/>
-			</div>
-			
-			<div class="clearfix visible-xs"></div>
-		</div>
 	</div>
 	
-	
-	
-	<footer>
-		
-	</footer>
+	<script src=""
+		th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script src="http://cdn.jsdelivr.net/webjars/angularjs/1.5.8/angular.min.js"
         th:src="@{/webjars/angularjs/1.5.8/angular.min.js}"></script>
-       
+    <script src=""
+    	th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script> 
 </body>
 </html>

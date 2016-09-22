@@ -12,10 +12,18 @@
 <body>
 	<div class="container-fluid">
 		<div th:replace="navbar :: navigation"></div>
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#">Home</a></li>
+			<li><a href="#">Resource</a></li>
+		</ul>
 	</div>
-	<p th:text="'My Booking App Admin Area'" />
 	
+	
+	<script src=""
+		th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 	<script src="http://cdn.jsdelivr.net/webjars/angularjs/1.5.8/angular.min.js"
         th:src="@{/webjars/angularjs/1.5.8/angular.min.js}"></script>
+    <script src=""
+    	th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script> 
 </body>
 </html>

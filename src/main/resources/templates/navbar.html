@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/dialect">
 <body>
 	<nav th:fragment="navigation" class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
@@ -11,10 +13,14 @@
 			</p>
 		</div>
 		<div sec:authorize="isAuthenticated()">
-			<p class="navbar-text navbar-right">
-				<a th:href="@{/admin/logout.html}" class="btn-link">Logout</a>
-				<p class="navbar-text navbar-right" th:text="${#authentication.name}"/>
-			</p>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" th:text="${#authentication.name}"></a>
+					<ul class="dropdown-menu">
+						<li><a th:href="@{/admin/logout.html}">Logout</a></li>
+					</ul>
+				</li>
+			</ul>	
 		</div>
 	</nav>		
 </body>
