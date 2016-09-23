@@ -12,31 +12,37 @@
 <body>
 	<div th:fragment="login" class="container-fluid">
 		<div th:replace="navbar :: navigation"></div>
-        <form name="f" th:action="@{/login.html}" method="post" role="form">             
-            <fieldset>
-                <div class="form-group col-md-8">
-                	<label for="username">Username</label>
-                	<input type="text" id="username" name="username" placeholder="Username" class="form-control"/>        	
-                </div>
-                <div class="form-group col-md-8">
-                	<label for="password">Password</label>
-                	<input type="password" id="password" name="password" placeholder="Password" class="form-control"/>	
-                </div>
-                <div class="form-actions col-md-8">
-                	<button type="submit" class="btn btn-primary">Log in</button>
-                </div>
-            </fieldset>
-            <div th:if="${param.error}" class="alert alert-error">    
-                    Invalid username and password.
-            </div>
-        </form>
+		<div class="row">
+	        <form name="f" th:action="@{/login.html}" method="post" role="form">             
+	            <fieldset>
+	                <div class="form-group col-md-8">
+	                	<label for="username">Username</label>
+	                	<input type="text" id="username" name="username" placeholder="Username" class="form-control"/>        	
+	                </div>
+	                <div class="form-group col-md-8">
+	                	<label for="password">Password</label>
+	                	<input type="password" id="password" name="password" placeholder="Password" class="form-control"/>	
+	                </div>
+	                <div class="form-actions col-md-8">
+	                	<button type="submit" class="btn btn-primary">Log in</button>
+	                </div>
+	            </fieldset>
+	        </form>
+        </div>
+        <div class="row big-top">
+        	<div class="col-md-8">
+		        <div th:if="${param.error}" class="alert alert-danger">    
+		        	<p th:text="'Invalid username and password.'"/>
+		        </div>
+	        </div>
+        </div>
     </div>
     
-    <script src=""
-		th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/jquery/3.1.1/jquery.min.js"
+		th:src="@{/webjars/jquery/3.1.0/jquery.min.js}"></script>
 	<script src="http://cdn.jsdelivr.net/webjars/angularjs/1.5.8/angular.min.js"
         th:src="@{/webjars/angularjs/1.5.8/angular.min.js}"></script>
-    <script src=""
+    <script src="https://cdn.jsdelivr.net/bootstrap/3.3.7/js/bootstrap.min.js"
     	th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script> 
 </body>
 </html>
