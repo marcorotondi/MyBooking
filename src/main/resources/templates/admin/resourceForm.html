@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="formInput">
+		<div class="form-group">
+			<label for="description" th:text="'Description'"></label>
+			<input type="text" class="form-control" id="description" name="description" placeholder="Enter Resource Description"/>
+		</div>
+		<div class="form-group">
+			<label for="type" th:text="'Typology'"></label>
+			<select class="form-control" name="type">
+				
+			</select>
+		</div>
+	</div>
+	
+</body>
+</html>

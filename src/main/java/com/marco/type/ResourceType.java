@@ -8,7 +8,20 @@ package com.marco.type;
  *
  */
 public enum ResourceType {
-	ROOM,
-	OBJECT,
-	CAR;
+	ROOM("Room"),
+	OBJECT("Object"),
+	CAR("Car");
+
+	private String defaultName;
+
+	private ResourceType(String nameType) {
+		this.defaultName = nameType;
+	}
+
+	/**
+	 * @return the defaultName
+	 */
+	public String getDefaultName() {
+		return defaultName;
+	}
 }
