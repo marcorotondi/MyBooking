@@ -3,29 +3,30 @@
  */
 
 var appAdmin = angular.module("appAdmin", ['ngResource']);
-
-/* Configuration */
-appAdmin.config(['$httpProvider', function ($httpProvider) {    
-	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-}]);
-
 /* Controller */
-appAdmin.controller("adminController", ['$scope', '$http', function($scope, $http) {
+appAdmin.controller("adminAddController", ['$scope', '$http', function($scope, $http) {
 	$scope.addNewResource = function() {	
-		var data = 'description=' + $scope.description + '&type=' + $scope.type;	
+		var data = 'description=' + $scope.description + '&type=' + $scope.type;
+		var config = {
+				headers : {
+					'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+        }
 		
-		var res = $http.post('/admin/', data);
-		res.success(function(data, status, headers, config) {
-			$scope.message = data;
-			// hide section after save successful
+		$http.post('/admin/addResource', data, config)
+		.success(function (data, status, headers, config) {
 			$('div.add').addClass('displayNone');	
-		});
-		res.error(function(data, status, headers, config) {
-			alert( "failure message: " + JSON.stringify({data: data}));
-		});		
+        })
+        .error(function (data, status, header, config) {
+        	alert(data);
+        });
+		
 		// Making the fields empty
 		//
 		$scope.description='';
 		$scope.type='';
 	}
 }]);
+
+appAdmin.controller('adminChangeController', ['$scope', '$http', function($scope, $http) {
+}])
