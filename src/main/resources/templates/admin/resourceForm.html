@@ -3,16 +3,20 @@
 xmlns:th="http://www.thymeleaf.org">
 <body>
 	<div th:fragment="formInput">
-		<div class="form-group">
+		<div class="form-group col-md-8">
 			<label for="description" th:text="'Description'"></label>
 			<input type="text" class="form-control" id="description" name="description" placeholder="Enter Resource Description"/>
 		</div>
-		<div class="form-group">
+		<div class="form-group col-md-8">
 			<label for="type" th:text="'Typology'"></label>
 			<select class="form-control" name="type">
-				
+				<option th:each="type : ${resourceTypes}" th:value="${type}" th:text="${type.defaultName}" />	
 			</select>
 		</div>
+		<div class="form-actions col-md-8">
+	    	<button type="submit" class="btn btn-primary">Save</button>
+	    	<button type="reset" class="btn">Reset</button>
+	    </div>
 	</div>
 	
 </body>

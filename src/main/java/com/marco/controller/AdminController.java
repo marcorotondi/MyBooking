@@ -30,6 +30,11 @@ public class AdminController {
 		return resultView;
 	}
 
+	@RequestMapping(value = "/admin/addResource", method = RequestMethod.POST)
+	public ModelAndView addResource() {
+		return null;
+	}
+
 
 
 }

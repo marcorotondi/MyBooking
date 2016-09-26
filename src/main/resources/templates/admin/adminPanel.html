@@ -28,12 +28,12 @@
   					<button type="button" class="btn btn-default" th:text="'Modify Resource'"></button>
   					<button type="button" class="btn btn-default" th:text="'Delete Resource'"></button>
 				</div>
-				<div class="add displayNone">
+				<div class="add form-container displayNone">
 					<form class="form" role="form" name="addForm" th:action="@{/admin/addResource}" method="post">
 						<div th:replace="admin/resourceForm :: formInput"></div>	
 					</form>	
 				</div>
-				<div class="change displayNone">
+				<div class="change form-container displayNone">
 					<form class="form-inline" role="form" name="addForm" th:action="@{/admin/changeResource}" method="post">
 						
 					</form>	
