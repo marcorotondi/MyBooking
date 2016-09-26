@@ -13,7 +13,7 @@
 	<div th:fragment="login" class="container-fluid">
 		<div th:replace="navbar :: navigation"></div>
 		<div class="row">
-	        <form name="f" role="form">             
+	        <form name="f" th:action="@{/login.html}" method="post" role="form">             
 	            <fieldset>
 	                <div class="form-group col-md-8">
 	                	<label for="username">Username</label>
