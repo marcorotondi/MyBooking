@@ -2,16 +2,19 @@
  * 
  */
 
-var appAdmin = angular.module("appAdmin", []);
+var appAdmin = angular.module("appAdmin", ['ngResource']);
+
+/* Configuration */
+appAdmin.config(['$httpProvider', function ($httpProvider) {    
+	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+}]);
+
+/* Controller */
 appAdmin.controller("adminController", ['$scope', '$http', function($scope, $http) {
-	$scope.addNewResource = function() {
+	$scope.addNewResource = function() {	
+		var data = 'description=' + $scope.description + '&type=' + $scope.type;	
 		
-		var dataObj = {
-				description : $scope.description,
-				type : $scope.type
-		};	
-		
-		var res = $http.post('/admin/', dataObj);
+		var res = $http.post('/admin/', data);
 		res.success(function(data, status, headers, config) {
 			$scope.message = data;
 			// hide section after save successful
