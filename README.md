@@ -1,4 +1,11 @@
 # MyBooking
 Booking Resource
 
-Springoot webapp for booking a resource
+Spring Boot webapp for booking a resource
+Use Thymeleaf, Bootstrap, AngularJS
+
+- Permit define new Resource
+- Permit define change Resource
+- Permit delete a Resource
+
+
