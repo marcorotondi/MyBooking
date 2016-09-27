@@ -42,12 +42,14 @@
           			<caption><span th:text="'Available Resource'"></span></caption>
           			<thead>
           				<tr>
+          					<th>#</th>
           					<th>Name</th>
           					<th>Type</th>
           				</tr>
           			</thead>
           			<tbody>
-          				<tr th:each="resource : ${resources}">
+          				<tr th:each="resource, iterStatus : ${resources}">
+          					<td th:text="${iterStatus.count}"></td>
 							<td th:text="${resource.description}"></td>
 							<td th:text="${resource.type.defaultName}"></td>
 						</tr>

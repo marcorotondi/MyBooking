@@ -15,6 +15,7 @@ appAdmin.controller("adminAddController", ['$scope', '$http', function($scope, $
 		
 		$http.post('/admin/addResource', data, config)
 		.success(function (data, status, headers, config) {
+			console.info(data);
 			$('div.add').addClass('displayNone');	
         })
         .error(function (data, status, header, config) {

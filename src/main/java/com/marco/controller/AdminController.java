@@ -34,10 +34,11 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/admin/addResource", method = RequestMethod.POST)
-	public @ResponseBody String addResource(@ModelAttribute Resource resource) {
+	@ResponseBody
+	public Resource addResource(@ModelAttribute Resource resource) {
 		resourceRepo.save(resource);
 
-		return resource.toString();
+		return resource;
 	}
 
 
