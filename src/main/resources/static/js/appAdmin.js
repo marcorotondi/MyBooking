@@ -2,7 +2,7 @@
  * 
  */
 
-var appAdmin = angular.module("appAdmin", ['ngResource']);
+var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 /* Controller */
 appAdmin.controller("adminAddController", ['$scope', '$http', function($scope, $http) {
 	$scope.addNewResource = function() {	
@@ -30,4 +30,27 @@ appAdmin.controller("adminAddController", ['$scope', '$http', function($scope, $
 }]);
 
 appAdmin.controller('adminChangeController', ['$scope', '$http', function($scope, $http) {
-}])
+}]);
+
+appAdmin.controller("demoController", demoController);
+demoController.$inject = ["NgTableParams"];
+
+function demoController(NgTableParams, simpleList) {
+  this.defaultConfigTableParams = new NgTableParams({}, { dataset: [{name:'Marco', age: 99}]});
+  this.customConfigParams = createUsingFullOptions();
+
+  function createUsingFullOptions() {
+    var initialParams = {
+      count: 5 // initial page size
+    };
+    var initialSettings = {
+      // page size buttons (right set of buttons in demo)
+      counts: [],
+      // determines the pager buttons (left set of buttons in demo)
+      paginationMaxBlocks: 13,
+      paginationMinBlocks: 2,
+      dataset: simpleList
+    };
+    return new NgTableParams(initialParams, initialSettings);
+  }
+}

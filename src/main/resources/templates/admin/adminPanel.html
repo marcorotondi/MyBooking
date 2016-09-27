@@ -4,9 +4,8 @@
 	<title>My booking Admin Area</title>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
-	
-	<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/webjars/ng-table/1.0.0-beta.9/ng-table.min.css}" rel="stylesheet"/>
 	<link href="../../css/app.css" th:href="@{/css/app.css}" rel="stylesheet" media="screen"/>
 </head>
 <body ng-app="appAdmin">
@@ -58,10 +57,19 @@
 			</div>
 		</div>
 	</div>
+	<div ng-controller="demoController as demo">
+    <table ng-table="demo.defaultConfigTableParams" class="table table-condensed table-bordered table-striped">
+        <tr ng-repeat="row in $data">
+          <td data-title="'Name'">{{row.name}}</td>
+          <td data-title="'Age'">{{row.age}}</td>
+        </tr>
+      </table>
+  </div>	
 	
 	<script th:src="@{/webjars/jquery/3.1.0/jquery.min.js}"></script>
-	<script th:src="@{/webjars/angularjs/1.5.8/angular.min.js}"></script>
+	<script th:src="@{/webjars/angularjs/1.5.8/angular.js}"></script>
 	<script th:src="@{/webjars/angularjs/1.5.8/angular-resource.min.js}"></script>
+	<script th:src="@{/webjars/ng-table/1.0.0-beta.9/ng-table.js}"></script>
     <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script> 
     <script src="../../js/appAdmin.js"></script>	
     <script type="text/javascript">
