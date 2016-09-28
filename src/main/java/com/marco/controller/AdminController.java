@@ -41,6 +41,11 @@ public class AdminController {
 		return resource;
 	}
 
+	@RequestMapping(value = "/admin/api/resources.json", method = RequestMethod.GET)
+	@ResponseBody
+	public Iterable<Resource> getAllResources() {
+		return resourceRepo.findAll();
+	}
 
 
 }

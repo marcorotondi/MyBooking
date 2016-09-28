@@ -37,34 +37,19 @@
 						
 					</form>	
 				</div>
-          		<table class="table table-hover big-top">
-          			<caption><span th:text="'Available Resource'"></span></caption>
-          			<thead>
-          				<tr>
-          					<th>#</th>
-          					<th>Name</th>
-          					<th>Type</th>
-          				</tr>
-          			</thead>
-          			<tbody>
-          				<tr th:each="resource, iterStatus : ${resources}">
-          					<td th:text="${iterStatus.count}"></td>
-							<td th:text="${resource.description}"></td>
-							<td th:text="${resource.type.defaultName}"></td>
-						</tr>
-          			</tbody>
-          		</table>
+				<div ng-controller="adminTableController">
+    				<table ng-table="tableParams" class="table table-bordered table-striped">
+    					<caption><span th:text="'Available Resource'"></span></caption>
+        				<tr ng-repeat="row in $data track by row.id">
+          					<td data-title="'Name'" sortable="'description'">{{row.description}}</td>
+          					<td data-title="'Type'" sortable="'type'">{{row.type}}</td>
+        				</tr>
+      				</table>
+  				</div>	
 			</div>
 		</div>
 	</div>
-	<div ng-controller="demoController as demo">
-    <table ng-table="demo.defaultConfigTableParams" class="table table-condensed table-bordered table-striped">
-        <tr ng-repeat="row in $data">
-          <td data-title="'Name'">{{row.name}}</td>
-          <td data-title="'Age'">{{row.age}}</td>
-        </tr>
-      </table>
-  </div>	
+	
 	
 	<script th:src="@{/webjars/jquery/3.1.0/jquery.min.js}"></script>
 	<script th:src="@{/webjars/angularjs/1.5.8/angular.js}"></script>
