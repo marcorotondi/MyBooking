@@ -40,7 +40,7 @@
 				<div ng-controller="adminTableController">
     				<table ng-table="tableParams" class="table table-bordered table-striped">
     					<caption><span th:text="'Available Resource'"></span></caption>
-        				<tr ng-repeat="row in $data track by row.id">
+        				<tr ng-repeat="row in $data">
           					<td data-title="'Name'" sortable="'description'">{{row.description}}</td>
           					<td data-title="'Type'" sortable="'type'">{{row.type}}</td>
         				</tr>

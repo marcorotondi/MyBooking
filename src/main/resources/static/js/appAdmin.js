@@ -38,6 +38,8 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 		$http.get('http://localhost:9090/admin/api/resources.json')
 			.success(function(data, status) {
 				$scope.tableParams = new NgTableParams({
+					page: 1,
+		            count: 10,
 					sorting: {
 						name: 'asc'     // initial sorting
 					}
