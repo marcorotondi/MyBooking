@@ -38,9 +38,9 @@
 					</form>	
 				</div>
 				<div ng-controller="adminTableController">
-    				<table ng-table="tableParams" class="table table-bordered table-striped">
+    				<table ng-table="tableParams" class="table">
     					<caption><span th:text="'Available Resource'"></span></caption>
-        				<tr ng-repeat="row in $data">
+        				<tr ng-repeat="row in $data track by row.id">
           					<td data-title="'Name'" sortable="'description'">{{row.description}}</td>
           					<td data-title="'Type'" sortable="'type'">{{row.type}}</td>
         				</tr>

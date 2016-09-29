@@ -15,14 +15,11 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 	                }
 	        }
 			
-			$http.post('/admin/addResource', data, config)
-			.success(function (data, status, headers, config) {
-				console.info(data);
+			$http.post('/admin/addResource', data, config).then(function(response){
 				$('div.add').addClass('displayNone');	
-	        })
-	        .error(function (data, status, header, config) {
-	        	alert(data);
-	        });
+			}, function(response){
+				alert(response);
+			});
 			
 			// Making the fields empty
 			//
@@ -35,18 +32,22 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 	}]);
 
 	appAdmin.controller("adminTableController", ['$scope', '$http', 'NgTableParams', function($scope, $http, NgTableParams){
-		$http.get('http://localhost:9090/admin/api/resources.json')
-			.success(function(data, status) {
-				$scope.tableParams = new NgTableParams({
-					page: 1,
-		            count: 10,
-					sorting: {
-						name: 'asc'     // initial sorting
-					}
-				}, { 
-					total: data.length,
-					dataset: data
-				});
-			});
+	    $scope.tableParams = new NgTableParams(
+	      {
+	        page: 1,            // show first page
+	        count: 10,           // count per page
+	        sorting: {name:'asc'}
+	      },
+	      {
+	        total: 0, // length of data
+	        getData: function(params) {
+	        	return $http.get('/admin/api/resources.json').then(function(response){
+	        		params.total(response.data.lenght);
+	        		return response.data;
+	        	}, function(response) {
+	        		console.error(response);
+	        	});
+	        }
+	    });
 	}]);
 })();
