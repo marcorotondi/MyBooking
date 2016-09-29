@@ -22,7 +22,6 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 			});
 			
 			// Making the fields empty
-			//
 			$scope.description='';
 			$scope.type='';
 		}
