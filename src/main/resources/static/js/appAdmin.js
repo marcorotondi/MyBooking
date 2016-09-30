@@ -1,12 +1,12 @@
 /**
- * 
+ * My Booking AngularJS
  */
 
 var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 
 (function() {
 	/* Controller */
-	appAdmin.controller("adminAddController", ['$scope', '$http', function($scope, $http) {
+	appAdmin.controller("adminAddController", ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
 		$scope.addNewResource = function() {	
 			var data = 'description=' + $scope.description + '&type=' + $scope.type;
 			var config = {
@@ -16,6 +16,7 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 	        }
 			
 			$http.post('/admin/addResource', data, config).then(function(response){
+				$rootScope.$broadcast("addedNewResource", data);
 				$('div.add').addClass('displayNone');	
 			}, function(response){
 				alert(response);
@@ -31,6 +32,10 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 	}]);
 
 	appAdmin.controller("adminTableController", ['$scope', '$http', 'NgTableParams', function($scope, $http, NgTableParams){
+		$scope.$on("addedNewResource", function(e, newResource){
+			$scope.tableParams.reload();
+	    });
+		
 	    $scope.tableParams = new NgTableParams(
 	      {
 	        page: 1,            // show first page
