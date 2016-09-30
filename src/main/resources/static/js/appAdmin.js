@@ -10,9 +10,9 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 		$scope.addNewResource = function() {	
 			var data = 'description=' + $scope.description + '&type=' + $scope.type;
 			var config = {
-					headers : {
-						'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-	                }
+				headers : {
+					'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
 	        }
 			
 			$http.post('/admin/addResource', data, config).then(function(response){
