@@ -3,6 +3,18 @@
 	display: none;
 }
 
+.highlight {
+	background-color: #e6e6e6;
+}
+
+.editRow {
+	cursor: pointer;
+}
+
+.command {
+	cursor: default;
+}
+
 .navbar-right {
 	margin-right: 25px;
 }

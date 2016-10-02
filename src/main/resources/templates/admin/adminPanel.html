@@ -23,9 +23,9 @@
 			<div class="tab-pane" id="2">
           		<h3>Resource</h3>
           		<div class="btn-group col-md-8" role="group" aria-label="Main command">
-  					<button type="button" class="btn btn-default" th:text="'Add New Resource'" onclick="javascript:showSection('add');"></button>
-  					<button type="button" class="btn btn-default" th:text="'Modify Resource'"></button>
-  					<button type="button" class="btn btn-default" th:text="'Delete Resource'"></button>
+  					<button type="button" class="btn btn-default add" th:text="'Add New Resource'" onclick="javascript:showSection('add', this);"></button>
+  					<button type="button" class="btn btn-default change" th:text="'Modify Resource'" onclick="javascript:showSection('change', this);"></button>
+  					<button type="button" class="btn btn-default delete" th:text="'Delete Resource'"></button>
 				</div>
 				<div class="add form-container displayNone">
 					<form class="form" role="form" name="addForm" ng-controller="adminAddController">
@@ -33,16 +33,21 @@
 					</form>	
 				</div>
 				<div class="change form-container displayNone">
-					<form class="form-inline" role="form" name="changeForm" ng-controller="adminChangeController">
-						
+					<form class="form" role="form" name="changeForm" ng-controller="adminChangeController">
+						<div th:replace="admin/resourceForm :: formInput"></div>	
 					</form>	
 				</div>
 				<div class="col-md-8" ng-controller="adminTableController">
     				<table ng-table="tableParams" class="table table-condensed table-bordered table-striped">
     					<caption><span th:text="'Available Resource'"></span></caption>
-        				<tr ng-repeat="row in $data track by row.id">
+        				<tr ng-repeat="row in $data track by row.id" ng-dblclick="editRow(row);" th:class="editRow">
           					<td data-title="'Name'" sortable="'description'">{{row.description}}</td>
           					<td data-title="'Type'" sortable="'type'">{{row.type}}</td>
+          					<td th:class="command">
+          						<button class="btn btn-danger btn-xs" ng-click="delete(row.id)" title="Delete">
+    								<i class="glyphicon glyphicon-trash"></i>
+								</button>
+          					</td>
         				</tr>
       				</table>
   				</div>	
@@ -58,8 +63,13 @@
     <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script> 
     <script src="../../js/appAdmin.js"></script>	
     <script type="text/javascript">
-    	function showSection(sectionName) {
-        	$('div.' + sectionName).removeClass('displayNone');	
+    	function showSection(sectionName, button) {
+    		var divElem = $('div.' + sectionName);
+
+    		$('button').removeClass('active');
+        	$(button).addClass('active');
+			$('div.form-container.activeForm').addClass('displayNone');
+        	divElem.removeClass('displayNone').addClass('activeForm');
         }
     </script>	
 </body>

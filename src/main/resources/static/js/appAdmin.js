@@ -18,6 +18,7 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 			$http.post('/admin/addResource', data, config).then(function(response){
 				$rootScope.$broadcast("addedNewResource", data);
 				$('div.add').addClass('displayNone');	
+				$('button.add').removeClass('active');
 			}, function(response){
 				alert(response);
 			});
@@ -29,11 +30,20 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 	}]);
 
 	appAdmin.controller('adminChangeController', ['$scope', '$http', function($scope, $http) {
+		$scope.$on("changeResource", function(e, resource) {
+			$('button.change').click();
+			$scope.description = resource.description;
+			$scope.type = resource.type;
+			
+			$('button.change').removeClass('active');
+		});
 	}]);
 
-	appAdmin.controller("adminTableController", ['$scope', '$http', '$filter', 'NgTableParams', function($scope, $http, $filter, NgTableParams){
-		$scope.$on("addedNewResource", function(e, newResource){
-			$scope.tableParams.reload();
+	appAdmin.controller("adminTableController", ['$scope', '$http', '$filter', '$rootScope', 'NgTableParams', function($scope, $http, $filter, 
+			$rootScope, NgTableParams){
+		
+		$scope.$on("addedNewResource", function(e, newResource) {
+			$scope.tableParams.reload(); 
 	    });
 		
 	    $scope.tableParams = new NgTableParams({ 
@@ -53,5 +63,9 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 	        	});
 	        }
 	    });
+	    
+	    $scope.editRow = function(row) {
+	    	$rootScope.$broadcast("changeResource", row);
+	    }
 	}]);
 })();
