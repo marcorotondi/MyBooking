@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %c:%M:%L -%X{currentUser}%X{requestParams} %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework.web" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
     
-    <logger name="org.springframework.boot" level="INFO"/>
-    <logger name="org.springframework.security" level="ERROR"/>
-    <logger name="com.marco" level="INFO"/>
+    <logger name="org.springframework.boot" additivity="false">
+    	<level value="INFO"/>
+    	<appender-ref ref="STDOUT"/>
+    </logger>
+    
+    <logger name="org.springframework.security">
+    	<level value="ERROR"/>
+    	<appender-ref ref="STDOUT"/>
+    </logger>
+    
+    <logger name="com.marco">
+    	<level value="INFO"/>
+    	<appender-ref ref="STDOUT"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
 </configuration>
