@@ -7,7 +7,7 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 (function() {
 	/* Controller */
 	appAdmin.controller("adminAddController", ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
-		$scope.addNewResource = function() {	
+		$scope.addChangeResource = function() {	
 			var data = 'description=' + $scope.description + '&type=' + $scope.type;
 			var config = {
 				headers : {
@@ -15,8 +15,8 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
                 }
 	        }
 			
-			$http.post('/admin/addResource', data, config).then(function(response){
-				$rootScope.$broadcast("addedNewResource", data);
+			$http.post('/admin/crudResource', data, config).then(function(response){
+				$rootScope.$broadcast("addChangeResource", data);
 				$('div.add').addClass('displayNone');	
 				$('button.add').removeClass('active');
 			}, function(response){
@@ -29,20 +29,40 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 		}
 	}]);
 
-	appAdmin.controller('adminChangeController', ['$scope', '$http', function($scope, $http) {
+	appAdmin.controller('adminChangeController', ['$scope', '$rootScope', '$http', function($scope, $rootScope, $http) {
 		$scope.$on("changeResource", function(e, resource) {
 			$('button.change').click();
 			$scope.description = resource.description;
 			$scope.type = resource.type;
+			$scope.id = resource.id;
 			
-			$('button.change').removeClass('active');
+			$scope.addChangeResource = function () {
+				var data = 'id=' + $scope.id + '&description=' + $scope.description + '&type=' + $scope.type;
+				var config = {
+					headers : {
+						'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+	                }
+		        }
+				
+				$http.post('/admin/crudResource', data, config).then(function(response){
+					$rootScope.$broadcast("addChangeResource", data);
+					$('div.change').addClass('displayNone');	
+					$('button.change').removeClass('active');
+				}, function(response){
+					alert(response);
+				});
+				
+				// Making the fields empty
+				$scope.description='';
+				$scope.type='';
+			}
 		});
 	}]);
 
 	appAdmin.controller("adminTableController", ['$scope', '$http', '$filter', '$rootScope', 'NgTableParams', function($scope, $http, $filter, 
 			$rootScope, NgTableParams){
 		
-		$scope.$on("addedNewResource", function(e, newResource) {
+		$scope.$on("addChangeResource", function(e, newResource) {
 			$scope.tableParams.reload(); 
 	    });
 		

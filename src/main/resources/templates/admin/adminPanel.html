@@ -25,7 +25,6 @@
           		<div class="btn-group col-md-8" role="group" aria-label="Main command">
   					<button type="button" class="btn btn-default add" th:text="'Add New Resource'" onclick="javascript:showSection('add', this);"></button>
   					<button type="button" class="btn btn-default change" th:text="'Modify Resource'" onclick="javascript:showSection('change', this);"></button>
-  					<button type="button" class="btn btn-default delete" th:text="'Delete Resource'"></button>
 				</div>
 				<div class="add form-container displayNone">
 					<form class="form" role="form" name="addForm" ng-controller="adminAddController">
@@ -66,10 +65,15 @@
     	function showSection(sectionName, button) {
     		var divElem = $('div.' + sectionName);
 
-    		$('button').removeClass('active');
-        	$(button).addClass('active');
-			$('div.form-container.activeForm').addClass('displayNone');
-        	divElem.removeClass('displayNone').addClass('activeForm');
+    		if (!$(divElem).hasClass('displayNone')) {
+        		$(divElem).addClass('displayNone');
+        		$('button').removeClass('active');
+        	} else {
+	    		$('button').removeClass('active');
+	        	$(button).addClass('active');
+				$('div.form-container.activeForm').addClass('displayNone');
+	        	divElem.removeClass('displayNone').addClass('activeForm');
+        	}
         }
     </script>	
 </body>

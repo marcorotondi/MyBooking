@@ -4,6 +4,7 @@ xmlns:th="http://www.thymeleaf.org"
 xmlns:ng="http://angularjs.org">
 <body>
 	<div th:fragment="formInput">
+		<input type="hidden" id="id" name="id" ng-model="id"/>
 		<div class="form-group col-md-8">
 			<label for="description" th:text="'Description'"></label>
 			<input type="text" class="form-control" id="description" name="description" 
@@ -17,7 +18,7 @@ xmlns:ng="http://angularjs.org">
 			</select>
 		</div>
 		<div class="form-actions col-md-8">
-	    	<button class="btn btn-primary" ng-click="addNewResource()">Save</button>
+	    	<button class="btn btn-primary" ng-click="addChangeResource()">Save</button>
 	    	<button type="reset" class="btn">Reset</button>
 	    </div>
 	</div>

@@ -4,11 +4,11 @@
 package com.marco.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.marco.model.Resource;
@@ -19,7 +19,7 @@ import com.marco.type.ResourceType;
  * @author Marco
  *
  */
-@Controller
+@RestController
 public class AdminController {
 
 	@Autowired
@@ -33,9 +33,8 @@ public class AdminController {
 		return resultView;
 	}
 
-	@RequestMapping(value = "/admin/addResource", method = RequestMethod.POST)
-	@ResponseBody
-	public Resource addResource(@ModelAttribute Resource resource) {
+	@RequestMapping(value = "/admin/crudResource", method = RequestMethod.POST)
+	public Resource crudResource(@ModelAttribute Resource resource) {
 		resourceRepo.save(resource);
 
 		return resource;
