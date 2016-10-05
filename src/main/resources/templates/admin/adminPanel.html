@@ -25,9 +25,9 @@
 	          		<h3>Resource</h3>
 	          		<div class="btn-group col-md-8" role="group" aria-label="Main command">
 	  					<button type="button" class="btn btn-default add" th:text="'Add New Resource'" 
-	  						ng-click="displayForm('add');" ng-class="addBtnClass();"></button>
+	  						ng-click="showForm = !showForm"></button>
 	  					<button type="button" class="btn btn-default change" th:text="'Modify Resource'" 
-	  						ng-click="displayForm('change');" ng-class="changeBtnClass();"></button>
+	  						ng-click="showForm = !showForm"></button>
 					</div>
 					<div class="add form-container" ng-show="showForm">
 						<form class="form" role="form" name="addForm">
@@ -35,15 +35,18 @@
 						</form>	
 					</div>
 					<div class="col-md-8">
-	    				<table ng-table="tableParams" class="table table-condensed table-bordered table-striped">
+	    				<table ng-table="tableParams" class="table table-bordered table-hover table-condensed table-striped">
 	    					<caption><span th:text="'Available Resource'"></span></caption>
-	        				<tr ng-repeat="row in $data track by row.id" ng-dblclick="editRow(row);" th:class="editRow">
+	        				<tr ng-repeat="row in $data track by row.id" th:class="editRow">
 	          					<td data-title="'Name'" sortable="'description'">{{row.description}}</td>
 	          					<td data-title="'Type'" sortable="'type'">{{row.type}}</td>
 	          					<td th:class="command">
-	          						<button class="btn btn-danger btn-xs" ng-click="delete(row.id)" title="Delete">
-	    								<i class="glyphicon glyphicon-trash"></i>
-									</button>
+            						<button class="btn btn-default btn-sm" ng-click="editRow(row);">
+            							<span class="glyphicon glyphicon-ok"></span>
+            						</button>
+            						<button class="btn btn-danger btn-sm" ng-click="del(row);">
+            							<span class="glyphicon glyphicon-trash"></span>
+            						</button>
 	          					</td>
 	        				</tr>
 	      				</table>

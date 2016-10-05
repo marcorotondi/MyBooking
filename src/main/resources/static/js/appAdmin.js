@@ -53,22 +53,6 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 				$scope.id = row.id;
 				$scope.description = row.description;
 				$scope.type = row.type;
-				$scope.displayForm('change');
 			}
-			
-			$scope.displayForm = function(btn) {
-				$scope.selectBtn = btn;
-				$scope.changeBtnClass();
-				
-				return $scope.showForm = !$scope.showForm;
-			}
-			
-			$scope.addBtnClass = function() {
-				return ($scope.selectBtn == 'add' && $scope.showForm ? 'active' : '');
-			}
-			
-			$scope.changeBtnClass = function() {
-				return ($scope.selectBtn == 'change' && $scope.showForm ? 'active' : '');
-			} 
 	}]);
 })();
