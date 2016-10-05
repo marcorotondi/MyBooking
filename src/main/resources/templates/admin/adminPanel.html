@@ -24,16 +24,13 @@
 				<div ng-controller="adminResourceController">
 	          		<h3>Resource</h3>
 	          		<div class="btn-group col-md-8" role="group" aria-label="Main command">
-	  					<button type="button" class="btn btn-default add" th:text="'Add New Resource'" ng-click="add = !add"></button>
-	  					<button type="button" class="btn btn-default change" th:text="'Modify Resource'" ng-click="change = !change"></button>
+	  					<button type="button" class="btn btn-default add" th:text="'Add New Resource'" 
+	  						ng-click="displayForm('add');" ng-class="addBtnClass();"></button>
+	  					<button type="button" class="btn btn-default change" th:text="'Modify Resource'" 
+	  						ng-click="displayForm('change');" ng-class="changeBtnClass();"></button>
 					</div>
-					<div class="add form-container" ng-show="add">
+					<div class="add form-container" ng-show="showForm">
 						<form class="form" role="form" name="addForm">
-							<div th:replace="admin/resourceForm :: formInput"></div>	
-						</form>	
-					</div>
-					<div class="change form-container" ng-show="change">
-						<form class="form" role="form" name="changeForm">
 							<div th:replace="admin/resourceForm :: formInput"></div>	
 						</form>	
 					</div>
@@ -63,22 +60,5 @@
 	<script th:src="@{/webjars/ng-table/1.0.0/dist/ng-table.js}"></script>
     <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script> 
     <script src="../../js/appAdmin.js"></script>	
-    <script type="text/javascript">
-    	/*
-    	function showSection(sectionName, button) {
-    		var divElem = $('div.' + sectionName);
-
-    		if (!$(divElem).hasClass('displayNone')) {
-        		$(divElem).addClass('displayNone');
-        		$('button').removeClass('active');
-        	} else {
-	    		$('button').removeClass('active');
-	        	$(button).addClass('active');
-				$('div.form-container.activeForm').addClass('displayNone');
-	        	divElem.removeClass('displayNone').addClass('activeForm');
-        	}
-        }
-        */
-    </script>	
 </body>
 </html>

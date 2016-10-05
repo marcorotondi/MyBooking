@@ -6,10 +6,8 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 
 (function() {
 	/* Controller */
-	appAdmin.controller("adminResourceController", ['$scope', '$http', '$rootScope', '$filter', 'NgTableParams', 
-		function($scope, $http, $rootScope, $filter, NgTableParams) {
-			$scope.add = false;
-			$scope.change = false;
+	appAdmin.controller("adminResourceController", ['$scope', '$http', '$filter', 'NgTableParams', function($scope, $http, $filter, NgTableParams) {
+			$scope.showForm = false;
 			$scope.tableParams = new NgTableParams({ 
 		    	sorting: {
 		            id: 'asc'     
@@ -38,9 +36,9 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 		        }
 				
 				$http.post('/admin/crudResource', data, config).then(function(response){
-					$rootScope.$broadcast("addChangeResource", data);
-					$('div.add').addClass('displayNone');	
-					$('button.add').removeClass('active');
+					$scope.tableParams.reload();
+					$scope.showForm = false;
+					//$('button.add').removeClass('active');
 				}, function(response){
 					alert(response);
 				});
@@ -55,7 +53,22 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 				$scope.id = row.id;
 				$scope.description = row.description;
 				$scope.type = row.type;
-				$scope.change = true;
+				$scope.displayForm('change');
 			}
+			
+			$scope.displayForm = function(btn) {
+				$scope.selectBtn = btn;
+				$scope.changeBtnClass();
+				
+				return $scope.showForm = !$scope.showForm;
+			}
+			
+			$scope.addBtnClass = function() {
+				return ($scope.selectBtn == 'add' && $scope.showForm ? 'active' : '');
+			}
+			
+			$scope.changeBtnClass = function() {
+				return ($scope.selectBtn == 'change' && $scope.showForm ? 'active' : '');
+			} 
 	}]);
 })();
