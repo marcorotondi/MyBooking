@@ -5,7 +5,7 @@
 var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 
 (function() {
-	/* Controller */
+	/* Admin Controller */
 	appAdmin.controller("adminResourceController", ['$scope', '$http', '$filter', 'NgTableParams', function($scope, $http, $filter, NgTableParams) {
 			$scope.showForm = false;
 			$scope.tableParams = new NgTableParams({ 
