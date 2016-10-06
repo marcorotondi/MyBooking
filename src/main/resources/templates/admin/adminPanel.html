@@ -23,9 +23,7 @@
 				<div ng-controller="adminResourceController">
 	          		<h3>Resource</h3>
 	          		<div class="btn-group col-md-8" role="group" aria-label="Main command">
-	  					<button type="button" class="btn btn-default add" th:text="'Add New Resource'" 
-	  						ng-click="showForm = !showForm"></button>
-	  					<button type="button" class="btn btn-default change" th:text="'Modify Resource'" 
+	  					<button type="button" class="btn btn-default" th:text="'Add New Resource'" 
 	  						ng-click="showForm = !showForm"></button>
 					</div>
 					<div class="add form-container" ng-show="showForm">
@@ -34,18 +32,39 @@
 						</form>	
 					</div>
 					<div class="col-md-8">
-	    				<table ng-table="tableParams" class="table table-bordered table-hover table-condensed table-striped">
-	    					<caption><span th:text="'Available Resource'"></span></caption>
-	        				<tr ng-repeat="row in $data track by row.id" th:class="editRow">
-	          					<td data-title="'Name'" sortable="'description'">{{row.description}}</td>
-	          					<td data-title="'Type'" sortable="'type'">{{row.type}}</td>
+						<h3>Available Resource</h3>
+	    				<table ng-table="tableParams" ng-form="tableForm" class="table table-bordered table-hover table-condensed editable-table"
+	    					resource-table="resourceTable">
+	        				<tr ng-repeat="row in $data" ng-form="rowForm" resource-table-row="row">
+	        					<td title="'Name'" sortable="'description'" ng-switch="row.isEditing" ng-class="name.$dirty ? 'bg-warning' : ''" 
+	        						ng-form="name">
+            						<span ng-switch-default class="editable-text">{{row.description}}</span>
+            						<div class="controls" ng-class="name.$invalid && name.$dirty ? 'has-error' : ''" ng-switch-when="true">
+              							<input type="text" name="description" ng-model="row.description" class="editable-input form-control input-sm" required />
+            						</div>
+          						</td>
+          						<td title="'Type'" sortable="'Type'" ng-switch="row.isEditing" ng-class="name.$dirty ? 'bg-warning' : ''" 
+	        						ng-form="Type">
+            						<span ng-switch-default class="editable-text">{{row.type}}</span>
+            						<div class="controls" ng-class="type.$invalid && type.$dirty ? 'has-error' : ''" ng-switch-when="true">
+              							<select ng-model="row.type" required autofocus class="editable-input form-control input-sm"> 
+              								<option th:each="type : ${resourceTypes}" th:value="${type}" th:text="${type.defaultName}" />	
+										</select>
+            						</div>
+          						</td>
 	          					<td th:class="command">
-            						<button class="btn btn-default btn-sm" ng-click="editRow(row);">
-            							<span class="glyphicon glyphicon-ok"></span>
-            						</button>
-            						<button class="btn btn-danger btn-sm" ng-click="del(row);">
-            							<span class="glyphicon glyphicon-trash"></span>
-            						</button>
+	          						<button class="btn btn-primary btn-sm" ng-click="updateResource(row, rowForm)" ng-if="row.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid">
+	          							<span class="glyphicon glyphicon-ok"></span>
+	          						</button>
+						            <button class="btn btn-default btn-sm" ng-click="cancel(row, rowForm)" ng-if="row.isEditing">
+						            	<span class="glyphicon glyphicon-remove"></span>
+						            </button>
+						            <button class="btn btn-default btn-sm" ng-click="row.isEditing = true" ng-if="!row.isEditing">
+						            	<span class="glyphicon glyphicon-pencil"></span>
+						            </button>
+						            <button class="btn btn-danger btn-sm" ng-click="delResource(row)" ng-if="!row.isEditing">
+						            	<span class="glyphicon glyphicon-trash"></span>
+						            </button>
 	          					</td>
 	        				</tr>
 	      				</table>
