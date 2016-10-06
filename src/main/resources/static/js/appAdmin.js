@@ -2,11 +2,16 @@
  * My Booking AngularJS
  */
 
-var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
+var underscore = angular.module('underscore', []);
+	underscore.factory('_', ['$window', function($window) {
+	  return $window._; // assumes underscore has already been loaded on the page
+}]);
+
+var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable', 'underscore']);
 
 (function() {
-	/* Admin Controller */
-	appAdmin.controller("adminResourceController", ['$scope', '$http', '$filter', 'NgTableParams', function($scope, $http, $filter, NgTableParams) {
+	/* Administrator Controller */
+	appAdmin.controller("adminResourceController", ['$scope', '$http', '$filter', 'NgTableParams', '_', function($scope, $http, $filter, NgTableParams, _) {
 			var self = this;
 			var originalData;
 			$scope.showForm = false;
@@ -66,7 +71,6 @@ var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 			function resetRow(row, rowForm){
 		      row.isEditing = false;
 		      rowForm.$setPristine();
-		      //self.resourceTable.untrack(row);
 		      return _.findWhere(originalData, function(r){
 		        return r.id === row.id;
 		      });
