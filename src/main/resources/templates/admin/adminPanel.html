@@ -53,10 +53,10 @@
             						</div>
           						</td>
 	          					<td th:class="command">
-	          						<button class="btn btn-primary btn-sm" ng-click="updateResource(row, rowForm)" ng-if="row.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid">
+	          						<button class="btn btn-primary btn-sm" ng-click="updateResource(row)" ng-if="row.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid">
 	          							<span class="glyphicon glyphicon-ok"></span>
 	          						</button>
-						            <button class="btn btn-default btn-sm" ng-click="cancel(row, rowForm)" ng-if="row.isEditing">
+						            <button class="btn btn-default btn-sm" ng-click="cancel()" ng-if="row.isEditing">
 						            	<span class="glyphicon glyphicon-remove"></span>
 						            </button>
 						            <button class="btn btn-default btn-sm" ng-click="row.isEditing = true" ng-if="!row.isEditing">
@@ -82,5 +82,7 @@
 	<script th:src="@{/webjars/underscorejs/1.8.3/underscore-min.js}"></script>
     <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script> 
     <script src="../../js/appAdmin.js"></script>	
+    <script src="../../js/service/services.js"></script>
+    <script src="../../js/controller/admin_controller.js"></script>
 </body>
 </html>
