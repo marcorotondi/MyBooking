@@ -17,7 +17,14 @@
 		</ul>
 		<div class="tab-content">
 			 <div class="tab-pane active" id="1">
-          			<h3>Standard tab panel created on bootstrap using nav-tabs</h3>
+          			<h3>Summary</h3>
+          			<div class="row" ng-controller="adminSummaryController">
+          				<div class="col-md-8">
+          					<ul>
+          						<li>Number of resurce: <span th:text="${#arrays.length(resources)}" ng-model="resource.count"/>
+          					</ul>
+          				</div>
+          			</div>
 			</div>
 			<div class="tab-pane" id="2">
 				<div ng-controller="adminResourceController">
@@ -79,7 +86,6 @@
 	<script th:src="@{/webjars/angularjs/1.5.8/angular.js}"></script>
 	<script th:src="@{/webjars/angularjs/1.5.8/angular-resource.min.js}"></script>
 	<script th:src="@{/webjars/ng-table/1.0.0/dist/ng-table.js}"></script>
-	<script th:src="@{/webjars/underscorejs/1.8.3/underscore-min.js}"></script>
     <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script> 
     <script src="../../js/appAdmin.js"></script>	
     <script src="../../js/service/services.js"></script>

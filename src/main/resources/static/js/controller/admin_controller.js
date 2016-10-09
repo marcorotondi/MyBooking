@@ -91,4 +91,20 @@
 				}
 			}
 	}]);
+	
+	appAdmin.controller("adminSummaryController", ['$scope', 'ResourceService', function($scope, ResourceService) {
+		$scope.resource = {};
+		
+		var summaryData = ResourceService.summary().then(
+				function(data){
+					
+				}, 
+				function(errResponse){
+					console.error('Error while fetch Summary data');
+				}
+			 );
+		
+		console.info("summary data is: " + summaryData);
+	}]);
+	
 })();

@@ -5,7 +5,9 @@ package com.marco.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,28 +47,37 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin/api/crudResource", method = RequestMethod.POST)
 	public ResponseEntity<Void> crudResource(@RequestBody Resource resource, UriComponentsBuilder ucBuilder) {
-		LOGGER.info("Creating / Update Resource {}", resource);		
-		
+		LOGGER.info("Creating / Update Resource {}", resource);
+
 		resourceRepo.save(resource);
-	    return new ResponseEntity<Void>(OK);
+		return new ResponseEntity<>(OK);
 	}
-	
+
 	@RequestMapping(value = "/admin/api/delete/resource/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Resource> deleteUser(@PathVariable("id") long id) {
-       LOGGER.info("Fetching & Deleting Resource with id: {}", id);
-  
-       final Resource res = resourceRepo.findOne(id);
-       if (null == res) {
-    	   LOGGER.warn("Unable to delete. Resource with id {} not found", id);
-    	   return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
-       }
-       
-       resourceRepo.delete(id);
-       return new ResponseEntity<Resource>(HttpStatus.NO_CONTENT);
-    }
+	public ResponseEntity<Resource> deleteUser(@PathVariable("id") long id) {
+		LOGGER.info("Fetching & Deleting Resource with id: {}", id);
+
+		final Resource res = resourceRepo.findOne(id);
+		if (null == res) {
+			LOGGER.warn("Unable to delete. Resource with id {} not found", id);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		resourceRepo.delete(id);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
 
 	@RequestMapping(value = "/admin/api/resources.json", method = RequestMethod.GET)
 	public ResponseEntity<List<Resource>> getAllResources() {
-		return new ResponseEntity<List<Resource>>(resourceRepo.findAll(), HttpStatus.OK);
+		return new ResponseEntity<>(resourceRepo.findAll(), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/admin/api/summary.json", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Integer>> getSummaryCounters() {
+		final Map<String, Integer> counterMap = new HashMap<>();
+
+		counterMap.put("RESOUCES", resourceRepo.findAll().size());
+
+		return new ResponseEntity<>(counterMap, OK);
 	}
 }

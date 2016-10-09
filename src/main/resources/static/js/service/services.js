@@ -10,7 +10,8 @@
 	    var factory = {
 	        fetchAllResource: fetchAllResource,
 	        createUpdateResource: createUpdateResource,
-	        deleteResource: deleteResource
+	        deleteResource: deleteResource,
+	        summary: summary
 	    };
 	 
 	    return factory;
@@ -56,6 +57,20 @@
 	            }
 	        );
 	        return deferred.promise;
+	    }
+	    
+	    function summary() {
+	    	var deferred = $q.defer();
+	    	$http.get(REST_SERVICE_URI + "summary.json").then(
+    			function (response) {
+	                deferred.resolve(response.data);
+	            },
+	            function(errResponse){
+	                console.error('Error while fetching Resource');
+	                deferred.reject(errResponse);
+	            }
+		    );
+		    return deferred.promise;
 	    }
 	}]);
 })();
