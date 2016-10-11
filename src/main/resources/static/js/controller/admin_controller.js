@@ -8,7 +8,7 @@
 	
 	/* Administrator Controller */
 	appAdmin.controller("adminResourceController", 
-			['$scope', '$filter', 'ResourceService', 'NgTableParams', function($scope, $filter, ResourceService, NgTableParams) {
+			['$scope', '$filter', 'ResourceService', 'MessageService', 'NgTableParams', function($scope, $filter, ResourceService, MessageService, NgTableParams) {
 				
 			$scope.showForm = false;
 			$scope.tableParams = new NgTableParams({ 
@@ -43,6 +43,8 @@
 						function() {
 							$scope.tableParams.reload();
 							$scope.showForm = false;
+							
+							MessageService.addNewResourceSignal();
 						},
 						function(errResponse){
 							console.error('Error while creating Resource');
@@ -84,6 +86,7 @@
 							function() {
 								$scope.tableParams.reload();
 								row.isEditing = false;
+								MessageService.removeResourceSignal();
 							},
 							function(errResponse){
 								console.error('Error while delete Resource');
@@ -92,19 +95,27 @@
 			}
 	}]);
 	
-	appAdmin.controller("adminSummaryController", ['$scope', 'ResourceService', function($scope, ResourceService) {
-		$scope.resource = {};
-		
-		var summaryData = ResourceService.summary().then(
-				function(data){
-					
-				}, 
-				function(errResponse){
-					console.error('Error while fetch Summary data');
+	appAdmin.controller("adminSummaryController", ['$scope', 'ResourceService', 'MessageService', function($scope, ResourceService, MessageService) {		
+		ResourceService.summary().then(
+			function(data){
+				$scope.resource = {
+						count_res: data.resource_count
 				}
-			 );
+			}, 
+			function(errResponse){
+				console.error('Error while fetch Summary data');
+			}
+		);
 		
-		console.info("summary data is: " + summaryData);
+		 $scope.$on('handleResource', function() {
+			 if (MessageService.message.add) {
+				 $scope.resource.count_res++;
+			 }
+			 
+			 if (MessageService.message.del) {
+				 $scope.resource.count_res--;
+			 }
+		 }); 
 	}]);
 	
 })();

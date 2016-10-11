@@ -76,7 +76,7 @@ public class AdminController {
 	public ResponseEntity<Map<String, Integer>> getSummaryCounters() {
 		final Map<String, Integer> counterMap = new HashMap<>();
 
-		counterMap.put("RESOUCES", resourceRepo.findAll().size());
+		counterMap.put("resource_count", resourceRepo.findAll().size());
 
 		return new ResponseEntity<>(counterMap, OK);
 	}
