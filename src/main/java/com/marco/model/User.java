@@ -33,6 +33,8 @@ public class User implements Serializable {
 
 	private String checkSum;
 
+	@Version
+	@Column(name = "VERSION")
 	private int version;
 
 	/**
@@ -111,21 +113,4 @@ public class User implements Serializable {
 	public void setCheckSum(String checkSum) {
 		this.checkSum = checkSum;
 	}
-
-	/**
-	 * @return the version
-	 */
-	@Version
-	@Column(name = "VERSION")
-	public int getVersion() {
-		return version;
-	}
-
-	/**
-	 * @param version the version to set
-	 */
-	public void setVersion(int version) {
-		this.version = version;
-	}
-
 }

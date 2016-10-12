@@ -38,6 +38,8 @@ public class CalendarBook implements Serializable {
 
 	private User userRef;
 
+	@Version
+	@Column(name = "VERSION")
 	private int version;
 
 	/**
@@ -119,22 +121,6 @@ public class CalendarBook implements Serializable {
 	 */
 	public void setUserRef(User userRef) {
 		this.userRef = userRef;
-	}
-
-	/**
-	 * @return the version
-	 */
-	@Version
-	@Column(name = "VERSION")
-	public int getVersion() {
-		return version;
-	}
-
-	/**
-	 * @param version the version to set
-	 */
-	public void setVersion(int version) {
-		this.version = version;
 	}
 
 	/* (non-Javadoc)

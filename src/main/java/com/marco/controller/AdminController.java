@@ -3,7 +3,6 @@
  */
 package com.marco.controller;
 
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.OK;
 
 import java.util.HashMap;
