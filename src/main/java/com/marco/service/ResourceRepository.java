@@ -14,5 +14,7 @@ import com.marco.type.ResourceType;
  */
 public interface ResourceRepository extends JpaRepository<Resource, Long> {
 	
-	Long countByType(ResourceType type);
+	long countByType(ResourceType type);
+	
+	long count();
 }

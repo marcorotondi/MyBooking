@@ -38,6 +38,8 @@ public class Resource implements Serializable {
 
 	private Set<CalendarBook> calendarBooks = new HashSet<>();
 
+	@Version
+	@Column(name = "VERSION")
 	private int version;
 
 	/**
@@ -101,22 +103,6 @@ public class Resource implements Serializable {
 	 */
 	public void setCalendarBooks(Set<CalendarBook> calendarBooks) {
 		this.calendarBooks = calendarBooks;
-	}
-
-	/**
-	 * @return the version
-	 */
-	@Version
-	@Column(name = "VERSION")
-	public int getVersion() {
-		return version;
-	}
-
-	/**
-	 * @param version the version to set
-	 */
-	public void setVersion(int version) {
-		this.version = version;
 	}
 
 	public void addCalendarBook(CalendarBook calendarBook) {

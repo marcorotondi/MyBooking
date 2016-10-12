@@ -3,6 +3,7 @@
  */
 package com.marco.controller;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.OK;
 
 import java.util.HashMap;
@@ -47,9 +48,11 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin/api/crudResource", method = RequestMethod.POST)
 	public ResponseEntity<Void> crudResource(@RequestBody Resource resource, UriComponentsBuilder ucBuilder) {
-		LOGGER.info("Creating / Update Resource {}", resource);
-
+		LOGGER.info("Try To Creating / Update Resource {}", resource);
+		
 		resourceRepo.save(resource);
+		
+		LOGGER.info("Successfully Creating / Update Resource {}", resource);
 		return new ResponseEntity<>(OK);
 	}
 
@@ -76,7 +79,7 @@ public class AdminController {
 	public ResponseEntity<Map<String, Long>> getSummaryCounters() {
 		final Map<String, Long> counterMap = new HashMap<>();
 
-		counterMap.put("resource_count", Long.valueOf(resourceRepo.findAll().size()));
+		counterMap.put("resource_count", resourceRepo.count());
 		counterMap.put("resource_room", resourceRepo.countByType(ResourceType.ROOM)); 
 		counterMap.put("resource_car", resourceRepo.countByType(ResourceType.CAR)); 
 		counterMap.put("resource_obj", resourceRepo.countByType(ResourceType.OBJECT)); 
