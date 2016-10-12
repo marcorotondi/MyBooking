@@ -44,7 +44,7 @@
 							$scope.tableParams.reload();
 							$scope.showForm = false;
 							
-							MessageService.addNewResourceSignal();
+							MessageService.signalResourceChange();
 						},
 						function(errResponse){
 							console.error('Error while creating Resource');
@@ -72,6 +72,7 @@
 						function() {
 							$scope.tableParams.reload();
 							row.isEditing = false;
+							MessageService.signalResourceChange();
 						},
 						function(errResponse){
 							console.error('Error while update Resource');
@@ -86,7 +87,7 @@
 							function() {
 								$scope.tableParams.reload();
 								row.isEditing = false;
-								MessageService.removeResourceSignal();
+								MessageService.signalResourceChange();
 							},
 							function(errResponse){
 								console.error('Error while delete Resource');
@@ -95,27 +96,28 @@
 			}
 	}]);
 	
-	appAdmin.controller("adminSummaryController", ['$scope', 'ResourceService', 'MessageService', function($scope, ResourceService, MessageService) {		
-		ResourceService.summary().then(
-			function(data){
-				$scope.resource = {
-						count_res: data.resource_count
+	appAdmin.controller("adminSummaryController", ['$scope', 'ResourceService', 'MessageService', function($scope, ResourceService, MessageService) {
+		function loadCounter() {
+			ResourceService.summary().then(
+				function(data){
+					$scope.resource = {
+							count_res: data.resource_count,
+							count_room: data.resource_room,
+							count_car: data.resource_car,
+							count_obj: data.resource_obj
+					}
+				}, 
+				function(errResponse){
+					console.error('Error while fetch Summary data');
 				}
-			}, 
-			function(errResponse){
-				console.error('Error while fetch Summary data');
-			}
-		);
+			);
+		}
 		
-		 $scope.$on('handleResource', function() {
-			 if (MessageService.message.add) {
-				 $scope.resource.count_res++;
-			 }
-			 
-			 if (MessageService.message.del) {
-				 $scope.resource.count_res--;
-			 }
-		 }); 
+		loadCounter();
+		
+		$scope.$on('handleResource', function() {
+			loadCounter();
+		});
 	}]);
 	
 })();

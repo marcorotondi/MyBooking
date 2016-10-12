@@ -77,20 +77,6 @@
 	appAdmin.factory('MessageService', ['$rootScope', function($rootScope){
 		var messageService = {};
 		
-		messageService.message = {};
-		
-		messageService.addNewResourceSignal = function() {
-			this.message.add = true;
-			this.message.del = false;
-			this.signalResourceChange();
-		}
-		
-		messageService.removeResourceSignal = function() {
-			this.message.add = false;
-			this.message.del = true;
-			this.signalResourceChange();
-		}
-		
 		messageService.signalResourceChange = function() {
 			 $rootScope.$broadcast('handleResource');
 		}

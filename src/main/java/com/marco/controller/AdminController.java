@@ -73,10 +73,13 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/admin/api/summary.json", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Integer>> getSummaryCounters() {
-		final Map<String, Integer> counterMap = new HashMap<>();
+	public ResponseEntity<Map<String, Long>> getSummaryCounters() {
+		final Map<String, Long> counterMap = new HashMap<>();
 
-		counterMap.put("resource_count", resourceRepo.findAll().size());
+		counterMap.put("resource_count", Long.valueOf(resourceRepo.findAll().size()));
+		counterMap.put("resource_room", resourceRepo.countByType(ResourceType.ROOM)); 
+		counterMap.put("resource_car", resourceRepo.countByType(ResourceType.CAR)); 
+		counterMap.put("resource_obj", resourceRepo.countByType(ResourceType.OBJECT)); 
 
 		return new ResponseEntity<>(counterMap, OK);
 	}
