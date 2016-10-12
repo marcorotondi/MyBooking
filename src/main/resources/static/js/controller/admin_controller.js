@@ -1,5 +1,5 @@
 /**
- * Controller My Booking AngularJS
+ * Administrator Controller My Booking AngularJS
  */
 
 'use strict';
