@@ -1,20 +1,31 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:ng="http://angularjs.org">
 <head>
 	<title>My booking</title>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
 	
-	<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
-	<link href="../css/app.css" th:href="@{/css/app.css}" rel="stylesheet" media="screen"/>
+	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+	<link th:href="@{/css/app.css}" rel="stylesheet" media="screen"/>
+	<link th:href="@{/css/scheduler.css}" rel="stylesheet" media="screen"/>
 </head>
-<body>
+<body ng-app="appScheduler">
 	<div class="container-fluid">
 		<div th:replace="navbar :: navigation"></div>
 	</div>
-	
-	<weekly-scheduler class="scheduler" ng-model="myScopeModel" options="options"></weekly-scheduler>
+	<div class="container-fluid" ng-controller="indexController">
+		<div>
+      		<code>$scope.model</code>
+      		<pre ng-bind="model | json" style="max-height: 200px;"></pre>
+    	</div>
+		<div class="row">
+			<weekly-scheduler class="scheduler" 
+				items="model.items"
+				options="model.options">
+				<div class="srow">{{::$index + 1}}. {{item.label}}</div>
+			</weekly-scheduler>
+		</div>
+	</div>
 	
 	<script th:src="@{/webjars/jquery/3.1.0/jquery.min.js}"></script>
 	<script th:src="@{/webjars/angularjs/1.5.8/angular.min.js}"></script>

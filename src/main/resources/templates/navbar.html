@@ -5,7 +5,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/dialect">
 <body>
 	<nav th:fragment="navigation" class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">My booking Application</a>
+			<a class="navbar-brand navbar-link" th:href="@{/}">My booking Application</a>
 		</div>
 		<div sec:authorize="isAnonymous()">
 			<p class="navbar-text navbar-right">
@@ -17,6 +17,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/dialect">
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" th:text="${#authentication.name}"></a>
 					<ul class="dropdown-menu">
+						<li><a th:href="@{/admin/adminPanel.html}">Admin Area</a></li>
 						<li><a th:href="@{/admin/logout.html}">Logout</a></li>
 					</ul>
 				</li>
