@@ -14,17 +14,11 @@
 		<div th:replace="navbar :: navigation"></div>
 	</div>
 	<div class="container-fluid" ng-controller="indexController">
-		<div>
-      		<code>$scope.model</code>
-      		<pre ng-bind="model | json" style="max-height: 200px;"></pre>
-    	</div>
-		<div class="row">
-			<weekly-scheduler class="scheduler" 
-				items="model.items"
-				options="model.options">
-				<div class="srow">{{::$index + 1}}. {{item.label}}</div>
-			</weekly-scheduler>
-		</div>
+		<weekly-scheduler class="scheduler" 
+			items="model.items"
+			options="model.options">
+			<div class="srow">{{::$index + 1}}. {{item.label}}</div>
+		</weekly-scheduler>
 	</div>
 	
 	<script th:src="@{/webjars/jquery/3.1.0/jquery.min.js}"></script>
