@@ -13,12 +13,28 @@
 			options : {/*monoSchedule: true*/},
 			items : [ {
 				label : 'Item 1',
-				editable : false,
+				editable : true,
 				schedules : [ {
-					start : moment('2015-12-27').toDate(),
-					end : moment('2016-08-01').toDate()
-				} ]
-			} ]
+					start : moment('2016-10-14').toDate(),
+					end : moment('2016-10-14').toDate()
+				}, {
+					start : moment('2016-11-14').toDate(),
+					end : moment('2016-11-14').toDate()
+				}
+				]
+			},
+			{
+				label : 'Item 2',
+				editable : true,
+				schedules : [ {
+					start : moment('2016-10-14').toDate(),
+					end : moment('2016-10-14').toDate()
+				}, {
+					start : moment('2016-11-14').toDate(),
+					end : moment('2016-11-14').toDate()
+				}
+				]
+			}]
 		};
 	}]);
 })();
