@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.marco.data.CalendarData;
 import com.marco.service.CalendarBookRepository;
+import com.marco.service.SchedulerService;
 
 /**
  * @author marco.rotondi
@@ -25,7 +26,7 @@ public class SchedulerController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerController.class);
 	
 	@Autowired
-	private CalendarBookRepository calendarBookRepo;
+	private SchedulerService schedulerService;
 	
 	@RequestMapping(value = "/public/api/schedulers", method = RequestMethod.GET)
 	public ResponseEntity<List<CalendarData>> retriveScheduler() {
