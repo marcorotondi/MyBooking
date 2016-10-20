@@ -17,6 +17,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.marco.type.ResourceType;
 
@@ -32,8 +35,10 @@ public class Resource implements Serializable {
 
 	private Long id;
 
+	@NotBlank
 	private String description;
 
+	@NotNull
 	private ResourceType type;
 
 	private Set<CalendarBook> calendarBooks = new HashSet<>();

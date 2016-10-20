@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +48,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/admin/api/crudResource", method = RequestMethod.POST)
-	public ResponseEntity<Void> crudResource(@RequestBody Resource resource, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<Void> crudResource(@RequestBody @Valid Resource resource, UriComponentsBuilder ucBuilder) {
 		LOGGER.info("Try To Creating / Update Resource {}", resource);
 		
 		resourceRepo.save(resource);
