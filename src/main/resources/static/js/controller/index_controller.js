@@ -74,7 +74,7 @@
         $scope.settings = {
         		date: new $.jqx.date(new Date()),
                 width: "100%",
-                height: 620,
+                height: "100%",
                 dayNameFormat: "abbr",
                 source: appointments,
                 showLegend: true,
