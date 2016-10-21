@@ -72,7 +72,7 @@
         appointments.push(appointment6);
         
         $scope.settings = {
-        		date: new $.jqx.date(new Date()),
+        		date: new $.jqx.date('todayDate'),
                 width: "100%",
                 height: "100%",
                 dayNameFormat: "abbr",
@@ -81,7 +81,7 @@
                 theme: "bootstrap",
                 resources:
                 {
-                    colorScheme: "scheme05",
+                    colorScheme: "scheme13",
                     dataField: "calendar",
                     orientation: "horizontal",
                     source: appointments
