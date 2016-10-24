@@ -14,8 +14,8 @@
             location: "",
             subject: "Fashion Expo",
             calendar: "East Coast Events",
-            start: new Date(2016, 09, 25, 9, 0, 0),
-            end: new Date(2016, 09, 25, 16, 0, 0)
+            start: new Date('2016-10-25T10:24:00'),
+            end: new Date('2016-10-25T12:24:00')
         }
 
         var appointment2 = {
@@ -24,8 +24,8 @@
             location: "",
             subject: "Cloud Data Expo",
             calendar: "Middle West Events",
-            start: new Date(2016, 09, 26, 10, 0, 0),
-            end: new Date(2016, 09, 26, 15, 0, 0)
+            start: new Date('2016-10-25T10:24:00'),
+            end: new Date('2016-10-25T10:24:00')
         }
       
         var appointments = new Array();
@@ -34,7 +34,7 @@
         
      // prepare the data
         var source = {
-            dataType: "array",  //json
+            dataType: "json", //"array",  //json
             dataFields: [
                 { name: 'id', type: 'string' },
                 { name: 'description', type: 'string' },
@@ -45,7 +45,8 @@
                 { name: 'end', type: 'date' }
             ],
             id: 'id',
-            localData: appointments //url: 'getschedule.php'
+            //localData: appointments //url: 'getschedule.php'
+            url: "/public/api/schedulers"
         };
         var adapter = new $.jqx.dataAdapter(source);
       

@@ -3,7 +3,7 @@
  */
 package com.marco.service;
 
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.marco.model.User;
 
@@ -11,6 +11,6 @@ import com.marco.model.User;
  * @author Marco
  *
  */
-public interface UserRepository extends Repository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
 }
