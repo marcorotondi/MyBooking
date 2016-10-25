@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 import com.marco.data.CalendarData;
 import com.marco.model.CalendarBook;
 import com.marco.service.CalendarBookRepository;
+import com.marco.service.ResourceRepository;
 import com.marco.service.SchedulerService;
+import com.marco.utils.BookingUtils;
 
 /**
  * @author marco.rotondi
@@ -30,6 +32,9 @@ public class SchedulerServiceImpl implements SchedulerService {
 
 	@Autowired
 	private CalendarBookRepository calendarBookRepo;
+	
+	@Autowired
+	private ResourceRepository resourceRepo; 
 
 	@Override
 	public List<CalendarData> findAllScheduler() {
@@ -43,10 +48,15 @@ public class SchedulerServiceImpl implements SchedulerService {
 		if (Objects.isNull(endDate)) {
 			endDate = startDate.plusDays(5L);
 		}
-		// Date.from(ZonedDateTime.of(start, ZoneId.systemDefault()).toInstant())
+
 		List<CalendarBook> appointments = calendarBookRepo.findByStartToEnd(GregorianCalendar.from(ZonedDateTime.of(startDate, ZoneId.systemDefault())),
 				GregorianCalendar.from(ZonedDateTime.of(endDate, ZoneId.systemDefault())));
 
+		if (!appointments.isEmpty()) {
+			appointments.forEach(calBook -> resourceCalendars.add(BookingUtils.prepareCalendarData(calBook)));
+		} else {
+			BookingUtils.fillEmptyCalendar(resourceCalendars, resourceRepo.findAllOrderByTypeDescAndDescriptionDesc());
+		}
 
 		return resourceCalendars;
 	}
