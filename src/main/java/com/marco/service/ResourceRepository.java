@@ -20,5 +20,5 @@ public interface ResourceRepository extends JpaRepository<Resource, Long> {
 	
 	long count();
 	
-	List<Resource> findAllOrderByTypeDescAndDescriptionDesc();
+	List<Resource> findAllByOrderByTypeDescDescriptionDesc();
 }

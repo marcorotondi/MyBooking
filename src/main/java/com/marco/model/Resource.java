@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -82,7 +83,7 @@ public class Resource implements Serializable {
 	/**
 	 * @return the type
 	 */
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	@Column(name = "TYPE")
 	public ResourceType getType() {
 		return type;

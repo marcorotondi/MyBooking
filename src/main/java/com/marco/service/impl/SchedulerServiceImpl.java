@@ -55,7 +55,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 		if (!appointments.isEmpty()) {
 			appointments.forEach(calBook -> resourceCalendars.add(BookingUtils.prepareCalendarData(calBook)));
 		} else {
-			BookingUtils.fillEmptyCalendar(resourceCalendars, resourceRepo.findAllOrderByTypeDescAndDescriptionDesc());
+			BookingUtils.fillEmptyCalendar(resourceCalendars, resourceRepo.findAllByOrderByTypeDescDescriptionDesc());
 		}
 
 		return resourceCalendars;

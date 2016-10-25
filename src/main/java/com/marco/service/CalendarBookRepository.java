@@ -18,7 +18,7 @@ import com.marco.model.CalendarBook;
  */
 public interface CalendarBookRepository extends JpaRepository<CalendarBook, Long> {
 
-	@Query("select cb from CalendarBook cb left join cb.resource, left join cb.userRef where cb.start >= :start and cb.end <= :end")
+	@Query("select cb from CalendarBook cb left join cb.resource left join cb.userRef where cb.start >= :start and cb.end <= :end")
 	List<CalendarBook> findByStartToEnd(@Param("start") Calendar start, @Param("end") Calendar end);
 
 }
