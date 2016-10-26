@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marco.data.CalendarData;
+import com.marco.data.SchedulerMappingData;
 import com.marco.service.SchedulerService;
 
 /**
@@ -30,8 +30,8 @@ public class SchedulerController {
 	private SchedulerService schedulerService;
 
 	@RequestMapping(value = "/public/api/schedulers", method = RequestMethod.GET)
-	public ResponseEntity<List<CalendarData>> retriveScheduler() {
-		List<CalendarData> schedulerData = schedulerService.findAllByRangeDate(LocalDateTime.now(), null);
+	public ResponseEntity<List<SchedulerMappingData>> retriveScheduler() {
+		List<SchedulerMappingData> schedulerData = schedulerService.findAllByRangeDate(LocalDateTime.now(), null);
 
 		return new ResponseEntity<>(schedulerData, HttpStatus.OK);
 	}

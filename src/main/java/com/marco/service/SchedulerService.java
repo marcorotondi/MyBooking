@@ -6,7 +6,7 @@ package com.marco.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.marco.data.CalendarData;
+import com.marco.data.SchedulerMappingData;
 
 /**
  * @author marco.rotondi
@@ -14,10 +14,10 @@ import com.marco.data.CalendarData;
  */
 public interface SchedulerService {
 
-	List<CalendarData> findAllScheduler();
+	List<SchedulerMappingData> findAllScheduler();
 
-	List<CalendarData> findAllByRangeDate(LocalDateTime startDate, LocalDateTime endDate);
+	List<SchedulerMappingData> findAllByRangeDate(LocalDateTime startDate, LocalDateTime endDate);
 
-	List<CalendarData> findByDate(LocalDateTime currentDate);
+	List<SchedulerMappingData> findByDate(LocalDateTime currentDate);
 
 }

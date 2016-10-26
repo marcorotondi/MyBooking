@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.marco.data.CalendarData;
+import com.marco.data.SchedulerMappingData;
 import com.marco.model.CalendarBook;
 import com.marco.service.CalendarBookRepository;
 import com.marco.service.ResourceRepository;
@@ -37,14 +37,14 @@ public class SchedulerServiceImpl implements SchedulerService {
 	private ResourceRepository resourceRepo; 
 
 	@Override
-	public List<CalendarData> findAllScheduler() {
+	public List<SchedulerMappingData> findAllScheduler() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CalendarData> findAllByRangeDate(LocalDateTime startDate, LocalDateTime endDate) {
-		final List<CalendarData> resourceCalendars = new LinkedList<>();
+	public List<SchedulerMappingData> findAllByRangeDate(LocalDateTime startDate, LocalDateTime endDate) {
+		final List<SchedulerMappingData> resourceCalendars = new LinkedList<>();
 		if (Objects.isNull(endDate)) {
 			endDate = startDate.plusDays(5L);
 		}
@@ -62,7 +62,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 	}
 
 	@Override
-	public List<CalendarData> findByDate(LocalDateTime currentDate) {
+	public List<SchedulerMappingData> findByDate(LocalDateTime currentDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}

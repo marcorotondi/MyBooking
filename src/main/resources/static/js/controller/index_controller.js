@@ -8,33 +8,9 @@
 	
 	/* Index Controller HomePage */
 	appScheduler.controller("indexController", ['$scope', function($scope){
-		var appointment1 = {
-            id: "id1",
-            description: "George brings projector for presentations.",
-            location: "",
-            subject: "Fashion Expo",
-            calendar: "East Coast Events",
-            start: new Date('2016-10-25T10:24:00'),
-            end: new Date('2016-10-25T12:24:00')
-        }
-
-        var appointment2 = {
-            id: "id2",
-            description: "",
-            location: "",
-            subject: "Cloud Data Expo",
-            calendar: "Middle West Events",
-            start: new Date('2016-10-25T10:24:00'),
-            end: new Date('2016-10-25T10:24:00')
-        }
-      
-        var appointments = new Array();
-        appointments.push(appointment1);
-        appointments.push(appointment2);
-        
-     // prepare the data
+		// prepare the data
         var source = {
-            dataType: "json", //"array",  //json
+            dataType: "json", 
             dataFields: [
                 { name: 'id', type: 'string' },
                 { name: 'description', type: 'string' },
@@ -45,7 +21,6 @@
                 { name: 'end', type: 'date' }
             ],
             id: 'id',
-            //localData: appointments //url: 'getschedule.php'
             url: "/public/api/schedulers"
         };
         var adapter = new $.jqx.dataAdapter(source);
