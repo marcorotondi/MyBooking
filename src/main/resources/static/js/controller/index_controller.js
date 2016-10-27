@@ -54,8 +54,14 @@
                 view: 'weekView',
                 views:
                 [
-                    { type: 'dayView', showWeekends: false, appointmentsRenderMode: "exactTime" },
-                    { type: 'weekView', showWeekends: false, appointmentsRenderMode: "exactTime" },
+                    { type: 'dayView', showWeekends: false, appointmentsRenderMode: "exactTime", timeRuler: { formatString: 'HH:mm' } },
+                    { type: 'weekView', showWeekends: false, appointmentsRenderMode: "exactTime", workTime: {
+                        	fromDayOfWeek: 1,
+                        	toDayOfWeek: 5,
+                        	fromHour: 7,
+                        	toHour: 19
+                    	}, timeRuler: { formatString: 'HH:mm' }
+                    },
                     { type: 'monthView', appointmentsRenderMode: "exactTime" }
                 ]
         }
