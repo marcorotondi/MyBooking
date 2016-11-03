@@ -10,7 +10,8 @@
 	appScheduler.controller("indexController", ['$scope', function($scope){
 		// prepare the data
         var source = {
-            dataType: "json", 
+        	async: false,
+        	dataType: "json", 
             dataFields: [
                 { name: 'id', type: 'string' },
                 { name: 'description', type: 'string' },
@@ -21,7 +22,7 @@
                 { name: 'end', type: 'date' }
             ],
             id: 'id',
-            url: "/public/api/schedulers"
+            url: "/public/api/schedulers",
         };
         var adapter = new $.jqx.dataAdapter(source);
       
