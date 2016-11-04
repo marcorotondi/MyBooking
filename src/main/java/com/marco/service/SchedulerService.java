@@ -19,5 +19,7 @@ public interface SchedulerService {
 	List<SchedulerMappingData> findAllByRangeDate(LocalDateTime startDate, LocalDateTime endDate);
 
 	List<SchedulerMappingData> findByDate(LocalDateTime currentDate);
+	
+	List<SchedulerMappingData> findAllResource();
 
 }

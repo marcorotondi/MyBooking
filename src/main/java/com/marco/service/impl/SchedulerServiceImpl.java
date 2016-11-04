@@ -44,7 +44,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 
 	@Override
 	public List<SchedulerMappingData> findAllByRangeDate(LocalDateTime startDate, LocalDateTime endDate) {
-		final List<SchedulerMappingData> resourceCalendars = new LinkedList<>();
+		final List<SchedulerMappingData> appointmentCalendars = new LinkedList<>();
 		if (Objects.isNull(endDate)) {
 			endDate = startDate.plusDays(5L);
 		}
@@ -53,12 +53,9 @@ public class SchedulerServiceImpl implements SchedulerService {
 				GregorianCalendar.from(ZonedDateTime.of(endDate, ZoneId.systemDefault())));
 
 		if (!appointments.isEmpty()) {
-			appointments.forEach(calBook -> resourceCalendars.add(BookingUtils.prepareCalendarData(calBook)));
-		} else {
-			BookingUtils.fillEmptyCalendar(resourceCalendars, resourceRepo.findAllByOrderByTypeDescDescriptionDesc());
+			appointments.forEach(calBook -> appointmentCalendars.add(BookingUtils.prepareCalendarData(calBook)));
 		}
-
-		return resourceCalendars;
+		return appointmentCalendars;
 	}
 
 	@Override
@@ -66,5 +63,15 @@ public class SchedulerServiceImpl implements SchedulerService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<SchedulerMappingData> findAllResource() {
+		final List<SchedulerMappingData> resourceCalendars = new LinkedList<>();
+		BookingUtils.fillEmptyCalendar(resourceCalendars, resourceRepo.findAllByOrderByTypeDescDescriptionDesc());
+		
+		return resourceCalendars;
+	}
+	
+	
 
 }

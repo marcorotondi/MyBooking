@@ -9,7 +9,7 @@
 	/* Index Controller HomePage */
 	appScheduler.controller("indexController", ['$scope', function($scope){
 		// prepare the data
-        var source = {
+        var appointmentSource = {
         	async: false,
         	dataType: "json", 
             dataFields: [
@@ -24,24 +24,41 @@
             id: 'id',
             url: "/public/api/schedulers",
         };
-        var adapter = new $.jqx.dataAdapter(source);
-      
+        
+        var resourceSource = {
+            	async: false,
+            	dataType: "json", 
+                dataFields: [
+                    { name: 'id', type: 'string' },
+                    { name: 'description', type: 'string' },
+                    { name: 'location', type: 'string' },
+                    { name: 'subject', type: 'string' },
+                    { name: 'calendar', type: 'string' }
+                ],
+                id: 'id',
+                url: "/public/api/resources",
+            };
+        
+        var appointmentAdapter = new $.jqx.dataAdapter(appointmentSource);
+        var resourceAdapter = new $.jqx.dataAdapter(resourceSource);
+        
+        $scope.scheduler = {};
         $scope.settings = {
         		date: new $.jqx.date('todayDate'),
                 width: "100%",
                 height: "100%",
                 dayNameFormat: "abbr",
-                source: adapter,
+                source: appointmentAdapter,
                 showLegend: true,
                 theme: "bootstrap",
                 ready: function () {
-                    $("#jqxScheduler1").jqxScheduler('ensureAppointmentVisible', 'id1');
+                    $scope.scheduler.ensureAppointmentVisible('id1');
                 },
                 resources: {
                     colorScheme: "scheme13",
                     dataField: "calendar",
                     orientation: "horizontal",
-                    source: new $.jqx.dataAdapter(source)
+                    source: resourceAdapter
                 },
                 appointmentDataFields: {
                     from: "start",

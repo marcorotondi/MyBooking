@@ -23,15 +23,23 @@ import com.marco.service.SchedulerService;
  *
  */
 @RestController
+@RequestMapping(value = "/public/api")
 public class SchedulerController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerController.class);
 
 	@Autowired
 	private SchedulerService schedulerService;
 
-	@RequestMapping(value = "/public/api/schedulers", method = RequestMethod.GET)
+	@RequestMapping(value = "/schedulers", method = RequestMethod.GET)
 	public ResponseEntity<List<SchedulerMappingData>> retriveScheduler() {
 		List<SchedulerMappingData> schedulerData = schedulerService.findAllByRangeDate(LocalDateTime.now(), null);
+
+		return new ResponseEntity<>(schedulerData, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/resources", method = RequestMethod.GET)
+	public ResponseEntity<List<SchedulerMappingData>> retriveResource() {
+		List<SchedulerMappingData> schedulerData = schedulerService.findAllResource();
 
 		return new ResponseEntity<>(schedulerData, HttpStatus.OK);
 	}
