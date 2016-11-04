@@ -50,6 +50,8 @@
                 dayNameFormat: "abbr",
                 source: appointmentAdapter,
                 showLegend: true,
+                editDialog: false,
+                contextMenu: false,
                 theme: "bootstrap",
                 ready: function () {
                     $scope.scheduler.ensureAppointmentVisible('id1');
