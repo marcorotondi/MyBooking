@@ -70,18 +70,36 @@
                     resourceId: "calendar"
                 },
                 view: 'weekView',
-                views:
-                [
-                    { type: 'dayView', showWeekends: false, appointmentsRenderMode: "exactTime", timeRuler: { formatString: 'HH:mm' } },
-                    { type: 'weekView', showWeekends: false, appointmentsRenderMode: "exactTime", workTime: {
-                        	fromDayOfWeek: 1,
-                        	toDayOfWeek: 5,
-                        	fromHour: 7,
-                        	toHour: 19
-                    	}, timeRuler: { formatString: 'HH:mm' }
-                    },
-                    { type: 'monthView', appointmentsRenderMode: "exactTime" }
-                ]
+                views: [{
+	                    	type: 'dayView', 
+	                    	showWeekends: false, 
+	                    	appointmentsRenderMode: "exactTime", 
+	                    	timeRuler: {
+	                    		formatString: 'HH:mm', 
+	                    		scaleStartHour: 7, 
+	                    		scaleEndHour: 20 
+	                    	}                  	
+                		},
+                		{
+                			type: 'weekView', 
+                			showWeekends: false, 
+                			appointmentsRenderMode: "exactTime", 
+                			workTime: {
+                				fromDayOfWeek: 1,
+                				toDayOfWeek: 5,
+                				fromHour: 7,
+                				toHour: 19
+                			}, 
+                			timeRuler: { 
+                				formatString: 'HH:mm',
+                				scaleStartHour: 7,
+                				scaleEndHour: 20
+                			}
+                		},
+	                    { 
+	                    	type: 'monthView',
+	                    	appointmentsRenderMode: "exactTime" 
+	                    }]
         }
 	}]);
 })();
