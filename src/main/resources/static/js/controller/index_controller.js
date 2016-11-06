@@ -101,7 +101,14 @@
 	                    { 
 	                    	type: 'monthView',
 	                    	appointmentsRenderMode: "exactTime" 
-	                    }]
+	                    }
+                ],
+                // Events
+                cellClick: function(event) {
+                	console.info("click cell action: " + event.args);
+                	console.info(event.args.cell);
+                	console.info(event.args.date);
+                }
         }
 	}]);
 })();
