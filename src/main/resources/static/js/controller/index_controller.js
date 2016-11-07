@@ -50,7 +50,7 @@
                 dayNameFormat: "abbr",
                 source: appointmentAdapter,
                 showLegend: true,
-                editDialog: true,
+                editDialog: false,
                 contextMenu: false,
                 theme: "bootstrap",
                 editDialogDateTimeFormatString: 'dd-MM-yyyy HH:mm',
@@ -106,34 +106,21 @@
 	                    }
                 ],
                 // Events
-                editDialogCreate: customEditDialog
+                cellDoubleClick: openEditDialog
         }
 	}]);
 	
 	/*
 	 * Perform Override of Edit Dialog
 	 */
-	function customEditDialog(event) {
+	function openEditDialog(event) {
 		var args = event.args; 
-    	var dialog = args.dialog; 
-    	var fields = args.fields; 
-    	var appointment = args.appointment;
-    	
-    	// hide repeat option
-        fields.repeatContainer.hide();
-        // hide status option
-        fields.statusContainer.hide();
-        // hide timeZone option
-        fields.timeZoneContainer.hide();
-        // hide color option
-        fields.colorContainer.hide();
-        //hide allDay option
-        fields.allDayContainer.hide();
-        
-        fields.subjectLabel.html("User");
-        fields.locationLabel.html("Email");
-        fields.fromLabel.html("Start");
-        fields.toLabel.html("End");
-        fields.resourceLabel.html("Resource");
+		var cell = args.cell; 
+		var date = args.date;
+		var owner = args.owner;
+		var resourceIndex = parseInt(cell.attributes[1].nodeValue);
+		
+		console.info(owner.source.records[resourceIndex - 1]);
+		
 	}
 })();
