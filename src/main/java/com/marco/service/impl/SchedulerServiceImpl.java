@@ -38,8 +38,14 @@ public class SchedulerServiceImpl implements SchedulerService {
 
 	@Override
 	public List<SchedulerMappingData> findAllScheduler() {
-		// TODO Auto-generated method stub
-		return null;
+		final List<SchedulerMappingData> appointmentCalendars = new LinkedList<>();
+		List<CalendarBook> appointments = calendarBookRepo.findAll();
+		
+		if (!appointments.isEmpty()) {
+			appointments.forEach(calendarBook -> appointmentCalendars.add(BookingUtils.prepareCalendarData(calendarBook)));
+		}
+		
+		return appointmentCalendars;
 	}
 
 	@Override

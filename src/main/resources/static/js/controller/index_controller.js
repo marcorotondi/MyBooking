@@ -50,7 +50,7 @@
                 dayNameFormat: "abbr",
                 source: appointmentAdapter,
                 showLegend: true,
-                editDialog: false,
+                editDialog: true,
                 contextMenu: false,
                 theme: "bootstrap",
                 ready: function () {
@@ -104,11 +104,34 @@
 	                    }
                 ],
                 // Events
-                cellClick: function(event) {
-                	console.info("click cell action: " + event.args);
-                	console.info(event.args.cell);
-                	console.info(event.args.date);
-                }
+                editDialogCreate: customEditDialog
         }
 	}]);
+	
+	/*
+	 * Perform Override of Edit Dialog
+	 */
+	function customEditDialog(event) {
+		var args = event.args; 
+    	var dialog = args.dialog; 
+    	var fields = args.fields; 
+    	var appointment = args.appointment;
+    	
+    	// hide repeat option
+        fields.repeatContainer.hide();
+        // hide status option
+        fields.statusContainer.hide();
+        // hide timeZone option
+        fields.timeZoneContainer.hide();
+        // hide color option
+        fields.colorContainer.hide();
+        //hide allDay option
+        fields.allDayContainer.hide();
+        
+        fields.subjectLabel.html("User");
+        fields.locationLabel.html("Email");
+        fields.fromLabel.html("Start");
+        fields.toLabel.html("End");
+        fields.resourceLabel.html("Resource");
+	}
 })();

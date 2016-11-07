@@ -3,7 +3,6 @@
  */
 package com.marco.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -32,7 +31,7 @@ public class SchedulerController {
 
 	@RequestMapping(value = "/schedulers", method = RequestMethod.GET)
 	public ResponseEntity<List<SchedulerMappingData>> retriveScheduler() {
-		List<SchedulerMappingData> schedulerData = schedulerService.findAllByRangeDate(LocalDateTime.now(), null);
+		List<SchedulerMappingData> schedulerData = schedulerService.findAllResource();
 
 		return new ResponseEntity<>(schedulerData, HttpStatus.OK);
 	}
