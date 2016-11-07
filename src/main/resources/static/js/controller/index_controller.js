@@ -53,6 +53,8 @@
                 editDialog: true,
                 contextMenu: false,
                 theme: "bootstrap",
+                editDialogDateTimeFormatString: 'dd-MM-yyyy HH:mm',
+                editDialogDateFormatString: 'dd-MM-yyyy',
                 ready: function () {
                     $scope.scheduler.ensureAppointmentVisible('id1');
                 },
