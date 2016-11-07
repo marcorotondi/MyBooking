@@ -7,7 +7,7 @@
 (function() {
 	
 	/* Index Controller HomePage */
-	appScheduler.controller("indexController", ['$scope', function($scope){
+	appScheduler.controller("indexController", ['$scope', 'ngDialog', function($scope, ngDialog){
 		// prepare the data
         var appointmentSource = {
         	async: false,
@@ -108,19 +108,24 @@
                 // Events
                 cellDoubleClick: openEditDialog
         }
+        
+        /*
+    	 * Perform Override of Edit Dialog
+    	 */
+    	function openEditDialog(event) {
+    		var args = event.args; 
+    		var cell = args.cell; 
+    		var date = args.date;
+    		var owner = args.owner;
+    		var resourceIndex = parseInt(cell.attributes[1].nodeValue);
+    		var selectResource = owner.source.records[resourceIndex - 1];
+    		
+    		console.info(selectResource);
+    		
+    		ngDialog.open({
+    		    template: '<p>my template: ' + JSON.stringify(selectResource) + '</p>',
+    		    plain: true
+    		});
+    	}
 	}]);
-	
-	/*
-	 * Perform Override of Edit Dialog
-	 */
-	function openEditDialog(event) {
-		var args = event.args; 
-		var cell = args.cell; 
-		var date = args.date;
-		var owner = args.owner;
-		var resourceIndex = parseInt(cell.attributes[1].nodeValue);
-		
-		console.info(owner.source.records[resourceIndex - 1]);
-		
-	}
 })();
