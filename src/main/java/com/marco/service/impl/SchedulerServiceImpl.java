@@ -73,7 +73,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 	@Override
 	public List<SchedulerMappingData> findAllResource() {
 		final List<SchedulerMappingData> resourceCalendars = new LinkedList<>();
-		BookingUtils.fillEmptyCalendar(resourceCalendars, resourceRepo.findAllByOrderByTypeDescDescriptionDesc());
+		BookingUtils.fillEmptyCalendar(resourceCalendars, resourceRepo.findAllByOrderByTypeDescIdAsc());
 		
 		return resourceCalendars;
 	}

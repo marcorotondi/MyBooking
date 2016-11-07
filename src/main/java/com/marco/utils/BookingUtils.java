@@ -23,7 +23,7 @@ public final class BookingUtils {
 	public static void fillEmptyCalendar(final List<SchedulerMappingData> resourceCalendars, final List<Resource> resources) {
 		resources.forEach(resource -> {
 			resourceCalendars.add(GenericBuilder.of(SchedulerMappingData::new)
-					.with(SchedulerMappingData::setId, resource.getId() + "_" + resource.getType().name())
+					.with(SchedulerMappingData::setId, String.valueOf(resource.getId()))
 					.with(SchedulerMappingData::setCalendar, resource.getDescription())
 					.build());
 		});
