@@ -120,12 +120,29 @@
     		var resourceIndex = parseInt(cell.attributes[1].nodeValue);
     		var selectResource = owner.source.records[resourceIndex - 1];
     		
-    		console.info(selectResource);
+    		var schedulerReference = {};
+    		schedulerReference.resource = selectResource;
+    		schedulerReference.date = date;
+    		
+    		// TODO pass owner for use add appointment function
+    		// TODO parse only date value
     		
     		ngDialog.open({
-    		    template: '<p>my template: ' + JSON.stringify(selectResource) + '</p>',
-    		    plain: true
+    		    template: 'editSchedulerTemplate.html',
+    		    className: 'ngdialog-theme-default',
+    		    closeByEscape: false,
+    		    closeByDocument: false,
+    		    name: 'schedulerEditDialog',
+    		    data: schedulerReference,
+    		    controller: 'schedulerDialogController',
+                controllerAs: 'scCnt',
     		});
     	}
+	}]);
+	
+	appScheduler.controller("schedulerDialogController", ['$scope', function($scope){
+		console.info("Dialog Controller");
+		console.info($scope.ngDialogData);
+		this.value = $scope.ngDialogData.resource.id;
 	}]);
 })();
