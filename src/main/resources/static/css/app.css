@@ -62,3 +62,7 @@ div.form-container {
   padding-top: 4px;
   padding-bottom: 4px;
 }
+
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+	background: #ffffff;
+}

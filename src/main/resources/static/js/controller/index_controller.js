@@ -113,22 +113,19 @@
     	 * Perform Override of Edit Dialog
     	 */
     	function openEditDialog(event) {
-    		var args = event.args; 
-    		var cell = args.cell; 
-    		var date = args.date;
-    		var owner = args.owner;
+    		var cell = event.args.cell; 
+    		var date = event.args.date;
+    		var owner = event.args.owner;
     		var resourceIndex = parseInt(cell.attributes[1].nodeValue);
     		var selectResource = owner.source.records[resourceIndex - 1];
     		
     		var schedulerReference = {};
     		schedulerReference.resource = selectResource;
-    		schedulerReference.date = date;
-    		
-    		// TODO pass owner for use add appointment function
-    		// TODO parse only date value
+    		schedulerReference.date = date.dateData;
+    		schedulerReference.reference = owner;
     		
     		ngDialog.open({
-    		    template: 'editSchedulerTemplate.html',
+    		    template: 'html/scEditTemplate.html',
     		    className: 'ngdialog-theme-default',
     		    closeByEscape: false,
     		    closeByDocument: false,
@@ -141,7 +138,8 @@
 	}]);
 	
 	appScheduler.controller("schedulerDialogController", ['$scope', function($scope){
-		console.info("Dialog Controller");
+		this.dialogTitle = "Add Appointment";
+		
 		console.info($scope.ngDialogData);
 		this.value = $scope.ngDialogData.resource.id;
 	}]);
