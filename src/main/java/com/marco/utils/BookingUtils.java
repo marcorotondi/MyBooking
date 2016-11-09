@@ -17,10 +17,9 @@ public final class BookingUtils {
 	
 	public static SchedulerMappingData prepareCalendarData(final CalendarBook calendarBook) {
 		return null;
-		
 	}
 
-	public static void fillEmptyCalendar(final List<SchedulerMappingData> resourceCalendars, final List<Resource> resources) {
+	public static void mappingResourceData(final List<SchedulerMappingData> resourceCalendars, final List<Resource> resources) {
 		resources.forEach(resource -> {
 			resourceCalendars.add(GenericBuilder.of(SchedulerMappingData::new)
 					.with(SchedulerMappingData::setId, String.valueOf(resource.getId()))

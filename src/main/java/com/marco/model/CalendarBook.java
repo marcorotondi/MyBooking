@@ -4,6 +4,7 @@
 package com.marco.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -30,9 +31,9 @@ public class CalendarBook implements Serializable {
 
 	private Long id;
 
-	private Calendar start;
+	private LocalDateTime start;
 
-	private Calendar end;
+	private LocalDateTime end;
 
 	private Resource resource;
 
@@ -62,32 +63,30 @@ public class CalendarBook implements Serializable {
 	/**
 	 * @return the start
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "START")
-	public Calendar getStart() {
+	public LocalDateTime getStart() {
 		return start;
 	}
 
 	/**
 	 * @param start the start to set
 	 */
-	public void setStart(Calendar start) {
+	public void setStart(LocalDateTime start) {
 		this.start = start;
 	}
 
 	/**
 	 * @return the end
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "END")
-	public Calendar getEnd() {
+	public LocalDateTime getEnd() {
 		return end;
 	}
 
 	/**
 	 * @param end the end to set
 	 */
-	public void setEnd(Calendar end) {
+	public void setEnd(LocalDateTime end) {
 		this.end = end;
 	}
 
