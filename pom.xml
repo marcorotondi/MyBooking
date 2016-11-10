@@ -98,8 +98,18 @@
     		<artifactId>jqwidgets</artifactId>
     		<version>4.1.2</version>
 		</dependency>
+		<dependency>
+    		<groupId>org.webjars.bower</groupId>
+    		<artifactId>momentjs</artifactId>
+    		<version>2.15.2</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.webjars.bower</groupId>
+    		<artifactId>github-com-indrimuska-angular-moment-picker</artifactId>
+    		<version>0.6.5</version>
+		</dependency>
+		<!-- End WebJars -->
 		
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
