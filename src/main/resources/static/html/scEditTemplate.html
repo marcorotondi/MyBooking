@@ -1,11 +1,37 @@
 <!DOCTYPE html>
 <div class="ngdialog-message">
 	<div class="modal-header">
-		<h4 class="modal-title" ng-bind="scCnt.dialogTitle">Appointment</h4>
+		<h4 class="modal-title" ng-if="scCnt.isNew">Add Appointment</h4>
+		<h4 class="modal-title" ng-if="!scCnt.isNew">Change Appointment</h4>
 	</div>
 	<div class="modal-body">
-        <p>One fine body&hellip;</p>
-        <p>Value from controller {{scCnt.value}}</p>
+		<form class="form-horizontal" role="form" name="appointmentForm">
+       		<div class="form-group">
+       			<label for="name">Name</label>
+       			<input type="text" class="form-control input-sm" id="name" name="name" required
+					placeholder="Enter Your Name" ng-model="userName"/>
+       		</div>
+       		<div class="form-group">
+       			<label for="surname">Surname</label>
+       			<input type="text" class="form-control input-sm" id="surname" name="surname" required
+					placeholder="Enter Your Surname" ng-model="userSurname"/>
+       		</div>
+       		<div class="form-group">
+				<label for="email">Email</label>
+				<input type="email" class="form-control input-sm" id="email" name="email" required
+					placeholder="Enter Your email address" ng-model="userEmail">
+       		</div>
+       		<div class="form-group">
+				<label for="start">Start Date</label>
+				<input type="email" class="form-control input-sm" id="start" name="start" required
+					placeholder="Enter Your email address" ng-model="startDate">
+       		</div>
+       		<div class="form-group">
+				<label for="end">End Date</label>
+				<input type="email" class="form-control input-sm" id=end name="end" required
+					placeholder="Enter Your email address" ng-model="endDate">
+       		</div>
+        </form>
     </div>
     <div class="modal-footer form-actions">
     	<button type="button" class="btn btn-default" ng-click="closeThisDialog()">Close</button>

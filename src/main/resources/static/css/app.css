@@ -38,6 +38,11 @@ div.form-container {
 	margin-bottom: 10px;	
 }
 
+span.summaryLabel {
+	width: 150px;
+	display: inline-block;
+}
+
 /** Editable table
 ------------------------- */
 

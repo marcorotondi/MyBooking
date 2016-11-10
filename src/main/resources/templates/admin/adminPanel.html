@@ -21,10 +21,10 @@
        			<div class="row" ng-controller="adminSummaryController">
        				<div class="col-md-8">
        					<ul>
-       						<li>Number of resource: <span ng-bind="resource.count_res"></span></li>
-       						<li>Number of Rooms: <span ng-bind="resource.count_room"></span></li>
-       						<li>Number of Cars: <span ng-bind="resource.count_car"></span></li>
-       						<li>Number of Objects: <span ng-bind="resource.count_obj"></span></li>
+       						<li role="presentation"><span class="summaryLabel">Number of resource:</span><span class="badge" ng-bind="resource.count_res"></span></li>
+       						<li role="presentation"><span class="summaryLabel">Number of Rooms:</span><span class="badge" ng-bind="resource.count_room"></span></li>
+       						<li role="presentation"><span class="summaryLabel">Number of Cars:</span><span class="badge" ng-bind="resource.count_car"></span></li>
+       						<li role="presentation"><span class="summaryLabel">Number of Objects:</span><span class="badge" ng-bind="resource.count_obj"></span></li>
        					</ul>
        				</div>
        			</div>

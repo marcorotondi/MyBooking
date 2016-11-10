@@ -138,7 +138,8 @@
 	}]);
 	
 	appScheduler.controller("schedulerDialogController", ['$scope', function($scope){
-		this.dialogTitle = "Add Appointment";
+		this.isNew = true;
+		
 		
 		console.info($scope.ngDialogData);
 		this.value = $scope.ngDialogData.resource.id;
