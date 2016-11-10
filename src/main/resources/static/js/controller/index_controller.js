@@ -139,9 +139,13 @@
 	
 	appScheduler.controller("schedulerDialogController", ['$scope', function($scope){
 		this.isNew = true;
-		
+		this.resourceName = $scope.ngDialogData.resource.calendar;
 		
 		console.info($scope.ngDialogData);
-		this.value = $scope.ngDialogData.resource.id;
+		
+		$scope.saveScheduler = function() {
+			console.info("start: " + $scope.startTimepicker);
+			console.info("end: " + $scope.endTimepicker);
+		}
 	}]);
 })();

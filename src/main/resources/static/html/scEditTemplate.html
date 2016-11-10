@@ -3,6 +3,7 @@
 	<div class="modal-header">
 		<h4 class="modal-title" ng-if="scCnt.isNew">Add Appointment</h4>
 		<h4 class="modal-title" ng-if="!scCnt.isNew">Change Appointment</h4>
+		<p class="text-info">for <strong><span ng-bind="scCnt.resourceName"></span></strong> resource</p>
 	</div>
 	<div class="modal-body">
 		<form class="form-horizontal" role="form" name="appointmentForm">
@@ -23,26 +24,28 @@
        		</div>
        		<div class="form-group">
 				<label for="start">Start Time</label>
-				<div class="input-group" moment-picker="scCnt.startTimepicker" format="HH:mm">
+				<div class="input-group" moment-picker="startTimepicker" format="LT" locale="it">
     				<span class="input-group-addon">
     					<i class="glyphicon glyphicon-time"></i>
     				</span>
-    				<input class="form-control input-sm" placeholder="Select a Start time" ng-model="scCnt.startTimepicker" ng-model-options="{ updateOn: 'blur' }">
+    				<input class="form-control input-sm" required placeholder="Select a Start time" 
+    					ng-model="startTimepicker" ng-model-options="{ updateOn: 'blur' }">
 				</div>
        		</div>
        		<div class="form-group">
 				<label for="end">End Time</label>
-				<div class="input-group" moment-picker="scCnt.endTimepicker" format="HH:mm">
+				<div class="input-group" moment-picker="endTimepicker" format="LT" locale="it">
     				<span class="input-group-addon">
     					<i class="glyphicon glyphicon-time"></i>
     				</span>
-    				<input class="form-control input-sm" placeholder="Select a End time" ng-model="scCnt.endTimepicker" ng-model-options="{ updateOn: 'blur' }">
+    				<input class="form-control input-sm" required placeholder="Select a End time" 
+    					ng-model="endTimepicker" ng-model-options="{ updateOn: 'blur' }">
 				</div>
        		</div>
         </form>
     </div>
     <div class="modal-footer form-actions">
     	<button type="button" class="btn btn-default" ng-click="closeThisDialog()">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" ng-click="saveScheduler()">Save changes</button>
     </div>
 </div>
