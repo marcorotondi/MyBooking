@@ -5,6 +5,17 @@
 'use strict';
 
 (function() {
+	appScheduler.config(['momentPickerProvider', function (momentPickerProvider) {
+        momentPickerProvider.options({
+        	locale: 'it',
+        	format: 'LT',
+        	minView: 'day',
+        	maxView: 'minute',
+        	leftArrow: '',
+        	rightArrow: '',
+        	minutesStep: 30,
+        });
+    }])
 	
 	/* Index Controller HomePage */
 	appScheduler.controller("indexController", ['$scope', 'ngDialog', function($scope, ngDialog){
@@ -116,7 +127,7 @@
     		var cell = event.args.cell; 
     		var date = event.args.date;
     		var owner = event.args.owner;
-    		var resourceIndex = parseInt(cell.attributes[1].nodeValue);
+    		var resourceIndex = parseInt(cell.attributes[1].value);
     		var selectResource = owner.source.records[resourceIndex - 1];
     		
     		var schedulerReference = {};
