@@ -3,7 +3,11 @@
 	<div class="modal-header">
 		<h4 class="modal-title" ng-if="scCnt.isNew">Add Appointment</h4>
 		<h4 class="modal-title" ng-if="!scCnt.isNew">Change Appointment</h4>
-		<p class="text-info">for <strong><span ng-bind="scCnt.resourceName"></span></strong> resource</p>
+		<ul class="list-group">
+  			<li class="list-group-item list-group-item-success">
+  				<strong><span ng-bind="scCnt.resourceName"></span></strong> resource selected.
+  			</li>
+  		</ul>
 	</div>
 	<div class="modal-body">
 		<form class="form-horizontal" role="form" name="appointmentForm">
