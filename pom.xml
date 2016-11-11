@@ -67,6 +67,12 @@
     		<artifactId>datasource-proxy</artifactId>
     		<version>1.3.3</version>
 		</dependency>
+		<!--  DB migration -->
+		<dependency>
+    		<groupId>org.flywaydb</groupId>
+    		<artifactId>flyway-core</artifactId>
+    		<version>4.0.3</version>
+		</dependency>
 		<!-- WebJars -->
 		<dependency>
 		  <groupId>org.webjars</groupId>
@@ -103,13 +109,6 @@
     		<artifactId>momentjs</artifactId>
     		<version>2.15.2</version>
 		</dependency>
-		<!--  Mantenere per ora 
-		<dependency>
-    		<groupId>org.webjars.bower</groupId>
-    		<artifactId>github-com-indrimuska-angular-moment-picker</artifactId>
-    		<version>0.6.5</version>
-		</dependency>
-		-->
 		<dependency>
     		<groupId>org.webjars.bower</groupId>
     		<artifactId>angular-strap</artifactId>
