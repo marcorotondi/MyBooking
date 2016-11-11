@@ -118,7 +118,7 @@
     		var schedulerReference = {};
     		schedulerReference.resource = selectResource;
     		schedulerReference.date = date.dateData;
-    		schedulerReference.reference = owner;
+    		schedulerReference.scheduler = $scope.scheduler;
     		
     		ngDialog.open({
     		    template: 'html/scEditTemplate.html',
@@ -142,6 +142,7 @@
 		$scope.saveScheduler = function() {
 			console.info("start: " + $scope.selectedStartTime);
 			console.info("end: " + $scope.selectedEndTime);
+			console.info($scope.ngDialogData.scheduler);
 			
 			SchedulerService.appointment({}, {}).then(
 					function(newAppoitment) {
