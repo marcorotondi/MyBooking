@@ -5,6 +5,7 @@
 'use strict';
 
 (function() {
+	/*
 	appScheduler.config(['momentPickerProvider', function (momentPickerProvider) {
         momentPickerProvider.options({
         	locale: 'it',
@@ -15,7 +16,8 @@
         	rightArrow: '',
         	minutesStep: 30,
         });
-    }])
+    }]);
+    */
 	
 	/* Index Controller HomePage */
 	appScheduler.controller("indexController", ['$scope', 'ngDialog', function($scope, ngDialog){
@@ -155,8 +157,8 @@
 		console.info($scope.ngDialogData);
 		
 		$scope.saveScheduler = function() {
-			console.info("start: " + $scope.startTimepicker);
-			console.info("end: " + $scope.endTimepicker);
+			console.info("start: " + $scope.selectedStartTime);
+			console.info("end: " + $scope.selectedEndTime);
 		}
 	}]);
 })();

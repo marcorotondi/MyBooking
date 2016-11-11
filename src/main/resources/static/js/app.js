@@ -5,4 +5,4 @@
 
 var appAdmin = angular.module("appAdmin", ['ngResource', 'ngTable']);
 
-var appScheduler = angular.module("appScheduler", ['jqwidgets', 'ngDialog', 'moment-picker']);
+var appScheduler = angular.module("appScheduler", ['jqwidgets', 'ngDialog', 'mgcrea.ngStrap']);

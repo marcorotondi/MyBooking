@@ -27,24 +27,26 @@
 					placeholder="Enter Your email address" ng-model="scCnt.userEmail">
        		</div>
        		<div class="form-group">
-				<label for="start">Start Time</label>
-				<div class="input-group" moment-picker="startTimepicker">
+    			<label class="control-label">Start Time</label>
+    			<div class="input-group">
+    				<input type="text" class="form-control" size="8" ng-model="selectedStartTime" 
+    				data-time-format="HH:mm" data-time-type="number" data-min-time="07:00" data-max-time="20:00" 
+    				data-autoclose="1" name="timeStart" bs-timepicker />	
     				<span class="input-group-addon">
     					<i class="glyphicon glyphicon-time"></i>
     				</span>
-    				<input class="form-control input-sm" required placeholder="Select a Start time" 
-    					ng-model="startTimepicker" ng-model-options="{ updateOn: 'blur' }">
-				</div>
-       		</div>
+    			</div>
+  			</div>
        		<div class="form-group">
-				<label for="end">End Time</label>
-				<div class="input-group" moment-picker="endTimepicker">
-    				<span class="input-group-addon">
+       			<label class="control-label">End Time</label>
+       			<div class="input-group">
+	    			<input type="text" class="form-control" size="8" ng-model="selectedEndTime" 
+	    				data-time-format="HH:mm" data-time-type="number" data-min-time="07:00" data-max-time="20:00" 
+	    				data-autoclose="1" name="timeEnd" bs-timepicker />
+	    			<span class="input-group-addon">
     					<i class="glyphicon glyphicon-time"></i>
     				</span>
-    				<input class="form-control input-sm" required placeholder="Select a End time" 
-    					ng-model="endTimepicker" ng-model-options="{ updateOn: 'blur' }">
-				</div>
+    			</div>
        		</div>
         </form>
     </div>
