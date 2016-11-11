@@ -5,20 +5,7 @@
 'use strict';
 
 (function() {
-	/*
-	appScheduler.config(['momentPickerProvider', function (momentPickerProvider) {
-        momentPickerProvider.options({
-        	locale: 'it',
-        	format: 'LT',
-        	minView: 'day',
-        	maxView: 'minute',
-        	leftArrow: '',
-        	rightArrow: '',
-        	minutesStep: 30,
-        });
-    }]);
-    */
-	
+
 	/* Index Controller HomePage */
 	appScheduler.controller("indexController", ['$scope', 'ngDialog', function($scope, ngDialog){
 		// prepare the data
@@ -150,7 +137,7 @@
     	}
 	}]);
 	
-	appScheduler.controller("schedulerDialogController", ['$scope', function($scope){
+	appScheduler.controller("schedulerDialogController", ['$scope', 'SchedulerService', function($scope, SchedulerService){
 		this.isNew = true;
 		this.resourceName = $scope.ngDialogData.resource.calendar;
 		
@@ -159,6 +146,15 @@
 		$scope.saveScheduler = function() {
 			console.info("start: " + $scope.selectedStartTime);
 			console.info("end: " + $scope.selectedEndTime);
+			
+			SchedulerService.appointment({}, {}).then(
+					function(newAppoitment) {
+						
+					},
+					function(errResponse){
+						console.error(errResponse.data.errors);
+		             }
+			);
 		}
 	}]);
 })();

@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.marco.model.Resource;
 import com.marco.service.ResourceRepository;
@@ -48,11 +47,11 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/admin/api/crudResource", method = RequestMethod.POST)
-	public ResponseEntity<Void> crudResource(@RequestBody @Valid Resource resource, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<Void> crudResource(@RequestBody @Valid Resource resource) {
 		LOGGER.info("Try To Creating / Update Resource {}", resource);
-		
+
 		resourceRepo.save(resource);
-		
+
 		LOGGER.info("Successfully Creating / Update Resource {}", resource);
 		return new ResponseEntity<>(OK);
 	}
@@ -81,9 +80,9 @@ public class AdminController {
 		final Map<String, Long> counterMap = new HashMap<>();
 
 		counterMap.put("resource_count", resourceRepo.count());
-		counterMap.put("resource_room", resourceRepo.countByType(ResourceType.ROOM)); 
-		counterMap.put("resource_car", resourceRepo.countByType(ResourceType.CAR)); 
-		counterMap.put("resource_obj", resourceRepo.countByType(ResourceType.OBJECT)); 
+		counterMap.put("resource_room", resourceRepo.countByType(ResourceType.ROOM));
+		counterMap.put("resource_car", resourceRepo.countByType(ResourceType.CAR));
+		counterMap.put("resource_obj", resourceRepo.countByType(ResourceType.OBJECT));
 
 		return new ResponseEntity<>(counterMap, OK);
 	}

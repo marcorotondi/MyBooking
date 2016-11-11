@@ -1,9 +1,11 @@
 /**
- * 
+ *
  */
 package com.marco.data;
 
 import java.util.Date;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author marco.rotondi
@@ -11,17 +13,19 @@ import java.util.Date;
  */
 public class SchedulerMappingData {
 	private String id;
-	
+
 	private String description;
-	
+
 	private String location = "";
-	
+
 	private String subject = "";
-	
+
 	private String calendar;
-	
+
+	@NotNull
 	private Date start;
-	
+
+	@NotNull
 	private Date end;
 
 	/**
@@ -121,6 +125,6 @@ public class SchedulerMappingData {
 	public void setEnd(Date end) {
 		this.end = end;
 	}
-	
-	
+
+
 }
