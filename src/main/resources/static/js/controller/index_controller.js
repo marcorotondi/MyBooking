@@ -92,20 +92,16 @@
                 				fromDayOfWeek: 1,
                 				toDayOfWeek: 5,
                 				fromHour: 7,
-                				toHour: 19
+                				toHour: 20
                 			}, 
                 			timeRuler: { 
                 				formatString: 'HH:mm',
                 				scaleStartHour: 7,
                 				scaleEndHour: 20
                 			}
-                		},
-	                    { 
-	                    	type: 'monthView',
-	                    	appointmentsRenderMode: "exactTime" 
-	                    }
+                		}
                 ],
-                // Events
+                // Events #
                 cellDoubleClick: openEditDialog
         }
         
