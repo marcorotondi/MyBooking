@@ -5,21 +5,27 @@ xmlns:ng="http://angularjs.org">
 <body>
 	<div th:fragment="formInput">
 		<input type="hidden" id="id" name="id" ng-model="id"/>
-		<div class="form-group col-md-8">
+		<div class="form-group col-md-8" ng-class="{'has-error': addForm.description.$touched && addForm.description.$invalid}">
 			<label for="description" th:text="'Description'"></label>
 			<input type="text" class="form-control" id="description" name="description" required
-			placeholder="Enter Resource Description" ng-model="description"/>
+				placeholder="Enter Resource Description" ng-model="description"/>
+			<div class="help-block" ng-messages="addForm.description.$error" ng-if="addForm.description.$touched">
+				<p ng-message="required">Resource Description is required.</p>
+			</div>
 		</div>
-		<div class="form-group col-md-8">
+		<div class="form-group col-md-8" ng-class="{'has-error': addForm.type.$touched && addForm.type.$invalid }">
 			<label for="type" th:text="'Typology'"></label>
 			<select class="form-control" name="type" ng-model="type" required>
 				<option th:value="''" th:text="'Select a Resource Type'"></option>	
 				<option th:each="type : ${resourceTypes}" th:value="${type}" th:text="${type.defaultName}" />	
 			</select>
+			<div class="help-block" ng-messages="addForm.type.$error" ng-if="addForm.type.$touched">
+				<p ng-message="required">Resource Type is required.</p>
+			</div>
 		</div>
 		<div class="form-actions col-md-8">
 	    	<button type="reset" class="btn">Reset</button>
-	    	<button class="btn btn-primary" ng-click="addResource()">Save</button>
+	    	<button type="submit" class="btn btn-primary" ng-disabled="addForm.$invalid">Save</button>
 	    </div>
 	</div>
 </body>

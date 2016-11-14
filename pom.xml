@@ -111,13 +111,13 @@
 		</dependency>
 		<dependency>
     		<groupId>org.webjars.bower</groupId>
-    		<artifactId>momentjs</artifactId>
-    		<version>2.15.2</version>
+    		<artifactId>angular-strap</artifactId>
+    		<version>2.3.8</version>
 		</dependency>
 		<dependency>
     		<groupId>org.webjars.bower</groupId>
-    		<artifactId>angular-strap</artifactId>
-    		<version>2.3.8</version>
+    		<artifactId>angular-messages</artifactId>
+    		<version>1.5.8</version>
 		</dependency>
 		<!-- End WebJars -->
 		

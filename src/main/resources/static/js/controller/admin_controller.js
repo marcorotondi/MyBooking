@@ -33,28 +33,30 @@
 		        }
 		    });
 		
-			$scope.addResource = function() {	
-				var resource = {
-						description: $scope.description,
-						type: $scope.type
-				};
+			$scope.addResource = function(isValid) {
+				if (isValid) {
+					var resource = {
+							description: $scope.description,
+							type: $scope.type
+					};
+					
+					ResourceService.createUpdateResource(resource).then(
+							function() {
+								$scope.tableParams.reload();
+								$scope.showForm = false;
+								
+								MessageService.signalResourceChange();
+							},
+							function(errResponse){
+								console.error('Error while creating Resource');
+							}
+					);
 				
-				ResourceService.createUpdateResource(resource).then(
-						function() {
-							$scope.tableParams.reload();
-							$scope.showForm = false;
-							
-							MessageService.signalResourceChange();
-						},
-						function(errResponse){
-							console.error('Error while creating Resource');
-						}
-				);
-				
-				// Making the fields empty
-				$scope.description = '';
-				$scope.type = '';
-				$scope.id = ''
+					// Making the fields empty
+					$scope.description = '';
+					$scope.type = '';
+					$scope.id = ''
+				}
 			}
 			
 			$scope.cancel = function () {

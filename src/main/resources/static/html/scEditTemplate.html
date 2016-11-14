@@ -10,48 +10,64 @@
   		</ul>
 	</div>
 	<div class="modal-body">
-		<form class="form-horizontal" role="form" name="appointmentForm">
-       		<div class="form-group">
+		<form class="form-horizontal" role="form" name="appointmentForm" novalidate ng-submit="saveScheduler(appointmentForm.$valid)">
+       		<div class="form-group" ng-class="{'has-error': appointmentForm.name.$touched && appointmentForm.name.$invalid}">
        			<label for="name">Name</label>
        			<input type="text" class="form-control input-sm" id="name" name="name" required
 					placeholder="Enter Your Name" ng-model="scCnt.userName"/>
+				<div class="help-block" ng-messages="appointmentForm.name.$error" ng-if="appointmentForm.name.$touched">
+					<p ng-message="required">Name is required.</p>
+				</div>
        		</div>
-       		<div class="form-group">
+       		<div class="form-group" ng-class="{'has-error': appointmentForm.surname.$touched && appointmentForm.surname.$invalid}">
        			<label for="surname">Surname</label>
        			<input type="text" class="form-control input-sm" id="surname" name="surname" required
 					placeholder="Enter Your Surname" ng-model="scCnt.userSurname"/>
+				<div class="help-block" ng-messages="appointmentForm.surname.$error" ng-if="appointmentForm.surname.$touched">
+					<p ng-message="required">Surname is required.</p>
+				</div>
        		</div>
-       		<div class="form-group">
+       		<div class="form-group" ng-class="{'has-error': appointmentForm.email.$touched && appointmentForm.email.$invalid}">
 				<label for="email">Email</label>
 				<input type="email" class="form-control input-sm" id="email" name="email" required
 					placeholder="Enter Your email address" ng-model="scCnt.userEmail">
+				<div class="help-block" ng-messages="appointmentForm.email.$error" ng-if="appointmentForm.email.$touched">
+					<p ng-message="required">Email is required.</p>
+					<p ng-message="email">Please enter a valid Email.</p>
+				</div>
        		</div>
-       		<div class="form-group">
+       		<div class="form-group" ng-class="{'has-error': appointmentForm.selectedStartTime.$touched && appointmentForm.selectedStartTime.$invalid}">
     			<label class="control-label">Start Time</label>
     			<div class="input-group">
-    				<input type="text" class="form-control" size="8" ng-model="selectedStartTime" 
+    				<input type="text" class="form-control" size="8" ng-model="selectedStartTime" name="selectedStartTime"
     				data-time-format="HH:mm" data-time-type="number" data-min-time="07:00" data-max-time="20:00" 
-    				data-autoclose="1" name="timeStart" bs-timepicker />	
+    				data-autoclose="1" name="timeStart" bs-timepicker required placeholder="Enter Appointment start time" />	
     				<span class="input-group-addon">
     					<i class="glyphicon glyphicon-time"></i>
     				</span>
     			</div>
+    			<div class="help-block" ng-messages="appointmentForm.selectedStartTime.$error" ng-if="appointmentForm.selectedStartTime.$touched">
+					<p ng-message="required">Start Time is required.</p>
+				</div>
   			</div>
-       		<div class="form-group">
+       		<div class="form-group" ng-class="{'has-error': appointmentForm.selectedEndTime.$touched && appointmentForm.selectedEndTime.$invalid}">
        			<label class="control-label">End Time</label>
        			<div class="input-group">
-	    			<input type="text" class="form-control" size="8" ng-model="selectedEndTime" 
+	    			<input type="text" class="form-control" size="8" ng-model="selectedEndTime" name="selectedEndTime"
 	    				data-time-format="HH:mm" data-time-type="number" data-min-time="07:00" data-max-time="20:00" 
-	    				data-autoclose="1" name="timeEnd" bs-timepicker />
+	    				data-autoclose="1" name="timeEnd" bs-timepicker required placeholder="Enter Appointment end time" />
 	    			<span class="input-group-addon">
     					<i class="glyphicon glyphicon-time"></i>
     				</span>
     			</div>
+    			<div class="help-block" ng-messages="appointmentForm.selectedEndTime.$error" ng-if="appointmentForm.selectedEndTime.$touched">
+					<p ng-message="required">End Time is required.</p>
+				</div>
        		</div>
         </form>
     </div>
     <div class="modal-footer form-actions">
     	<button type="button" class="btn btn-default" ng-click="closeThisDialog()">Close</button>
-        <button type="button" class="btn btn-primary" ng-click="saveScheduler()">Save changes</button>
+        <button type="submit" class="btn btn-primary" ng-disabled="appointmentForm.$invalid">Save changes</button>
     </div>
 </div>

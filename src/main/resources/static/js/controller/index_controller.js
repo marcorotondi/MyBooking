@@ -139,19 +139,21 @@
 		
 		console.info($scope.ngDialogData);
 		
-		$scope.saveScheduler = function() {
+		$scope.saveScheduler = function(isValid) {
 			console.info("start: " + $scope.selectedStartTime);
 			console.info("end: " + $scope.selectedEndTime);
 			console.info($scope.ngDialogData.scheduler);
 			
-			SchedulerService.appointment({}, {}).then(
-					function(newAppoitment) {
-						
-					},
-					function(errResponse){
-						console.error(errResponse.data.errors);
-		             }
-			);
+			if (isValid) {
+				SchedulerService.appointment({}, {}).then(
+						function(newAppoitment) {
+							
+						},
+						function(errResponse){
+							console.error(errResponse.data.errors);
+			             }
+				);
+			}
 		}
 	}]);
 })();
