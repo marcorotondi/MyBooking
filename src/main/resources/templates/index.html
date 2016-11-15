@@ -16,10 +16,10 @@
 	<div class="container-fluid">
 		<div th:replace="navbar :: navigation"></div>
 	</div>
-	<div class="container-fluid full-height" ng-controller="indexController">
+	<div class="container-fluid full-height" ng-controller="indexController as mainCnt">
 		<jqx-scheduler 
-			jqx-instance="scheduler" 
-			jqx-settings="settings">
+			jqx-instance="mainCnt.scheduler" 
+			jqx-settings="mainCnt.settings">
 		</jqx-scheduler>
 	</div>
 	

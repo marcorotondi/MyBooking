@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <div class="ngdialog-message">
 	<div class="modal-header">
-		<h4 class="modal-title" ng-if="scCnt.isNew">Add Appointment</h4>
-		<h4 class="modal-title" ng-if="!scCnt.isNew">Change Appointment</h4>
+		<h4 class="modal-title" ng-if="dialogCnt.isNew">Add Appointment</h4>
+		<h4 class="modal-title" ng-if="!dialogCnt.isNew">Change Appointment</h4>
 		<ul class="list-group">
   			<li class="list-group-item list-group-item-success">
-  				<strong><span ng-bind="scCnt.resourceName"></span></strong> resource selected.
+  				<strong><span ng-bind="dialogCnt.resourceName"></span></strong> resource selected.
   			</li>
   		</ul>
 	</div>
 	<div class="modal-body">
-		<form class="form-horizontal" role="form" name="appointmentForm" novalidate ng-submit="saveScheduler(appointmentForm.$valid)">
+		<form class="form-horizontal" role="form" name="appointmentForm" 
+				novalidate ng-submit="dialogCnt.saveScheduler(appointmentForm.$valid)">
        		<div class="form-group" ng-class="{'has-error': appointmentForm.name.$touched && appointmentForm.name.$invalid}">
        			<label for="name">Name</label>
        			<input type="text" class="form-control input-sm" id="name" name="name" required
-					placeholder="Enter Your Name" ng-model="scCnt.userName"/>
+					placeholder="Enter Your Name" ng-model="dialogCnt.userName"/>
 				<div class="help-block" ng-messages="appointmentForm.name.$error" ng-if="appointmentForm.name.$touched">
 					<p ng-message="required">Name is required.</p>
 				</div>
@@ -22,7 +23,7 @@
        		<div class="form-group" ng-class="{'has-error': appointmentForm.surname.$touched && appointmentForm.surname.$invalid}">
        			<label for="surname">Surname</label>
        			<input type="text" class="form-control input-sm" id="surname" name="surname" required
-					placeholder="Enter Your Surname" ng-model="scCnt.userSurname"/>
+					placeholder="Enter Your Surname" ng-model="dialogCnt.userSurname"/>
 				<div class="help-block" ng-messages="appointmentForm.surname.$error" ng-if="appointmentForm.surname.$touched">
 					<p ng-message="required">Surname is required.</p>
 				</div>
@@ -30,7 +31,7 @@
        		<div class="form-group" ng-class="{'has-error': appointmentForm.email.$touched && appointmentForm.email.$invalid}">
 				<label for="email">Email</label>
 				<input type="email" class="form-control input-sm" id="email" name="email" required
-					placeholder="Enter Your email address" ng-model="scCnt.userEmail">
+					placeholder="Enter Your email address" ng-model="dialogCnt.userEmail">
 				<div class="help-block" ng-messages="appointmentForm.email.$error" ng-if="appointmentForm.email.$touched">
 					<p ng-message="required">Email is required.</p>
 					<p ng-message="email">Please enter a valid Email.</p>

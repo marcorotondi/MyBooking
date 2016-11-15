@@ -7,11 +7,11 @@
 (function() {
 	
 	/* Administrator Controller */
-	appAdmin.controller("adminResourceController", 
-			['$scope', '$filter', 'ResourceService', 'MessageService', 'NgTableParams', function($scope, $filter, ResourceService, MessageService, NgTableParams) {
+	appAdmin.controller("adminResourceController", ['$filter', 'ResourceService', 'MessageService', 'NgTableParams', function($filter, ResourceService, MessageService, NgTableParams) {
+			var self = this;	
 				
-			$scope.showForm = false;
-			$scope.tableParams = new NgTableParams({ 
+			self.showForm = false;
+			self.tableParams = new NgTableParams({ 
 		    	sorting: {
 		    		description: 'asc'     
 		        }
@@ -33,17 +33,17 @@
 		        }
 		    });
 		
-			$scope.addResource = function(isValid) {
+			self.addResource = function(isValid) {
 				if (isValid) {
 					var resource = {
-							description: $scope.description,
-							type: $scope.type
+							description: self.description,
+							type: self.type
 					};
 					
 					ResourceService.createUpdateResource(resource).then(
 							function() {
-								$scope.tableParams.reload();
-								$scope.showForm = false;
+								self.tableParams.reload();
+								self.showForm = false;
 								
 								MessageService.signalResourceChange();
 							},
@@ -53,17 +53,17 @@
 					);
 				
 					// Making the fields empty
-					$scope.description = '';
-					$scope.type = '';
-					$scope.id = ''
+					self.description = '';
+					self.type = '';
+					self.id = ''
 				}
 			}
 			
-			$scope.cancel = function () {
-				$scope.tableParams.reload();
+			self.cancel = function () {
+				self.tableParams.reload();
 			}
 		
-			$scope.updateResource = function(row) {
+			self.updateResource = function(row) {
 				var resource = {
 						id: row.id,
 						description:row.description,
@@ -72,7 +72,7 @@
 				
 				ResourceService.createUpdateResource(resource).then(
 						function() {
-							$scope.tableParams.reload();
+							self.tableParams.reload();
 							row.isEditing = false;
 							MessageService.signalResourceChange();
 						},
@@ -82,12 +82,12 @@
 				);
 			}
 			
-			$scope.delResource = function(row) {
+			self.delResource = function(row) {
 				var confimDel = confirm("Are You Scure to Remove this resource?");
 				if (confimDel) {
 					ResourceService.deleteResource(row.id).then(
 							function() {
-								$scope.tableParams.reload();
+								self.tableParams.reload();
 								row.isEditing = false;
 								MessageService.signalResourceChange();
 							},
@@ -99,10 +99,11 @@
 	}]);
 	
 	appAdmin.controller("adminSummaryController", ['$scope', 'ResourceService', 'MessageService', function($scope, ResourceService, MessageService) {
+		var self = this;
 		function loadCounter() {
 			ResourceService.summary().then(
 				function(data){
-					$scope.resource = {
+					self.resource = {
 							count_res: data.resource_count,
 							count_room: data.resource_room,
 							count_car: data.resource_car,

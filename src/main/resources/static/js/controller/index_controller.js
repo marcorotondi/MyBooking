@@ -7,7 +7,8 @@
 (function() {
 
 	/* Index Controller HomePage */
-	appScheduler.controller("indexController", ['$scope', 'ngDialog', function($scope, ngDialog){
+	appScheduler.controller("indexController", ['ngDialog', function(ngDialog){
+		var self = this;
 		// prepare the data
         var appointmentSource = {
         	async: false,
@@ -42,8 +43,8 @@
         var appointmentAdapter = new $.jqx.dataAdapter(appointmentSource);
         var resourceAdapter = new $.jqx.dataAdapter(resourceSource);
         
-        $scope.scheduler = {};
-        $scope.settings = {
+        self.scheduler = {};
+        self.settings = {
         		date: new $.jqx.date('todayDate'),
                 width: "100%",
                 height: "100%",
@@ -56,7 +57,7 @@
                 editDialogDateTimeFormatString: 'dd-MM-yyyy HH:mm',
                 editDialogDateFormatString: 'dd-MM-yyyy',
                 ready: function () {
-                    $scope.scheduler.ensureAppointmentVisible('id1');
+                    self.scheduler.ensureAppointmentVisible('id1');
                 },
                 resources: {
                     colorScheme: "scheme13",
@@ -118,7 +119,7 @@
     		var schedulerReference = {};
     		schedulerReference.resource = selectResource;
     		schedulerReference.date = date.dateData;
-    		schedulerReference.scheduler = $scope.scheduler;
+    		schedulerReference.scheduler = self.scheduler;
     		
     		ngDialog.open({
     		    template: 'html/scEditTemplate.html',
@@ -128,21 +129,23 @@
     		    name: 'schedulerEditDialog',
     		    data: schedulerReference,
     		    controller: 'schedulerDialogController',
-                controllerAs: 'scCnt',
+                controllerAs: 'dialogCnt',
     		});
     	}
 	}]);
 	
 	appScheduler.controller("schedulerDialogController", ['$scope', 'SchedulerService', function($scope, SchedulerService){
-		this.isNew = true;
-		this.resourceName = $scope.ngDialogData.resource.calendar;
+		var self = this;
+		var scheduler = $scope.ngDialogData.scheduler;
+		self.isNew = true;
+		self.resourceName = $scope.ngDialogData.resource.calendar;
 		
-		console.info($scope.ngDialogData);
+		console.info(self.ngDialogData);
 		
-		$scope.saveScheduler = function(isValid) {
-			console.info("start: " + $scope.selectedStartTime);
-			console.info("end: " + $scope.selectedEndTime);
-			console.info($scope.ngDialogData.scheduler);
+		self.saveScheduler = function(isValid) {
+			console.info("start: " + self.selectedStartTime);
+			console.info("end: " + self.selectedEndTime);
+			console.info(scheduler);
 			
 			if (isValid) {
 				SchedulerService.appointment({}, {}).then(

@@ -18,23 +18,23 @@
 		<div class="tab-content">
 			 <div class="tab-pane active" id="1">
        			<h3>Summary</h3>
-       			<div class="row" ng-controller="adminSummaryController">
+       			<div class="row" ng-controller="adminSummaryController as adminCnt">
        				<div class="col-md-3">
        					<ul class="list-group">
        						<li class="list-group-item">
-       							<span class="badge" ng-bind="resource.count_res"></span>
+       							<span class="badge" ng-bind="adminCnt.resource.count_res"></span>
        							Number of resource:
        						</li>
        						<li class="list-group-item">
-       							<span class="badge" ng-bind="resource.count_room"></span>
+       							<span class="badge" ng-bind="adminCnt.resource.count_room"></span>
        							Number of Rooms:
        						</li>
        						<li class="list-group-item">
-       							<span class="badge" ng-bind="resource.count_car"></span>
+       							<span class="badge" ng-bind="adminCnt.resource.count_car"></span>
        							Number of Cars:
        						</li>
        						<li class="list-group-item">
-       							<span class="badge" ng-bind="resource.count_obj"></span>
+       							<span class="badge" ng-bind="adminCnt.resource.count_obj"></span>
        							Number of Objects:
        						</li>
        					</ul>
@@ -43,15 +43,15 @@
 			</div>
 			<div class="tab-pane" id="2">
 				<h3>Resource</h3>
-				<div class="row" ng-controller="adminResourceController">
+				<div class="row" ng-controller="adminResourceController as adminResCnt">
 	          		<div class="col-md-8">
 		          		<div class="btn-group" role="group" aria-label="Main command">
 		  					<button type="button" class="btn btn-primary" th:text="'Add New Resource'" 
-		  						ng-click="showForm = !showForm; addForm.$setPristine(); addForm.$setUntouched();"></button>
+		  						ng-click="adminResCnt.showForm = !adminResCnt.showForm; addForm.$setPristine(); addForm.$setUntouched();"></button>
 		  				</div>
-		  				<div class="add panel panel-default form-container" ng-show="showForm">
+		  				<div class="add panel panel-default form-container" ng-show="adminResCnt.showForm">
 	  						<div class="panel-body">
-								<form class="form" role="form" name="addForm" novalidate ng-submit="addResource(addForm.$valid)">
+								<form class="form" role="form" name="addForm" novalidate ng-submit="adminResCnt.addResource(addForm.$valid)">
 									<div th:replace="admin/resourceForm :: formInput"></div>	
 								</form>
 							</div>
@@ -59,9 +59,9 @@
 					</div>
 					<div class="col-md-8">
 						<h3>Available Resource</h3>
-	    				<table ng-table="tableParams" ng-form="tableForm" class="table table-bordered table-hover table-condensed editable-table"
+	    				<table ng-table="adminResCnt.tableParams" ng-form="tableForm" class="table table-bordered table-hover table-condensed editable-table"
 	    					resource-table="resourceTable">
-	        				<tr ng-repeat="row in $data" ng-form="rowForm" resource-table-row="row">
+	        				<tr ng-repeat="row in $data" ng-form="rowForm" resource-table-row="adminResCnt.row">
 	        					<td title="'Name'" sortable="'description'" ng-switch="row.isEditing" ng-class="name.$dirty ? 'bg-warning' : ''" 
 	        						ng-form="name">
             						<span ng-switch-default class="editable-text">{{row.description}}</span>
@@ -79,16 +79,17 @@
             						</div>
           						</td>
 	          					<td th:class="command">
-	          						<button class="btn btn-primary btn-sm" ng-click="updateResource(row)" ng-if="row.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid">
+	          						<button class="btn btn-primary btn-sm" ng-click="adminResCnt.updateResource(row)" ng-if="row.isEditing" 
+	          							ng-disabled="rowForm.$pristine || rowForm.$invalid">
 	          							<span class="glyphicon glyphicon-ok"></span>
 	          						</button>
-						            <button class="btn btn-default btn-sm" ng-click="cancel()" ng-if="row.isEditing">
+						            <button class="btn btn-default btn-sm" ng-click="adminResCnt.cancel()" ng-if="row.isEditing">
 						            	<span class="glyphicon glyphicon-remove"></span>
 						            </button>
 						            <button class="btn btn-default btn-sm" ng-click="row.isEditing = true" ng-if="!row.isEditing">
 						            	<span class="glyphicon glyphicon-pencil"></span>
 						            </button>
-						            <button class="btn btn-danger btn-sm" ng-click="delResource(row)" ng-if="!row.isEditing">
+						            <button class="btn btn-danger btn-sm" ng-click="adminResCnt.delResource(row)" ng-if="!row.isEditing">
 						            	<span class="glyphicon glyphicon-trash"></span>
 						            </button>
 	          					</td>

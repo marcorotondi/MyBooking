@@ -8,14 +8,14 @@ xmlns:ng="http://angularjs.org">
 		<div class="form-group col-md-8" ng-class="{'has-error': addForm.description.$touched && addForm.description.$invalid}">
 			<label for="description" th:text="'Description'"></label>
 			<input type="text" class="form-control" id="description" name="description" required
-				placeholder="Enter Resource Description" ng-model="description"/>
+				placeholder="Enter Resource Description" ng-model="adminResCnt.description"/>
 			<div class="help-block" ng-messages="addForm.description.$error" ng-if="addForm.description.$touched">
 				<p ng-message="required">Resource Description is required.</p>
 			</div>
 		</div>
 		<div class="form-group col-md-8" ng-class="{'has-error': addForm.type.$touched && addForm.type.$invalid }">
 			<label for="type" th:text="'Typology'"></label>
-			<select class="form-control" name="type" ng-model="type" required>
+			<select class="form-control" name="type" ng-model="adminResCnt.type" required>
 				<option th:value="''" th:text="'Select a Resource Type'"></option>	
 				<option th:each="type : ${resourceTypes}" th:value="${type}" th:text="${type.defaultName}" />	
 			</select>
