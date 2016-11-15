@@ -101,8 +101,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.webjars.bower</groupId>
-			<artifactId>ngDialog</artifactId>
-			<version>0.5.8</version>
+			<artifactId>ng-dialog</artifactId>
+			<version>0.6.4</version>
 		</dependency>
 		<dependency>
     		<groupId>org.webjars</groupId>

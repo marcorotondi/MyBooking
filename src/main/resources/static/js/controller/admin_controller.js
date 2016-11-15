@@ -59,6 +59,19 @@
 				}
 			}
 			
+			self.resetForm = function(form) {
+				if (form) {
+					form.$setPristine(); 
+					form.$setValidity();
+					form.$setUntouched();
+					
+					// Making the fields empty
+					self.description = '';
+					self.type = '';
+					self.id = ''
+				}
+			}
+			
 			self.cancel = function () {
 				self.tableParams.reload();
 			}

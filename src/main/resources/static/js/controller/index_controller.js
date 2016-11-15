@@ -137,10 +137,11 @@
 	appScheduler.controller("schedulerDialogController", ['$scope', 'SchedulerService', function($scope, SchedulerService){
 		var self = this;
 		var scheduler = $scope.ngDialogData.scheduler;
+		
 		self.isNew = true;
 		self.resourceName = $scope.ngDialogData.resource.calendar;
 		
-		console.info(self.ngDialogData);
+		console.info($scope.ngDialogData);
 		
 		self.saveScheduler = function(isValid) {
 			console.info("start: " + self.selectedStartTime);
@@ -156,6 +157,21 @@
 							console.error(errResponse.data.errors);
 			             }
 				);
+			}
+		}
+		
+		self.resetDialogForm = function(form) {
+			if (form) {
+				form.$setPristine(); 
+				form.$setValidity();
+				form.$setUntouched();
+				
+				// Making the fields empty
+				self.userName = '';
+				self.userSurname = '';
+				self.userEmail = '';
+				self.selectedStartTime = '';
+				self.selectedEndTime = '';
 			}
 		}
 	}]);

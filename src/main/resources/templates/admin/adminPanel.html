@@ -47,7 +47,7 @@
 	          		<div class="col-md-8">
 		          		<div class="btn-group" role="group" aria-label="Main command">
 		  					<button type="button" class="btn btn-primary" th:text="'Add New Resource'" 
-		  						ng-click="adminResCnt.showForm = !adminResCnt.showForm; addForm.$setPristine(); addForm.$setUntouched();"></button>
+		  						ng-click="adminResCnt.showForm = !adminResCnt.showForm; adminResCnt.resetForm(addForm);"></button>
 		  				</div>
 		  				<div class="add panel panel-default form-container" ng-show="adminResCnt.showForm">
 	  						<div class="panel-body">
