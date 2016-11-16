@@ -7,6 +7,8 @@ import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * @author marco.rotondi
  *
@@ -14,12 +16,16 @@ import javax.validation.constraints.NotNull;
 public class SchedulerMappingData {
 	private String id;
 
+	@NotEmpty
 	private String description;
-
+	
+	@NotEmpty
 	private String location = "";
 
+	@NotEmpty
 	private String subject = "";
 
+	@NotEmpty
 	private String calendar;
 
 	@NotNull

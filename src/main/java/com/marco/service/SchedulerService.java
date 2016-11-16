@@ -21,5 +21,7 @@ public interface SchedulerService {
 	List<SchedulerMappingData> findByDate(LocalDateTime currentDate);
 	
 	List<SchedulerMappingData> findAllResource();
+	
+	SchedulerMappingData createScheduler(SchedulerMappingData scheduler);
 
 }

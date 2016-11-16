@@ -49,7 +49,8 @@ public class SchedulerController {
 
 	@RequestMapping(value = "/appointment/create", method = RequestMethod.POST)
 	public ResponseEntity<SchedulerMappingData> createAppointment(@RequestBody @Valid SchedulerMappingData appoitment) {
-		LOGGER.info("Try to create new appointment: {}", appoitment);
+		LOGGER.info("Try to create new appointment: {}", appoitment.toString());
+		appoitment = schedulerService.createScheduler(appoitment);
 
 		LOGGER.info("Succesfully create new appointment: {}", appoitment.getId());
 		return new ResponseEntity<>(appoitment, HttpStatus.OK);

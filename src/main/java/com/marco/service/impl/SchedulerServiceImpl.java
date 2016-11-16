@@ -11,9 +11,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.marco.data.SchedulerMappingData;
 import com.marco.model.CalendarBook;
@@ -29,6 +32,7 @@ import com.marco.utils.BookingUtils;
 @Service
 @Qualifier("schedulerService")
 public class SchedulerServiceImpl implements SchedulerService {
+	private static final Logger LOGGER = org.slf4j.LoggerFactory.getLogger(SchedulerServiceImpl.class);
 
 	@Autowired
 	private CalendarBookRepository calendarBookRepo;
@@ -76,6 +80,17 @@ public class SchedulerServiceImpl implements SchedulerService {
 		BookingUtils.mappingResourceData(resourceCalendars, resourceRepo.findAllByOrderByTypeDescIdAsc());
 		
 		return resourceCalendars;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public SchedulerMappingData createScheduler(SchedulerMappingData scheduler) {
+		CalendarBook newCalendarBook = BookingUtils.mappingCalendar(scheduler);
+		newCalendarBook = calendarBookRepo.save(newCalendarBook);
+		
+		LOGGER.info("Generate new Calendar: {}", newCalendarBook.toString());
+		
+		return BookingUtils.prepareCalendarData(newCalendarBook);
 	}
 	
 	

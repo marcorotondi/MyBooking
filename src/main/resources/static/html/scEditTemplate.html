@@ -10,7 +10,7 @@
   		</ul>
 	</div>
 	<form class="form-horizontal" role="form" name="appointmentForm" 
-				novalidate ng-submit="saveScheduler(appointmentForm.$valid)">
+				novalidate ng-submit="dialogCnt.saveScheduler(appointmentForm.$valid)">
 		<div class="modal-body">
        		<div class="form-group" ng-class="{'has-error': appointmentForm.$submitted && appointmentForm.name.$invalid}">
        			<label for="name">Name</label>

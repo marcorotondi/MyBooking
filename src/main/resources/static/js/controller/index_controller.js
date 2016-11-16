@@ -141,17 +141,21 @@
 		self.isNew = true;
 		self.resourceName = $scope.ngDialogData.resource.calendar;
 		
-		console.info($scope.ngDialogData);
-		
 		self.saveScheduler = function(isValid) {
-			console.info("start: " + self.selectedStartTime);
-			console.info("end: " + self.selectedEndTime);
-			console.info(scheduler);
-			
 			if (isValid) {
-				SchedulerService.appointment({}, {}).then(
+				var appointment = {};
+				
+				appointment.id = null;
+				appointment.description = self.userName;
+				appointment.location = self.userSurname;
+				appointment.subject = self.userEmail;
+				appointment.calendar = $scope.ngDialogData.resource.id;
+				appointment.start = self.selectedStartTime;
+				appointment.end = self.selectedEndTime;
+				
+				SchedulerService.appointment(appointment, 'ADD').then(
 						function(newAppoitment) {
-							
+							console.info(newAppoitment);
 						},
 						function(errResponse){
 							console.error(errResponse.data.errors);
