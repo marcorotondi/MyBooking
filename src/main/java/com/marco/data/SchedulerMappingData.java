@@ -3,7 +3,7 @@
  */
 package com.marco.data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotNull;
 
@@ -29,10 +29,10 @@ public class SchedulerMappingData {
 	private String calendar;
 
 	@NotNull
-	private Date start;
+	private LocalDateTime start;
 
 	@NotNull
-	private Date end;
+	private LocalDateTime end;
 
 	/**
 	 * @return the id
@@ -107,28 +107,28 @@ public class SchedulerMappingData {
 	/**
 	 * @return the start
 	 */
-	public Date getStart() {
+	public LocalDateTime getStart() {
 		return start;
 	}
 
 	/**
 	 * @param start the start to set
 	 */
-	public void setStart(Date start) {
+	public void setStart(LocalDateTime start) {
 		this.start = start;
 	}
 
 	/**
 	 * @return the end
 	 */
-	public Date getEnd() {
+	public LocalDateTime getEnd() {
 		return end;
 	}
 
 	/**
 	 * @param end the end to set
 	 */
-	public void setEnd(Date end) {
+	public void setEnd(LocalDateTime end) {
 		this.end = end;
 	}
 

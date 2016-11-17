@@ -54,8 +54,7 @@
                 editDialog: false,
                 contextMenu: false,
                 theme: "bootstrap",
-                editDialogDateTimeFormatString: 'dd-MM-yyyy HH:mm',
-                editDialogDateFormatString: 'dd-MM-yyyy',
+                timeZone: 'UTC',
                 ready: function () {
                     self.scheduler.ensureAppointmentVisible('id1');
                 },
@@ -118,7 +117,7 @@
     		
     		var schedulerReference = {};
     		schedulerReference.resource = selectResource;
-    		schedulerReference.date = date.dateData;
+    		schedulerReference.date = date.toDate();
     		schedulerReference.scheduler = self.scheduler;
     		
     		ngDialog.open({
@@ -143,6 +142,9 @@
 		
 		self.saveScheduler = function(isValid) {
 			if (isValid) {
+				var selectedDate = $scope.ngDialogData.date;
+				var startTime = new Date(self.selectedStartTime);
+				var endTime = new Date(self.selectedEndTime);
 				var appointment = {};
 				
 				appointment.id = null;
@@ -150,16 +152,18 @@
 				appointment.location = self.userSurname;
 				appointment.subject = self.userEmail;
 				appointment.calendar = $scope.ngDialogData.resource.id;
-				appointment.start = self.selectedStartTime;
-				appointment.end = self.selectedEndTime;
+				appointment.start = new Date(selectedDate.setHours(startTime.getHours(), startTime.getMinutes(), 0, 0)).toISOString(); 
+				appointment.end = new Date(selectedDate.setHours(endTime.getHours(), endTime.getMinutes(), 0, 0)).toISOString();
+				
+				console.info(appointment);
 				
 				SchedulerService.appointment(appointment, 'ADD').then(
-						function(newAppoitment) {
-							console.info(newAppoitment);
-						},
-						function(errResponse){
-							console.error(errResponse.data.errors);
-			             }
+					function(newAppoitment) {
+						console.info(newAppoitment);
+					},
+					function(errResponse){
+						console.error(errResponse.data.errors);
+		            }
 				);
 			}
 		}
