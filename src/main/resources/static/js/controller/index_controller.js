@@ -113,7 +113,7 @@
     		var date = event.args.date;
     		var owner = event.args.owner;
     		var resourceIndex = parseInt(cell.attributes[1].value);
-    		var selectResource = owner.source.records[resourceIndex - 1];
+    		var selectResource = owner.resources.source.records[resourceIndex - 1];
     		
     		var schedulerReference = {};
     		schedulerReference.resource = selectResource;
