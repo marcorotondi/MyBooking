@@ -87,7 +87,6 @@ public class SchedulerServiceImpl implements SchedulerService {
 	public SchedulerMappingData createScheduler(SchedulerMappingData scheduler) {
 		CalendarBook newCalendarBook = BookingUtils.mappingCalendar(scheduler);
 		newCalendarBook = calendarBookRepo.save(newCalendarBook);
-		
 		LOGGER.info("Generate new Calendar: {}", newCalendarBook.toString());
 		
 		return BookingUtils.prepareCalendarData(newCalendarBook);
