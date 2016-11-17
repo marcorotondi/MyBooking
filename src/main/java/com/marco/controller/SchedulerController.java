@@ -35,7 +35,7 @@ public class SchedulerController {
 
 	@RequestMapping(value = "/schedulers", method = RequestMethod.GET)
 	public ResponseEntity<List<SchedulerMappingData>> retriveScheduler() {
-		List<SchedulerMappingData> schedulerData = schedulerService.findAllResource();
+		List<SchedulerMappingData> schedulerData = schedulerService.findAllScheduler();
 
 		return new ResponseEntity<>(schedulerData, HttpStatus.OK);
 	}
