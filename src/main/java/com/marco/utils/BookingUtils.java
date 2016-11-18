@@ -7,6 +7,8 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.util.NumberUtils;
+
 import com.marco.data.SchedulerMappingData;
 import com.marco.model.CalendarBook;
 import com.marco.model.Resource;
@@ -39,22 +41,26 @@ public final class BookingUtils {
 		});
 	}
 	
-	public static CalendarBook mappingCalendar(final SchedulerMappingData schedulerData) {
+	public static CalendarBook mappingCalendar(final SchedulerMappingData schedulerData, Resource selectedResource, User user) {
 		final CalendarBook calendarBook = new CalendarBook();
-		final Resource resource = new Resource();
-		final User user = new User();
+		
+		if (null == selectedResource) {
+			selectedResource = new Resource();
+			selectedResource.setId(NumberUtils.parseNumber(schedulerData.getCalendar(), Long.class));
+		}
+		
+		if (null == user) {
+			user = new User();
+			user.setName(schedulerData.getDescription());
+			user.setSurname(schedulerData.getLocation());
+			user.setEmail(schedulerData.getSubject());
+			user.setCheckSum(UUID.randomUUID().toString());
+		}
 		
 		calendarBook.setStart(schedulerData.getStart());
 		calendarBook.setEnd(schedulerData.getEnd());
 		
-		resource.setId(Long.valueOf(schedulerData.getCalendar()));
-		
-		user.setName(schedulerData.getDescription());
-		user.setSurname(schedulerData.getLocation());
-		user.setEmail(schedulerData.getSubject());
-		user.setCheckSum(UUID.randomUUID().toString());
-		
-		calendarBook.setResource(resource);
+		calendarBook.setResource(selectedResource);
 		calendarBook.setUserRef(user);
 		
 		return calendarBook;

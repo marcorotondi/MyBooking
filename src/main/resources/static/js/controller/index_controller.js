@@ -158,8 +158,8 @@
 				
 				SchedulerService.appointment(appointment, 'ADD').then(
 					function(newAppoitment) {
-						console.info(newAppoitment);
 						$scope.ngDialogData.scheduler.addAppointment(newAppoitment);
+						$scope.closeThisDialog()
 					},
 					function(errResponse){
 						console.error(errResponse.data.errors);

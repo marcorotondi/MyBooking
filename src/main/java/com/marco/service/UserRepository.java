@@ -12,5 +12,7 @@ import com.marco.model.User;
  *
  */
 public interface UserRepository extends JpaRepository<User, Long> {
+	
+	User findByEmail(final String email);
 
 }

@@ -21,4 +21,7 @@ public interface CalendarBookRepository extends JpaRepository<CalendarBook, Long
 	@Query("select cb from CalendarBook cb left join cb.resource left join cb.userRef where cb.start >= :start and cb.end <= :end")
 	List<CalendarBook> findByStartToEnd(@Param("start") Calendar start, @Param("end") Calendar end);
 
+	@Query("select cb from CalendarBook cb join fetch cb.resource join fetch cb.userRef where cb.id = :id")
+	CalendarBook reloadCalendar(@Param("id") Long id);
+
 }

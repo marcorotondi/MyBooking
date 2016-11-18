@@ -17,12 +17,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.NumberUtils;
 
 import com.marco.data.SchedulerMappingData;
 import com.marco.model.CalendarBook;
+import com.marco.model.Resource;
+import com.marco.model.User;
 import com.marco.service.CalendarBookRepository;
 import com.marco.service.ResourceRepository;
 import com.marco.service.SchedulerService;
+import com.marco.service.UserRepository;
 import com.marco.utils.BookingUtils;
 
 /**
@@ -39,16 +43,16 @@ public class SchedulerServiceImpl implements SchedulerService {
 	
 	@Autowired
 	private ResourceRepository resourceRepo; 
+	
+	@Autowired
+	private UserRepository userRepo;
 
 	@Override
 	public List<SchedulerMappingData> findAllScheduler() {
 		final List<SchedulerMappingData> appointmentCalendars = new LinkedList<>();
 		List<CalendarBook> appointments = calendarBookRepo.findAll();
 		
-		if (!appointments.isEmpty()) {
-			appointments.forEach(calendarBook -> appointmentCalendars.add(BookingUtils.prepareCalendarData(calendarBook)));
-		}
-		
+		appointments.forEach(calendarBook -> appointmentCalendars.add(BookingUtils.prepareCalendarData(calendarBook)));
 		return appointmentCalendars;
 	}
 
@@ -85,7 +89,11 @@ public class SchedulerServiceImpl implements SchedulerService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public SchedulerMappingData createScheduler(SchedulerMappingData scheduler) {
-		CalendarBook newCalendarBook = BookingUtils.mappingCalendar(scheduler);
+		final Resource selectedResource = resourceRepo.findOne(NumberUtils.parseNumber(scheduler.getCalendar(), Long.class));
+		final User user = userRepo.findByEmail(scheduler.getSubject());
+		
+		CalendarBook newCalendarBook = BookingUtils.mappingCalendar(scheduler, selectedResource, user);
+		
 		newCalendarBook = calendarBookRepo.save(newCalendarBook);
 		LOGGER.info("Generate new Calendar: {}", newCalendarBook.toString());
 		
