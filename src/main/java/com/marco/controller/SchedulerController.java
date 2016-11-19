@@ -58,7 +58,7 @@ public class SchedulerController {
 
 	@RequestMapping(value = "/appointment/update", method = RequestMethod.POST)
 	public ResponseEntity<SchedulerMappingData> updateAppointment(@RequestBody @Valid SchedulerMappingData appoitment) {
-		LOGGER.info("Try to update new appointment: {}", appoitment);
+		LOGGER.info("Try to update new appointment: {}", appoitment.toString());
 
 		LOGGER.info("Succesfully update new appointment: {}", appoitment.getId());
 		return new ResponseEntity<>(appoitment, HttpStatus.OK);

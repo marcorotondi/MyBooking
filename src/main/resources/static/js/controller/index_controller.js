@@ -20,7 +20,9 @@
                 { name: 'subject', type: 'string' },
                 { name: 'calendar', type: 'string' },
                 { name: 'start', type: 'date' },
-                { name: 'end', type: 'date' }
+                { name: 'end', type: 'date' },
+                { name: 'draggable', type: 'boolean'},
+                { name: 'resizable', type: 'boolean'}
             ],
             id: 'id',
             url: "/public/api/schedulers",
@@ -54,7 +56,6 @@
                 editDialog: false,
                 contextMenu: false,
                 theme: "bootstrap",
-                timeZone: 'UTC',
                 ready: function () {
                     self.scheduler.ensureAppointmentVisible('id1');
                 },
@@ -69,9 +70,11 @@
                     to: "end",
                     id: "id",
                     description: "description",
-                    location: "place",
+                    location: "location",
                     subject: "subject",
-                    resourceId: "calendar"
+                    resourceId: "calendar",
+                    draggable: "draggable",
+                    resizable: "resizable"
                 },
                 view: 'weekView',
                 views: [{
@@ -102,23 +105,31 @@
                 		}
                 ],
                 // Events #
-                cellDoubleClick: openEditDialog
+                cellDoubleClick: openEditDialog,
+                appointmentDoubleClick: openEditDialog
         }
         
         /*
     	 * Perform Override of Edit Dialog
     	 */
     	function openEditDialog(event) {
-    		var cell = event.args.cell; 
-    		var date = event.args.date;
-    		var owner = event.args.owner;
-    		var resourceIndex = parseInt(cell.attributes[1].value);
-    		var selectResource = owner.resources.source.records[resourceIndex - 1];
-    		
-    		var schedulerReference = {};
-    		schedulerReference.resource = selectResource;
-    		schedulerReference.date = date.toDate();
-    		schedulerReference.scheduler = self.scheduler;
+        	var schedulerReference = {};
+        	schedulerReference.scheduler = self.scheduler;
+        	
+        	if (event.args.appointment) {
+        		schedulerReference.appointment = event.args.appointment;
+        		schedulerReference.resource = self.scheduler.resources.source.records.find(function(resource){
+        			return resource.calendar === event.args.appointment.resourceId
+        		});
+        		schedulerReference.isNew = false;
+        	} else {
+        		var cell = event.args.cell; 
+        		var owner = event.args.owner;
+        		var resourceIndex = parseInt(cell.attributes[1].value);
+        		schedulerReference.date = event.args.date.toDate();
+        		schedulerReference.resource = owner.resources.source.records[resourceIndex - 1];
+        		schedulerReference.isNew = true;
+        	}
     		
     		ngDialog.open({
     		    template: 'html/scEditTemplate.html',
@@ -137,9 +148,19 @@
 		var self = this;
 		var scheduler = $scope.ngDialogData.scheduler;
 		
-		self.isNew = true;
+		self.isNew = $scope.ngDialogData.isNew;
 		self.resourceName = $scope.ngDialogData.resource.calendar;
-		self.selectedStartTime = new Date($scope.ngDialogData.date);
+		
+		if(self.isNew){
+			self.selectedStartTime = new Date($scope.ngDialogData.date);
+		} else {
+			var appointment = $scope.ngDialogData.appointment;
+			self.userName = appointment.originalData.description;
+			self.userSurname = appointment.originalData.location;
+			self.userEmail = appointment.originalData.subject;
+			self.selectedStartTime = appointment.from.toDate();
+			self.selectedEndTime = appointment.to.toDate();
+		}
 		
 		self.saveScheduler = function(isValid) {
 			if (isValid) {

@@ -18,7 +18,7 @@ public class SchedulerMappingData {
 
 	@NotEmpty
 	private String description;
-	
+
 	@NotEmpty
 	private String location = "";
 
@@ -33,6 +33,10 @@ public class SchedulerMappingData {
 
 	@NotNull
 	private LocalDateTime end;
+
+	private Boolean draggable = Boolean.FALSE;
+
+	private Boolean resizable = Boolean.FALSE;
 
 	/**
 	 * @return the id
@@ -132,5 +136,41 @@ public class SchedulerMappingData {
 		this.end = end;
 	}
 
+	/**
+	 * @return the draggable
+	 */
+	public Boolean getDraggable() {
+		return draggable;
+	}
 
+	/**
+	 * @param draggable the draggable to set
+	 */
+	public void setDraggable(Boolean draggable) {
+		this.draggable = draggable;
+	}
+
+	/**
+	 * @return the resizable
+	 */
+	public Boolean getResizable() {
+		return resizable;
+	}
+
+	/**
+	 * @param resizable the resizable to set
+	 */
+	public void setResizable(Boolean resizable) {
+		this.resizable = resizable;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return String.format(
+				"SchedulerMappingData [id=%s, description=%s, location=%s, subject=%s, calendar=%s, start=%s, end=%s]",
+				id, description, location, subject, calendar, start, end);
+	}
 }
