@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<div class="ngdialog-message">
+	<div class="modal-header">
+		<h4 class="modal-title">Show Appointment</h4>
+		<ul class="list-group">
+  			<li class="list-group-item list-group-item-success center">
+  				<strong><span ng-bind="summaryCnt.resourceName"></span></strong>
+  			</li>
+  		</ul>
+	</div>
+	<div class="modal-body">
+		<dl>
+			<dt>Name</dt>
+			<dd>{{summaryCnt.userName}}</dd>
+			<dt>Surname</dt>
+			<dd>{{summaryCnt.userSurname}}</dd>
+			<dt>Email</dt>
+			<dd>{{summaryCnt.userEmail}}</dd>
+			<dt>Start Time</dt>
+			<dd>{{summaryCnt.selectedStartTime}}</dd>
+			<dt>End Time</dt>
+			<dd>{{summaryCnt.selectedEndTime}}</dd>
+		</dl>
+    </div>
+    <div class="modal-footer form-actions">
+    	<button type="button" class="btn btn-default" ng-click="closeThisDialog();">Close</button>
+    	<button type="button" class="btn btn-primary" ng-click="summaryCnt.deleteAppoitment();">Delete</button>
+    </div>
+</div>

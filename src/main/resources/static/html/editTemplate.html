@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <div class="ngdialog-message">
 	<div class="modal-header">
-		<h4 class="modal-title" ng-if="dialogCnt.isNew">Add Appointment</h4>
-		<h4 class="modal-title" ng-if="!dialogCnt.isNew">Show Appointment</h4>
+		<h4 class="modal-title">Add Appointment</h4>
 		<ul class="list-group">
-  			<li class="list-group-item list-group-item-success">
-  				<strong><span ng-bind="dialogCnt.resourceName"></span></strong> resource selected.
+  			<li class="list-group-item list-group-item-success center">
+  				<strong><span ng-bind="dialogCnt.resourceName"></span></strong>
   			</li>
   		</ul>
 	</div>
 	<form class="form-horizontal" role="form" name="appointmentForm" 
 				novalidate ng-submit="dialogCnt.saveScheduler(appointmentForm.$valid)">
 		<div class="modal-body">
-			<fieldset ng-disabled="!dialogCnt.isNew">
        		<div class="form-group" ng-class="{'has-error': appointmentForm.$submitted && appointmentForm.name.$invalid}">
        			<label for="name">Name</label>
        			<input type="text" class="form-control input-sm" id="name" name="name" required
@@ -68,13 +66,11 @@
 					<p ng-message="required">End Time is required.</p>
 				</div>
        		</div>
-       		</fieldset>
 	    </div>
 	    <div class="modal-footer form-actions">
 	    	<button type="button" class="btn btn-default" ng-click="closeThisDialog();">Close</button>
-	    	<button type="button" class="btn btn-primary" ng-show="dialogCnt.isNew" ng-click="dialogCnt.deleteAppoitment();">Delete</button>
-	    	<button type="button" class="btn btn-secondary" ng-show="dialogCnt.isNew" ng-click="dialogCnt.resetDialogForm(appointmentForm)">Reset</button>
-	        <button type="submit" class="btn btn-primary" ng-show="dialogCnt.isNew">Save changes</button>
+	    	<button type="button" class="btn btn-secondary" ng-click="dialogCnt.resetDialogForm(appointmentForm)">Reset</button>
+	        <button type="submit" class="btn btn-primary">Save changes</button>
 	    </div>
     </form>
 </div>

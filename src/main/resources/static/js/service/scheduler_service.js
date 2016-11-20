@@ -14,11 +14,10 @@
 		 
 		return factory;
 		
-		function appointment(schedulerData, operation) {
-			var endPoint = operation == "ADD" ? 'create' : 'update';
+		function appointment(schedulerData) {
 			var deferred = $q.defer();
 	        
-			$http.post(REST_SERVICE_URI + "appointment/" + endPoint, schedulerData).then(
+			$http.post(REST_SERVICE_URI + "appointment/create", schedulerData).then(
 	            function (response) {
 	                deferred.resolve(response.data);
 	            },
@@ -33,7 +32,7 @@
 		function deleteAppointment(appointmentId) {
 			var deferred = $q.defer();
 	        
-			$http.delete(REST_SERVICE_URI + "appointment/delete/" + appointmentId, schedulerData).then(
+			$http.delete(REST_SERVICE_URI + "appointment/delete/" + appointmentId, {}).then(
 	            function (response) {
 	                deferred.resolve(response.data);
 	            },
