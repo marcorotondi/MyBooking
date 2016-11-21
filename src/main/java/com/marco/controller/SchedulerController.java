@@ -64,8 +64,9 @@ public class SchedulerController {
 		return new ResponseEntity<>(appoitment, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/appointment/delete/{appointmentId}", method = RequestMethod.DELETE)
-	public ResponseEntity<SchedulerMappingData> deleteAppointment(@PathVariable("appointmentId") long appoitmentId) {
+	@RequestMapping(value = "/appointment/delete/{appointmentId}/{checkCode}", method = RequestMethod.DELETE)
+	public ResponseEntity<SchedulerMappingData> deleteAppointment(@PathVariable("appointmentId") long appoitmentId,
+			@PathVariable("checkCode") final String checkCode) {
 		LOGGER.info("Fetching & Deleting Appoitment with id: {}", appoitmentId);
 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);

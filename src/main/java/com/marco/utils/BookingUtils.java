@@ -3,6 +3,7 @@
  */
 package com.marco.utils;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
@@ -42,6 +43,10 @@ public final class BookingUtils {
 	}
 	
 	public static CalendarBook mappingCalendar(final SchedulerMappingData schedulerData, Resource selectedResource, User user) {
+		final String checkCode = generateCheckCode(schedulerData.getSubject(), 
+				schedulerData.getCalendar(), 
+				schedulerData.getStart(), 
+				schedulerData.getEnd());
 		final CalendarBook calendarBook = new CalendarBook();
 		
 		if (null == selectedResource) {
@@ -54,7 +59,7 @@ public final class BookingUtils {
 			user.setName(schedulerData.getDescription());
 			user.setSurname(schedulerData.getLocation());
 			user.setEmail(schedulerData.getSubject());
-			user.setCheckSum(UUID.randomUUID().toString());
+			user.setCheckSum(checkCode);
 		}
 		
 		calendarBook.setStart(schedulerData.getStart());
@@ -64,5 +69,16 @@ public final class BookingUtils {
 		calendarBook.setUserRef(user);
 		
 		return calendarBook;
+	}
+	
+	public static String generateCheckCode(final String email, final String resourceId, 
+			final LocalDateTime start, final LocalDateTime end) {
+		final StringBuilder hasCode = new StringBuilder();
+		
+		hasCode.append(Character.charCount(email.hashCode()))
+			.append(Character.charCount(resourceId.hashCode()))
+			.append(Character.charCount((start.hashCode() + end.hashCode()) * 11));
+		
+		return hasCode.toString();
 	}
 }
