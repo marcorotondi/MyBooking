@@ -60,6 +60,7 @@ public class SchedulerController {
 	public ResponseEntity<SchedulerMappingData> deleteAppointment(@PathVariable("appointmentId") long appoitmentId,
 			@PathVariable("checkCode") final String checkCode) {
 		LOGGER.info("Fetching & Deleting Appoitment with id: {}", appoitmentId);
+		
 		final SchedulerMappingData deleteScheduler = new SchedulerMappingData();
 		deleteScheduler.setId(String.valueOf(appoitmentId));
 

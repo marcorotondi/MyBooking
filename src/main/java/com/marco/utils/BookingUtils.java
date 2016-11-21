@@ -75,9 +75,10 @@ public final class BookingUtils {
 			final LocalDateTime start, final LocalDateTime end) {
 		final StringBuilder hasCode = new StringBuilder();
 		
-		hasCode.append(Character.charCount(email.hashCode()))
-			.append(Character.charCount(resourceId.hashCode()))
-			.append(Character.charCount((start.hashCode() + end.hashCode()) * 11));
+		hasCode.append((char) email.hashCode())
+			.append((char) resourceId.hashCode())
+			.append((char) start.hashCode())
+			.append((char) end.hashCode());
 		
 		return hasCode.toString();
 	}
