@@ -56,20 +56,14 @@ public class SchedulerController {
 		return new ResponseEntity<>(appoitment, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/appointment/update", method = RequestMethod.POST)
-	public ResponseEntity<SchedulerMappingData> updateAppointment(@RequestBody @Valid SchedulerMappingData appoitment) {
-		LOGGER.info("Try to update new appointment: {}", appoitment);
-
-		LOGGER.info("Succesfully update new appointment: {}", appoitment.getId());
-		return new ResponseEntity<>(appoitment, HttpStatus.OK);
-	}
-
 	@RequestMapping(value = "/appointment/delete/{appointmentId}/{checkCode}", method = RequestMethod.DELETE)
 	public ResponseEntity<SchedulerMappingData> deleteAppointment(@PathVariable("appointmentId") long appoitmentId,
 			@PathVariable("checkCode") final String checkCode) {
 		LOGGER.info("Fetching & Deleting Appoitment with id: {}", appoitmentId);
+		final SchedulerMappingData deleteScheduler = new SchedulerMappingData();
+		deleteScheduler.setId(String.valueOf(appoitmentId));
 
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(deleteScheduler, HttpStatus.OK);
 	}
 
 }
