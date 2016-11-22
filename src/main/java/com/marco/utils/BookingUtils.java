@@ -6,6 +6,8 @@ package com.marco.utils;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.NumberUtils;
 
 import com.marco.data.SchedulerMappingData;
@@ -18,6 +20,7 @@ import com.marco.model.User;
  *
  */
 public final class BookingUtils {
+	private static final Logger LOGGER = LoggerFactory.getLogger(BookingUtils.class);
 	
 	public static SchedulerMappingData prepareCalendarData(final CalendarBook calendarBook) {
 		return GenericBuilder.of(SchedulerMappingData::new)
@@ -71,13 +74,14 @@ public final class BookingUtils {
 	
 	public static String generateCheckCode(final String email, final String resourceId, 
 			final LocalDateTime start, final LocalDateTime end) {
-		final StringBuilder hasCode = new StringBuilder();
+		final StringBuilder hashCode = new StringBuilder();
 		
-		hasCode.append((char) email.hashCode())
-			.append((char) resourceId.hashCode())
-			.append((char) start.hashCode())
-			.append((char) end.hashCode());
+		hashCode.append(Integer.toHexString(email.hashCode()))
+			.append(Integer.toHexString(resourceId.hashCode()))
+			.append(Integer.toHexString(start.hashCode()))
+			.append(Integer.toHexString(end.hashCode()));
 		
-		return hasCode.toString();
+		LOGGER.info("#### Check Code for Resource: {} is {} ####", resourceId, hashCode.toString().toUpperCase());
+		return hashCode.toString().toUpperCase();
 	}
 }
