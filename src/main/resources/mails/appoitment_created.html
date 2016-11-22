@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:remove="all">Appointment Created</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+  	<dl>
+		<dt>Name</dt>
+		<dd th:text="${name}">Name</dd>
+		<dt>Surname</dt>
+		<dd th:text="${surname}">Surname</dd>
+		<dt>Resource</dt>
+		<dd th:text="resource">Resource</dd>
+		<dt>Start Time</dt>
+		<dd th:text="${#temporals.format(start, 'dd/MMM/yyyy HH:mm')}">Start</dd>
+		<dt>End Time</dt>
+		<dd th:text="${#temporals.format(end, 'dd/MMM/yyyy HH:mm')}">End</dd>
+	</dl>
+	<h3>Your Check Code</h3>
+	<p th:text="${checkCode}"></p>
+    <p>
+      Regards, <br />
+      <em>My Booking</em>
+    </p>
+  </body>
+</html>

@@ -215,8 +215,10 @@
 		self.userName = appointment.originalData.description;
 		self.userSurname = appointment.originalData.location;
 		self.userEmail = appointment.originalData.subject;
-		self.selectedStartTime = appointment.from.hour() + ":" + appointment.from.minute();
-		self.selectedEndTime = appointment.to.hour() + ":" + appointment.to.minute();
+		self.selectedStartTime = (appointment.from.hour() < 10 ? "0" + appointment.from.hour() : appointment.from.hour()) 
+			+ ":" + (appointment.from.minute() < 10 ? "0" + appointment.from.minute() : appointment.from.minute());
+		self.selectedEndTime = (appointment.to.hour() < 10 ? "0" + appointment.to.hour() : appointment.to.hour()) 
+			+ ":" + (appointment.to.minute() < 10 ? "0" + appointment.to.minute() : appointment.to.minute());
 		self.appointmentId = appointment.id;
 		
 		self.deleteAppoitment = function() {
