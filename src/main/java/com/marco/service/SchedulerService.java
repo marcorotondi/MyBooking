@@ -6,6 +6,8 @@ package com.marco.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import com.marco.data.SchedulerMappingData;
 
 /**
@@ -22,6 +24,6 @@ public interface SchedulerService {
 	
 	List<SchedulerMappingData> findAllResource();
 	
-	SchedulerMappingData createScheduler(SchedulerMappingData scheduler);
+	SchedulerMappingData createScheduler(SchedulerMappingData scheduler) throws MessagingException;
 
 }

@@ -5,6 +5,7 @@ package com.marco.controller;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -48,7 +49,7 @@ public class SchedulerController {
 	}
 
 	@RequestMapping(value = "/appointment/create", method = RequestMethod.POST)
-	public ResponseEntity<SchedulerMappingData> createAppointment(@RequestBody @Valid SchedulerMappingData appoitment) {
+	public ResponseEntity<SchedulerMappingData> createAppointment(@RequestBody @Valid SchedulerMappingData appoitment) throws MessagingException {
 		LOGGER.info("Try to create new appointment: {}", appoitment.toString());
 		appoitment = schedulerService.createScheduler(appoitment);
 

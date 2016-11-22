@@ -11,6 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.mail.MessagingException;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,6 +26,7 @@ import com.marco.model.CalendarBook;
 import com.marco.model.Resource;
 import com.marco.model.User;
 import com.marco.service.CalendarBookRepository;
+import com.marco.service.MailService;
 import com.marco.service.ResourceRepository;
 import com.marco.service.SchedulerService;
 import com.marco.service.UserRepository;
@@ -46,6 +49,9 @@ public class SchedulerServiceImpl implements SchedulerService {
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private MailService mailService;
 
 	@Override
 	public List<SchedulerMappingData> findAllScheduler() {
@@ -88,7 +94,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public SchedulerMappingData createScheduler(SchedulerMappingData scheduler) {
+	public SchedulerMappingData createScheduler(SchedulerMappingData scheduler) throws MessagingException {
 		final Resource selectedResource = resourceRepo.findOne(NumberUtils.parseNumber(scheduler.getCalendar(), Long.class));
 		final User user = userRepo.findByEmail(scheduler.getSubject());
 		
@@ -96,6 +102,9 @@ public class SchedulerServiceImpl implements SchedulerService {
 		
 		newCalendarBook = calendarBookRepo.save(newCalendarBook);
 		LOGGER.info("Generate new Calendar: {}", newCalendarBook.toString());
+		
+		LOGGER.info("Try to send Mail for confirm Scheduler");
+		mailService.sendCreationConfirmation(newCalendarBook);
 		
 		return BookingUtils.prepareCalendarData(newCalendarBook);
 	}

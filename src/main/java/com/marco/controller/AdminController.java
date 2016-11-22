@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.marco.model.Resource;
 import com.marco.service.ResourceRepository;
@@ -37,14 +36,6 @@ public class AdminController {
 
 	@Autowired
 	private ResourceRepository resourceRepo;
-
-	@RequestMapping(value = "/admin/adminPanel.html", method = RequestMethod.GET)
-	public ModelAndView adminIndex() {
-		final ModelAndView resultView = new ModelAndView("admin/adminPanel");
-		resultView.addObject("resources", resourceRepo.findAll());
-		resultView.addObject("resourceTypes", ResourceType.values());
-		return resultView;
-	}
 
 	@RequestMapping(value = "/admin/api/crudResource", method = RequestMethod.POST)
 	public ResponseEntity<Void> crudResource(@RequestBody @Valid Resource resource) {
@@ -72,7 +63,8 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin/api/resources.json", method = RequestMethod.GET)
 	public ResponseEntity<List<Resource>> getAllResources() {
-		return new ResponseEntity<>(resourceRepo.findAll(), HttpStatus.OK);
+		final List<Resource> allResource = resourceRepo.findAll();
+		return new ResponseEntity<>(allResource, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/admin/api/summary.json", method = RequestMethod.GET)

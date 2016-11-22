@@ -4,10 +4,7 @@
 package com.marco.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,7 +12,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -41,8 +37,6 @@ public class Resource implements Serializable {
 
 	@NotNull
 	private ResourceType type;
-
-	private Set<CalendarBook> calendarBooks = new HashSet<>();
 
 	@Version
 	@Column(name = "VERSION")
@@ -96,30 +90,6 @@ public class Resource implements Serializable {
 		this.type = type;
 	}
 
-	/**
-	 * @return the calendarBooks
-	 */
-	@OneToMany(mappedBy = "resource", cascade = CascadeType.ALL, orphanRemoval = true)
-	public Set<CalendarBook> getCalendarBooks() {
-		return calendarBooks;
-	}
-
-	/**
-	 * @param calendarBooks the calendarBooks to set
-	 */
-	public void setCalendarBooks(Set<CalendarBook> calendarBooks) {
-		this.calendarBooks = calendarBooks;
-	}
-
-	public void addCalendarBook(CalendarBook calendarBook) {
-		calendarBook.setResource(this);
-		getCalendarBooks().add(calendarBook);
-	}
-
-	public void removeCalendarBook(CalendarBook calendarBook) {
-		getCalendarBooks().remove(calendarBook);
-	}
-
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -168,6 +138,4 @@ public class Resource implements Serializable {
 		}
 		return true;
 	}
-
-
 }

@@ -23,6 +23,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/").setViewName("index");
 		registry.addViewController("/login.html").setViewName("login");
+		registry.addViewController("/admin/adminPanel.html").setViewName("admin/adminPanel");
 	}
 
 	@Bean
