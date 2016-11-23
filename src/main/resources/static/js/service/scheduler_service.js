@@ -29,10 +29,11 @@
 	        return deferred.promise;
 		}
 		
-		function deleteAppointment(appointmentId) {
+		function deleteAppointment(appointmentId, checkCode) {
 			var deferred = $q.defer();
+			var parameterUrl = appointmentId + "/" + checkCode;
 	        
-			$http.delete(REST_SERVICE_URI + "appointment/delete/" + appointmentId, {}).then(
+			$http.delete(REST_SERVICE_URI + "appointment/delete/" + parameterUrl, {}).then(
 	            function (response) {
 	                deferred.resolve(response.data);
 	            },

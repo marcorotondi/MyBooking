@@ -108,7 +108,16 @@ public class SchedulerServiceImpl implements SchedulerService {
 		
 		return BookingUtils.prepareCalendarData(newCalendarBook);
 	}
-	
-	
 
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public void deleteScheduler(final Long appointnemtID, final String checkCode) throws IllegalStateException {
+		final CalendarBook toDelete = calendarBookRepo.findOne(appointnemtID);
+		
+		if (null != toDelete && checkCode.equalsIgnoreCase(toDelete.getCheckSum())) {
+			calendarBookRepo.delete(appointnemtID);
+		} else {
+			throw new IllegalStateException("Not Appoitment Found");
+		}
+	}
 }

@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,6 +37,8 @@ public class CalendarBook implements Serializable {
 	private Resource resource;
 
 	private User userRef;
+	
+	private String checkSum;
 
 	@Version
 	@Column(name = "VERSION")
@@ -91,7 +94,7 @@ public class CalendarBook implements Serializable {
 	/**
 	 * @return the resource
 	 */
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "RESOURCE_ID")
 	public Resource getResource() {
 		return resource;
@@ -107,7 +110,7 @@ public class CalendarBook implements Serializable {
 	/**
 	 * @return the resource
 	 */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "USER_REF_ID")
 	public User getUserRef() {
 		return userRef;
@@ -119,13 +122,28 @@ public class CalendarBook implements Serializable {
 	public void setUserRef(User userRef) {
 		this.userRef = userRef;
 	}
+	
+	/**
+	 * @return the checkSum
+	 */
+	@Column(name = "CHECK_SUM", nullable = false)
+	public String getCheckSum() {
+		return checkSum;
+	}
+
+	/**
+	 * @param checkSum the checkSum to set
+	 */
+	public void setCheckSum(String checkSum) {
+		this.checkSum = checkSum;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return String.format("CalendarBook [id=%s, start=%s, end=%s]", id,
-				start, end);
+		return String.format("CalendarBook [id=%s, start=%s, end=%s, check=%s]", id,
+				start, end, checkSum);
 	}
 }

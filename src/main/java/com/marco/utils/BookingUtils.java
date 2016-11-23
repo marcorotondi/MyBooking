@@ -41,7 +41,6 @@ public final class BookingUtils {
 	}
 
 	public static CalendarBook mappingCalendar(final SchedulerMappingData schedulerData, Resource selectedResource, User user) {
-		final String checkCode = generateCheckCode();
 		final CalendarBook calendarBook = new CalendarBook();
 
 		if (null == selectedResource) {
@@ -54,11 +53,11 @@ public final class BookingUtils {
 			user.setName(schedulerData.getDescription());
 			user.setSurname(schedulerData.getLocation());
 			user.setEmail(schedulerData.getSubject());
-			user.setCheckSum(checkCode);
 		}
 
 		calendarBook.setStart(schedulerData.getStart());
 		calendarBook.setEnd(schedulerData.getEnd());
+		calendarBook.setCheckSum(generateCheckCode());
 
 		calendarBook.setResource(selectedResource);
 		calendarBook.setUserRef(user);

@@ -45,7 +45,7 @@ public class MailServiceImpl implements MailService {
         ctx.setVariable("resource", appointment.getResource().getDescription());
         ctx.setVariable("start", appointment.getStart());
         ctx.setVariable("end", appointment.getEnd());
-        ctx.setVariable("checkCode",appointment.getUserRef().getCheckSum());
+        ctx.setVariable("checkCode",appointment.getCheckSum());
 
         // Prepare message using a Spring helper
         final MimeMessage mimeMessage = this.mailSender.createMimeMessage();

@@ -25,5 +25,7 @@ public interface SchedulerService {
 	List<SchedulerMappingData> findAllResource();
 	
 	SchedulerMappingData createScheduler(SchedulerMappingData scheduler) throws MessagingException;
+	
+	void deleteScheduler(Long appointnemtID, String checkCode) throws IllegalStateException;
 
 }

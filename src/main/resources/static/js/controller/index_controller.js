@@ -180,7 +180,7 @@
 				
 				SchedulerService.appointment(appointment).then(
 					function(newAppoitment) {
-						$scope.ngDialogData.scheduler.addAppointment(newAppoitment);
+						scheduler.addAppointment(newAppoitment);
 						$scope.closeThisDialog()
 					},
 					function(errResponse){
@@ -219,15 +219,13 @@
 		self.selectedEndTime = formatTime(appointment.to.hour()) + ":" + formatTime(appointment.to.minute());
 		self.appointmentId = appointment.id;
 		
-		self.deleteAppoitment = function() {
+		self.deleteAppoitment = function(isValid) {
 			self.checkCodeRequire = true;
 			
-			if (self.checkCode) {
-				console.info("id: " + self.appointmentId);
-				SchedulerService.deleteAppointment(self.appointmentId).then(
+			if (isValid) {
+				SchedulerService.deleteAppointment(self.appointmentId, self.checkCode).then(
 					function(deleteAppoitment){
-						console.info(deleteAppoitment);
-						//$scope.ngDialogData.scheduler.addAppointment(newAppoitment);
+						scheduler.deleteAppointment(deleteAppoitment);
 						$scope.closeThisDialog()
 					},
 					function(errResponse){
@@ -241,6 +239,5 @@
 		function formatTime(timeToFormat) {
 			return (timeToFormat < 10 ? '0' + timeToFormat : timeToFormat);
 		};
-		
 	}]);
 })();

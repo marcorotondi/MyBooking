@@ -58,14 +58,15 @@ public class SchedulerController {
 	}
 
 	@RequestMapping(value = "/appointment/delete/{appointmentId}/{checkCode}", method = RequestMethod.DELETE)
-	public ResponseEntity<SchedulerMappingData> deleteAppointment(@PathVariable("appointmentId") long appoitmentId,
+	public ResponseEntity<Long> deleteAppointment(@PathVariable("appointmentId") long appoitmentId,
 			@PathVariable("checkCode") final String checkCode) {
 		LOGGER.info("Fetching & Deleting Appoitment with id: {}", appoitmentId);
-		
-		final SchedulerMappingData deleteScheduler = new SchedulerMappingData();
-		deleteScheduler.setId(String.valueOf(appoitmentId));
-
-		return new ResponseEntity<>(deleteScheduler, HttpStatus.OK);
+		try {
+			schedulerService.deleteScheduler(appoitmentId, checkCode);
+		} catch (IllegalStateException e) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(appoitmentId, HttpStatus.OK);
 	}
 
 }

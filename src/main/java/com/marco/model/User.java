@@ -31,8 +31,6 @@ public class User implements Serializable {
 
 	private String email;
 
-	private String checkSum;
-
 	@Version
 	@Column(name = "VERSION")
 	private int version;
@@ -97,20 +95,5 @@ public class User implements Serializable {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	/**
-	 * @return the checkSum
-	 */
-	@Column(name = "CHECK_SUM", nullable = false)
-	public String getCheckSum() {
-		return checkSum;
-	}
-
-	/**
-	 * @param checkSum the checkSum to set
-	 */
-	public void setCheckSum(String checkSum) {
-		this.checkSum = checkSum;
 	}
 }
