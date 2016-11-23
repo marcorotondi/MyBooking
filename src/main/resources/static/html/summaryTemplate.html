@@ -21,6 +21,14 @@
 			<dt>End Time</dt>
 			<dd>{{summaryCnt.selectedEndTime}}</dd>
 		</dl>
+		<form class="form-horizontal" role="form" name="summaryForm" >
+			<div class="form-group" ng-show="summaryCnt.checkCodeRequire" 
+				ng-class="{'has-error': summaryForm.checkCode.$touched && summaryForm.checkCode.$invalid}">
+				<label for="checkCode">Chek Code</label>
+				<input type="text" class="form-control input-sm" name="checkCode" ng-model="summaryCnt.checkCode" 
+					placeholder="Please enter Check Code" required />
+			</div>
+		</form>
     </div>
     <div class="modal-footer form-actions">
     	<button type="button" class="btn btn-default" ng-click="closeThisDialog();">Close</button>

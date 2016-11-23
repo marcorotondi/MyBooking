@@ -220,17 +220,21 @@
 		self.appointmentId = appointment.id;
 		
 		self.deleteAppoitment = function() {
-			console.info("id: " + self.appointmentId);
-			SchedulerService.deleteAppointment(self.appointmentId).then(
-				function(deleteAppoitment){
-					console.info(deleteAppoitment);
-					//$scope.ngDialogData.scheduler.addAppointment(newAppoitment);
-					$scope.closeThisDialog()
-				},
-				function(errResponse){
-					console.error(errResponse)
-				}
-			);
+			self.checkCodeRequire = true;
+			
+			if (self.checkCode) {
+				console.info("id: " + self.appointmentId);
+				SchedulerService.deleteAppointment(self.appointmentId).then(
+					function(deleteAppoitment){
+						console.info(deleteAppoitment);
+						//$scope.ngDialogData.scheduler.addAppointment(newAppoitment);
+						$scope.closeThisDialog()
+					},
+					function(errResponse){
+						console.error(errResponse)
+					}
+				);
+			}
 		}
 		
 		//private function

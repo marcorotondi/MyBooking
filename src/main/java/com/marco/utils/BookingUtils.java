@@ -1,13 +1,11 @@
 /**
- * 
+ *
  */
 package com.marco.utils;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.util.NumberUtils;
 
 import com.marco.data.SchedulerMappingData;
@@ -20,8 +18,7 @@ import com.marco.model.User;
  *
  */
 public final class BookingUtils {
-	private static final Logger LOGGER = LoggerFactory.getLogger(BookingUtils.class);
-	
+
 	public static SchedulerMappingData prepareCalendarData(final CalendarBook calendarBook) {
 		return GenericBuilder.of(SchedulerMappingData::new)
 				.with(SchedulerMappingData::setId, String.valueOf(calendarBook.getId()))
@@ -29,8 +26,8 @@ public final class BookingUtils {
 				.with(SchedulerMappingData::setDescription, calendarBook.getUserRef().getName())
 				.with(SchedulerMappingData::setLocation, calendarBook.getUserRef().getSurname())
 				.with(SchedulerMappingData::setCalendar, calendarBook.getResource().getDescription())
-				.with(SchedulerMappingData::setStart, calendarBook.getStart()) 
-				.with(SchedulerMappingData::setEnd, calendarBook.getEnd()) 
+				.with(SchedulerMappingData::setStart, calendarBook.getStart())
+				.with(SchedulerMappingData::setEnd, calendarBook.getEnd())
 				.build();
 	}
 
@@ -42,19 +39,16 @@ public final class BookingUtils {
 					.build());
 		});
 	}
-	
+
 	public static CalendarBook mappingCalendar(final SchedulerMappingData schedulerData, Resource selectedResource, User user) {
-		final String checkCode = generateCheckCode(schedulerData.getSubject(), 
-				schedulerData.getCalendar(), 
-				schedulerData.getStart(), 
-				schedulerData.getEnd());
+		final String checkCode = generateCheckCode();
 		final CalendarBook calendarBook = new CalendarBook();
-		
+
 		if (null == selectedResource) {
 			selectedResource = new Resource();
 			selectedResource.setId(NumberUtils.parseNumber(schedulerData.getCalendar(), Long.class));
 		}
-		
+
 		if (null == user) {
 			user = new User();
 			user.setName(schedulerData.getDescription());
@@ -62,26 +56,17 @@ public final class BookingUtils {
 			user.setEmail(schedulerData.getSubject());
 			user.setCheckSum(checkCode);
 		}
-		
+
 		calendarBook.setStart(schedulerData.getStart());
 		calendarBook.setEnd(schedulerData.getEnd());
-		
+
 		calendarBook.setResource(selectedResource);
 		calendarBook.setUserRef(user);
-		
+
 		return calendarBook;
 	}
-	
-	public static String generateCheckCode(final String email, final String resourceId, 
-			final LocalDateTime start, final LocalDateTime end) {
-		final StringBuilder hashCode = new StringBuilder();
-		
-		hashCode.append(Integer.toHexString(email.hashCode()))
-			.append(Integer.toHexString(resourceId.hashCode()))
-			.append(Integer.toHexString(start.hashCode()))
-			.append(Integer.toHexString(end.hashCode()));
-		
-		LOGGER.info("#### Check Code for Resource: {} is {} ####", resourceId, hashCode.toString().toUpperCase());
-		return hashCode.toString().toUpperCase();
+
+	public static String generateCheckCode() {
+		return RandomStringUtils.randomAlphanumeric(5).toUpperCase();
 	}
 }
