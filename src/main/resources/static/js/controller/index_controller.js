@@ -134,6 +134,9 @@
     		});
     	}
         
+        /*
+         * Perform Custom Summary Appointment View 
+         */
         function openSummaryDialog(event) {
         	var schedulerReference = {};
         	schedulerReference.scheduler = self.scheduler;
@@ -153,7 +156,7 @@
     		    controller: 'summaryDialogController',
                 controllerAs: 'summaryCnt',
     		});
-        }
+        }        
 	}]);
 	
 	appScheduler.controller("editDialogController", ['$scope', 'SchedulerService', function($scope, SchedulerService){
