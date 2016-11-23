@@ -3,7 +3,9 @@
  */
 package com.marco.controller;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
@@ -58,7 +60,7 @@ public class SchedulerController {
 	}
 
 	@RequestMapping(value = "/appointment/delete/{appointmentId}/{checkCode}", method = RequestMethod.DELETE)
-	public ResponseEntity<Long> deleteAppointment(@PathVariable("appointmentId") long appoitmentId,
+	public ResponseEntity<Map<String, String>> deleteAppointment(@PathVariable("appointmentId") String appoitmentId,
 			@PathVariable("checkCode") final String checkCode) {
 		LOGGER.info("Fetching & Deleting Appoitment with id: {}", appoitmentId);
 		try {
@@ -66,7 +68,7 @@ public class SchedulerController {
 		} catch (IllegalStateException e) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<>(appoitmentId, HttpStatus.OK);
+		return new ResponseEntity<>(Collections.singletonMap("id", appoitmentId), HttpStatus.OK);
 	}
 
 }

@@ -43,13 +43,13 @@ public class SchedulerServiceImpl implements SchedulerService {
 
 	@Autowired
 	private CalendarBookRepository calendarBookRepo;
-	
+
 	@Autowired
-	private ResourceRepository resourceRepo; 
-	
+	private ResourceRepository resourceRepo;
+
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private MailService mailService;
 
@@ -57,7 +57,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 	public List<SchedulerMappingData> findAllScheduler() {
 		final List<SchedulerMappingData> appointmentCalendars = new LinkedList<>();
 		List<CalendarBook> appointments = calendarBookRepo.findAll();
-		
+
 		appointments.forEach(calendarBook -> appointmentCalendars.add(BookingUtils.prepareCalendarData(calendarBook)));
 		return appointmentCalendars;
 	}
@@ -88,7 +88,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 	public List<SchedulerMappingData> findAllResource() {
 		final List<SchedulerMappingData> resourceCalendars = new LinkedList<>();
 		BookingUtils.mappingResourceData(resourceCalendars, resourceRepo.findAllByOrderByTypeDescIdAsc());
-		
+
 		return resourceCalendars;
 	}
 
@@ -97,25 +97,25 @@ public class SchedulerServiceImpl implements SchedulerService {
 	public SchedulerMappingData createScheduler(SchedulerMappingData scheduler) throws MessagingException {
 		final Resource selectedResource = resourceRepo.findOne(NumberUtils.parseNumber(scheduler.getCalendar(), Long.class));
 		final User user = userRepo.findByEmail(scheduler.getSubject());
-		
+
 		CalendarBook newCalendarBook = BookingUtils.mappingCalendar(scheduler, selectedResource, user);
-		
+
 		newCalendarBook = calendarBookRepo.save(newCalendarBook);
 		LOGGER.info("Generate new Calendar: {}", newCalendarBook.toString());
-		
+
 		LOGGER.info("Try to send Mail for confirm Scheduler");
 		mailService.sendCreationConfirmation(newCalendarBook);
-		
+
 		return BookingUtils.prepareCalendarData(newCalendarBook);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public void deleteScheduler(final Long appointnemtID, final String checkCode) throws IllegalStateException {
-		final CalendarBook toDelete = calendarBookRepo.findOne(appointnemtID);
-		
+	public void deleteScheduler(final String appointnemtID, final String checkCode) throws IllegalStateException {
+		final CalendarBook toDelete = calendarBookRepo.findByNaturalId(appointnemtID);
+
 		if (null != toDelete && checkCode.equalsIgnoreCase(toDelete.getCheckSum())) {
-			calendarBookRepo.delete(appointnemtID);
+			calendarBookRepo.delete(toDelete.getId());
 		} else {
 			throw new IllegalStateException("Not Appoitment Found");
 		}

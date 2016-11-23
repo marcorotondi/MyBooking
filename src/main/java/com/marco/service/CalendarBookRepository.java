@@ -24,4 +24,6 @@ public interface CalendarBookRepository extends JpaRepository<CalendarBook, Long
 	@Query("select cb from CalendarBook cb join fetch cb.resource join fetch cb.userRef where cb.id = :id")
 	CalendarBook reloadCalendar(@Param("id") Long id);
 
+	CalendarBook findByNaturalId(String NaturalId);
+
 }
