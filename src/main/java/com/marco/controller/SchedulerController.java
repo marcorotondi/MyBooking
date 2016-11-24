@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -51,12 +50,17 @@ public class SchedulerController {
 	}
 
 	@RequestMapping(value = "/appointment/create", method = RequestMethod.POST)
-	public ResponseEntity<SchedulerMappingData> createAppointment(@RequestBody @Valid SchedulerMappingData appoitment) throws MessagingException {
+	public ResponseEntity<SchedulerMappingData> createAppointment(@RequestBody @Valid SchedulerMappingData appoitment) {
 		LOGGER.info("Try to create new appointment: {}", appoitment.toString());
+		try {
 		appoitment = schedulerService.createScheduler(appoitment);
+		} catch (Exception e) {
+			LOGGER.error("Fail to save new Scheduler");
+			return new ResponseEntity<>(appoitment, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 
 		LOGGER.info("Succesfully create new appointment: {}", appoitment.getId());
-		return new ResponseEntity<>(appoitment, HttpStatus.OK);
+		return new ResponseEntity<>(appoitment, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/appointment/delete/{appointmentId}/{checkCode}", method = RequestMethod.DELETE)

@@ -18,8 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.hibernate.annotations.NaturalId;
-
 /**
  * @author Marco
  *
@@ -31,8 +29,6 @@ public class CalendarBook implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-
-	private String naturalId;
 
 	private LocalDateTime start;
 
@@ -63,22 +59,6 @@ public class CalendarBook implements Serializable {
 	 */
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	/**
-	 * @return the naturalId
-	 */
-	@NaturalId(mutable = false)
-	@Column(name = "NATURAL_ID")
-	public String getNaturalId() {
-		return naturalId;
-	}
-
-	/**
-	 * @param naturalId the naturalId to set
-	 */
-	public void setNaturalId(String naturalId) {
-		this.naturalId = naturalId;
 	}
 
 	/**
@@ -163,7 +143,6 @@ public class CalendarBook implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return String.format("CalendarBook [id=%s, naturalId=%s, start=%s, end=%s, check=%s]", id, naturalId,
-				start, end, checkSum);
+		return String.format("CalendarBook [id=%s, start=%s, end=%s, check=%s]", id, start, end, checkSum);
 	}
 }

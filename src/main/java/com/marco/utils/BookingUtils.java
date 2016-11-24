@@ -21,7 +21,7 @@ public final class BookingUtils {
 
 	public static SchedulerMappingData prepareCalendarData(final CalendarBook calendarBook) {
 		return GenericBuilder.of(SchedulerMappingData::new)
-				.with(SchedulerMappingData::setId, calendarBook.getNaturalId())
+				.with(SchedulerMappingData::setId, String.valueOf(calendarBook.getId()))
 				.with(SchedulerMappingData::setSubject, calendarBook.getUserRef().getEmail())
 				.with(SchedulerMappingData::setDescription, calendarBook.getUserRef().getName())
 				.with(SchedulerMappingData::setLocation, calendarBook.getUserRef().getSurname())
@@ -55,7 +55,6 @@ public final class BookingUtils {
 			user.setEmail(schedulerData.getSubject());
 		}
 
-		calendarBook.setNaturalId(schedulerData.getId());
 		calendarBook.setStart(schedulerData.getStart());
 		calendarBook.setEnd(schedulerData.getEnd());
 		calendarBook.setCheckSum(generateCheckCode());

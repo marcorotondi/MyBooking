@@ -112,7 +112,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void deleteScheduler(final String appointnemtID, final String checkCode) throws IllegalStateException {
-		final CalendarBook toDelete = calendarBookRepo.findByNaturalId(appointnemtID);
+		final CalendarBook toDelete = calendarBookRepo.findOne(Long.parseLong(appointnemtID));
 
 		if (null != toDelete && checkCode.equalsIgnoreCase(toDelete.getCheckSum())) {
 			calendarBookRepo.delete(toDelete.getId());

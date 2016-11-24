@@ -9,41 +9,9 @@
 	/* Index Controller HomePage */
 	appScheduler.controller("indexController", ['ngDialog', 'SchedulerService', function(ngDialog, SchedulerService){
 		var self = this;
-		// prepare the data
-        var appointmentSource = {
-        	async: false,
-        	dataType: "json", 
-            dataFields: [
-                { name: 'id', type: 'string' },
-                { name: 'description', type: 'string' },
-                { name: 'location', type: 'string' },
-                { name: 'subject', type: 'string' },
-                { name: 'calendar', type: 'string' },
-                { name: 'start', type: 'date' },
-                { name: 'end', type: 'date' },
-                { name: 'draggable', type: 'boolean'},
-                { name: 'resizable', type: 'boolean'}
-            ],
-            id: 'id',
-            url: "/public/api/schedulers",
-        };
-        
-        var resourceSource = {
-            	async: false,
-            	dataType: "json", 
-                dataFields: [
-                    { name: 'id', type: 'string' },
-                    { name: 'description', type: 'string' },
-                    { name: 'location', type: 'string' },
-                    { name: 'subject', type: 'string' },
-                    { name: 'calendar', type: 'string' }
-                ],
-                id: 'id',
-                url: "/public/api/resources",
-            };
-        
-        var appointmentAdapter = new $.jqx.dataAdapter(appointmentSource);
-        var resourceAdapter = new $.jqx.dataAdapter(resourceSource);
+		
+        var appointmentAdapter = new $.jqx.dataAdapter(SchedulerService.appointmentSource);
+        var resourceAdapter = new $.jqx.dataAdapter(SchedulerService.resourceSource);
         
         self.scheduler = {};
         self.settings = {
@@ -56,6 +24,7 @@
                 editDialog: false,
                 contextMenu: false,
                 theme: "bootstrap",
+                timeZone: "UTC",
                 resources: {
                     colorScheme: "scheme13",
                     dataField: "calendar",
@@ -103,8 +72,7 @@
                 ],
                 // Events #
                 cellDoubleClick: openEditDialog,
-                appointmentDoubleClick: openSummaryDialog,
-                appointmentAdd: performSave
+                appointmentDoubleClick: openSummaryDialog
         }
         
         /*
@@ -116,7 +84,7 @@
         	var owner = event.args.owner;
         	var resourceIndex = parseInt(cell.attributes[1].value);
         	
-        	schedulerReference.scheduler = self.scheduler;       	
+        	schedulerReference.scheduler = self.scheduler;     
         	schedulerReference.date = event.args.date.toDate();
         	schedulerReference.resource = owner.resources.source.records[resourceIndex - 1];
     		
@@ -155,39 +123,14 @@
                 controllerAs: 'summaryCnt',
     		});
         }        
-        
-        /*
-         * Perform Save on DB for new appoitment
-         */
-        function performSave(event) {
-        	var args = event.args; 
-        	var scheduler = event.owner;
-        	var appointment = args.appointment.originalData; 
-        	
-        	var resource = scheduler.resources.source.records.find(function(resource){
-    			return resource.calendar === appointment.calendar;
-    		});
-        	
-			
-			appointment.calendar = resource.id;
-			
-        	SchedulerService.appointment(appointment).then(
-				function(newAppoitment) {
-					// Nothing
-				},
-				function(errResponse){
-					console.error(errResponse.data.errors);
-					scheduler.deleteAppointment(appointment.id);
-	            }
-			);
-        }
 	}]);
 	
-	appScheduler.controller("editDialogController", ['$scope', function($scope){
+	appScheduler.controller("editDialogController", ['$scope', 'SchedulerService', function($scope, SchedulerService){
 		var self = this;
 		var scheduler = $scope.ngDialogData.scheduler;
+		var resource = $scope.ngDialogData.resource;
 		
-		self.resourceName = $scope.ngDialogData.resource.calendar;
+		self.resourceName = resource.calendar;
 		self.selectedStartTime = new Date($scope.ngDialogData.date);
 		
 		self.saveScheduler = function(isValid) {
@@ -200,12 +143,24 @@
 				appointment.description = self.userName;
 				appointment.location = self.userSurname;
 				appointment.subject = self.userEmail;
-				appointment.calendar = $scope.ngDialogData.resource.calendar;
+				appointment.calendar = resource.id;
 				appointment.start = new Date(selectedDate.setUTCHours(startTime.getHours(), startTime.getMinutes(), 0, 0)).toISOString(); 
 				appointment.end = new Date(selectedDate.setUTCHours(endTime.getHours(), endTime.getMinutes(), 0, 0)).toISOString();
 				
-				scheduler.addAppointment(appointment);
-				$scope.closeThisDialog();
+				//scheduler.addAppointment(appointment);
+				SchedulerService.appointment(appointment).then(
+					function(newAppoitment) {
+						var appointmentAdapter = new $.jqx.dataAdapter(SchedulerService.appointmentSource);
+
+						$('#schedulerAppoitment').jqxScheduler({
+							source : appointmentAdapter
+						});
+						$scope.closeThisDialog();
+					},
+					function(errResponse){
+						console.error(errResponse.data);
+			        }
+				);
 			}
 		}
 		
@@ -234,8 +189,8 @@
 		self.userName = appointment.originalData.description;
 		self.userSurname = appointment.originalData.location;
 		self.userEmail = appointment.originalData.subject;
-		self.selectedStartTime = formatTime(appointment.from.hour()) + ":" + formatTime(appointment.from.minute());
-		self.selectedEndTime = formatTime(appointment.to.hour()) + ":" + formatTime(appointment.to.minute());
+		self.selectedStartTime = formatTime(appointment.from);
+		self.selectedEndTime = formatTime(appointment.to);
 		self.appointmentId = appointment.id;
 		
 		self.deleteAppoitment = function(isValid) {
@@ -255,8 +210,12 @@
 		}
 		
 		//private function
-		function formatTime(timeToFormat) {
-			return (timeToFormat < 10 ? '0' + timeToFormat : timeToFormat);
+		function formatTime(dateTimeObj) {
+			dateTimeObj.timeZone = 'UTC';
+			var hour = (dateTimeObj.toDate()).getHours();
+			var minute = (dateTimeObj.toDate()).getMinutes();
+			
+			return (hour < 10 ? '0' + hour : hour) + ":" + (minute < 10 ? '0' + minute : minute);
 		};
 	}]);
 })();
