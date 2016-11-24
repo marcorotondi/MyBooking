@@ -212,8 +212,8 @@
 		//private function
 		function formatTime(dateTimeObj) {
 			dateTimeObj.timeZone = 'UTC';
-			var hour = (dateTimeObj.toDate()).getHours();
-			var minute = (dateTimeObj.toDate()).getMinutes();
+			var hour = (dateTimeObj.toDate()).getUTCHours();
+			var minute = (dateTimeObj.toDate()).getUTCMinutes();
 			
 			return (hour < 10 ? '0' + hour : hour) + ":" + (minute < 10 ? '0' + minute : minute);
 		};
