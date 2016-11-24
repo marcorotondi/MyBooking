@@ -7,7 +7,7 @@
 (function() {
 
 	/* Index Controller HomePage */
-	appScheduler.controller("indexController", ['ngDialog', function(ngDialog){
+	appScheduler.controller("indexController", ['ngDialog', 'SchedulerService', function(ngDialog, SchedulerService){
 		var self = this;
 		// prepare the data
         var appointmentSource = {
@@ -56,9 +56,6 @@
                 editDialog: false,
                 contextMenu: false,
                 theme: "bootstrap",
-                ready: function () {
-                    self.scheduler.ensureAppointmentVisible('id1');
-                },
                 resources: {
                     colorScheme: "scheme13",
                     dataField: "calendar",
@@ -106,7 +103,8 @@
                 ],
                 // Events #
                 cellDoubleClick: openEditDialog,
-                appointmentDoubleClick: openSummaryDialog
+                appointmentDoubleClick: openSummaryDialog,
+                appointmentAdd: performSave
         }
         
         /*
@@ -157,9 +155,35 @@
                 controllerAs: 'summaryCnt',
     		});
         }        
+        
+        /*
+         * Perform Save on DB for new appoitment
+         */
+        function performSave(event) {
+        	var args = event.args; 
+        	var scheduler = event.owner;
+        	var appointment = args.appointment.originalData; 
+        	
+        	var resource = scheduler.resources.source.records.find(function(resource){
+    			return resource.calendar === appointment.calendar;
+    		});
+        	
+			
+			appointment.calendar = resource.id;
+			
+        	SchedulerService.appointment(appointment).then(
+				function(newAppoitment) {
+					// Nothing
+				},
+				function(errResponse){
+					console.error(errResponse.data.errors);
+					scheduler.deleteAppointment(appointment.id);
+	            }
+			);
+        }
 	}]);
 	
-	appScheduler.controller("editDialogController", ['$scope', 'SchedulerService', function($scope, SchedulerService){
+	appScheduler.controller("editDialogController", ['$scope', function($scope){
 		var self = this;
 		var scheduler = $scope.ngDialogData.scheduler;
 		
@@ -173,23 +197,15 @@
 				var endTime = new Date(self.selectedEndTime);
 				var appointment = {};
 				
-				appointment.id = null;
 				appointment.description = self.userName;
 				appointment.location = self.userSurname;
 				appointment.subject = self.userEmail;
-				appointment.calendar = $scope.ngDialogData.resource.id;
+				appointment.calendar = $scope.ngDialogData.resource.calendar;
 				appointment.start = new Date(selectedDate.setUTCHours(startTime.getHours(), startTime.getMinutes(), 0, 0)).toISOString(); 
 				appointment.end = new Date(selectedDate.setUTCHours(endTime.getHours(), endTime.getMinutes(), 0, 0)).toISOString();
 				
-				SchedulerService.appointment(appointment).then(
-					function(newAppoitment) {
-						scheduler.addAppointment(newAppoitment);
-						$scope.closeThisDialog()
-					},
-					function(errResponse){
-						console.error(errResponse.data.errors);
-		            }
-				);
+				scheduler.addAppointment(appointment);
+				$scope.closeThisDialog();
 			}
 		}
 		
@@ -227,9 +243,9 @@
 			
 			if (isValid) {
 				SchedulerService.deleteAppointment(self.appointmentId, self.checkCode).then(
-					function(deleteAppoitment){
-						scheduler.deleteAppointment(deleteAppoitment);
-						$scope.closeThisDialog()
+					function(toDelete){
+						scheduler.deleteAppointment(toDelete.id);
+						$scope.closeThisDialog();
 					},
 					function(errResponse){
 						console.error(errResponse)

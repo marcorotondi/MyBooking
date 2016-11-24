@@ -21,11 +21,11 @@ public interface SchedulerService {
 	List<SchedulerMappingData> findAllByRangeDate(LocalDateTime startDate, LocalDateTime endDate);
 
 	List<SchedulerMappingData> findByDate(LocalDateTime currentDate);
-	
+
 	List<SchedulerMappingData> findAllResource();
-	
+
 	SchedulerMappingData createScheduler(SchedulerMappingData scheduler) throws MessagingException;
-	
-	void deleteScheduler(Long appointnemtID, String checkCode) throws IllegalStateException;
+
+	void deleteScheduler(String appointnemtID, String checkCode) throws IllegalStateException;
 
 }
