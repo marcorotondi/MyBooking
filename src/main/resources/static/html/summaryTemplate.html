@@ -9,6 +9,9 @@
   		</ul>
 	</div>
 	<div class="modal-body">
+		<div class="alert alert-danger" ng-show="summaryCnt.internalError">
+  			Fail To Delete Appoitment
+  		</div>
 		<dl>
 			<dt>Name</dt>
 			<dd>{{summaryCnt.userName}}</dd>
