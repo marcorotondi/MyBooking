@@ -130,6 +130,7 @@
 		var scheduler = $scope.ngDialogData.scheduler;
 		var resource = $scope.ngDialogData.resource;
 		
+		self.internalError = false;
 		self.resourceName = resource.calendar;
 		self.selectedStartTime = new Date($scope.ngDialogData.date);
 		
@@ -147,7 +148,7 @@
 				appointment.start = new Date(selectedDate.setUTCHours(startTime.getHours(), startTime.getMinutes(), 0, 0)).toISOString(); 
 				appointment.end = new Date(selectedDate.setUTCHours(endTime.getHours(), endTime.getMinutes(), 0, 0)).toISOString();
 				
-				//scheduler.addAppointment(appointment);
+				self.internalError = false;
 				SchedulerService.appointment(appointment).then(
 					function(newAppoitment) {
 						var appointmentAdapter = new $.jqx.dataAdapter(SchedulerService.appointmentSource);
@@ -158,7 +159,7 @@
 						$scope.closeThisDialog();
 					},
 					function(errResponse){
-						console.error(errResponse.data);
+						self.internalError = true;
 			        }
 				);
 			}
@@ -185,6 +186,7 @@
 		var scheduler = $scope.ngDialogData.scheduler;
 		var appointment = $scope.ngDialogData.appointment;
 		
+		self.internalError = false;
 		self.resourceName = $scope.ngDialogData.resource.calendar;
 		self.userName = appointment.originalData.description;
 		self.userSurname = appointment.originalData.location;
@@ -197,6 +199,7 @@
 			self.checkCodeRequire = true;
 			
 			if (isValid) {
+				self.internalError = false;
 				SchedulerService.deleteAppointment(self.appointmentId, self.checkCode).then(
 					function(toDelete){
 						scheduler.deleteAppointment(toDelete.id);
@@ -204,6 +207,7 @@
 					},
 					function(errResponse){
 						console.error(errResponse)
+						self.internalError = true;
 					}
 				);
 			}

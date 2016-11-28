@@ -14,10 +14,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marco.data.SchedulerMappingData;
@@ -35,25 +37,25 @@ public class SchedulerController {
 	@Autowired
 	private SchedulerService schedulerService;
 
-	@RequestMapping(value = "/schedulers", method = RequestMethod.GET)
+	@GetMapping(value = "/schedulers")
 	public ResponseEntity<List<SchedulerMappingData>> retriveScheduler() {
 		List<SchedulerMappingData> schedulerData = schedulerService.findAllScheduler();
 
 		return new ResponseEntity<>(schedulerData, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/resources", method = RequestMethod.GET)
+	@GetMapping(value = "/resources")
 	public ResponseEntity<List<SchedulerMappingData>> retriveResource() {
 		List<SchedulerMappingData> schedulerData = schedulerService.findAllResource();
 
 		return new ResponseEntity<>(schedulerData, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/appointment/create", method = RequestMethod.POST)
+	@PostMapping(value = "/appointment/create")
 	public ResponseEntity<SchedulerMappingData> createAppointment(@RequestBody @Valid SchedulerMappingData appoitment) {
 		LOGGER.info("Try to create new appointment: {}", appoitment.toString());
 		try {
-		appoitment = schedulerService.createScheduler(appoitment);
+			appoitment = schedulerService.createScheduler(appoitment);
 		} catch (Exception e) {
 			LOGGER.error("Fail to save new Scheduler");
 			return new ResponseEntity<>(appoitment, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -63,14 +65,14 @@ public class SchedulerController {
 		return new ResponseEntity<>(appoitment, HttpStatus.CREATED);
 	}
 
-	@RequestMapping(value = "/appointment/delete/{appointmentId}/{checkCode}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/appointment/delete/{appointmentId}/{checkCode}")
 	public ResponseEntity<Map<String, String>> deleteAppointment(@PathVariable("appointmentId") String appoitmentId,
 			@PathVariable("checkCode") final String checkCode) {
 		LOGGER.info("Fetching & Deleting Appoitment with id: {}", appoitmentId);
 		try {
 			schedulerService.deleteScheduler(appoitmentId, checkCode);
 		} catch (IllegalStateException e) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>(Collections.singletonMap("id", appoitmentId), HttpStatus.OK);
 	}

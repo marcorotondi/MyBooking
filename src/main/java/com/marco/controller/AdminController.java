@@ -16,10 +16,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marco.model.Resource;
@@ -37,7 +38,7 @@ public class AdminController {
 	@Autowired
 	private ResourceRepository resourceRepo;
 
-	@RequestMapping(value = "/admin/api/crudResource", method = RequestMethod.POST)
+	@PostMapping(value = "/admin/api/crudResource")
 	public ResponseEntity<Void> crudResource(@RequestBody @Valid Resource resource) {
 		LOGGER.info("Try To Creating / Update Resource {}", resource);
 
@@ -47,7 +48,7 @@ public class AdminController {
 		return new ResponseEntity<>(OK);
 	}
 
-	@RequestMapping(value = "/admin/api/delete/resource/{id}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/admin/api/delete/resource/{id}")
 	public ResponseEntity<Resource> deleteUser(@PathVariable("id") long id) {
 		LOGGER.info("Fetching & Deleting Resource with id: {}", id);
 
@@ -61,13 +62,13 @@ public class AdminController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
-	@RequestMapping(value = "/admin/api/resources.json", method = RequestMethod.GET)
+	@GetMapping(value = "/admin/api/resources.json")
 	public ResponseEntity<List<Resource>> getAllResources() {
 		final List<Resource> allResource = resourceRepo.findAll();
 		return new ResponseEntity<>(allResource, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/admin/api/summary.json", method = RequestMethod.GET)
+	@GetMapping(value = "/admin/api/summary.json")
 	public ResponseEntity<Map<String, Long>> getSummaryCounters() {
 		final Map<String, Long> counterMap = new HashMap<>();
 

@@ -11,6 +11,9 @@
 	<form class="form-horizontal" role="form" name="appointmentForm" 
 				novalidate ng-submit="dialogCnt.saveScheduler(appointmentForm.$valid)">
 		<div class="modal-body">
+			<div class="alert alert-danger" ng-show="dialogCnt.internalError">
+	  			Fail To Create new Appoitment
+  			</div>
        		<div class="form-group" ng-class="{'has-error': appointmentForm.$submitted && appointmentForm.name.$invalid}">
        			<label for="name">Name</label>
        			<input type="text" class="form-control input-sm" id="name" name="name" required
