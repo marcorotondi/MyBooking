@@ -99,7 +99,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 		final User user = userRepo.findByEmail(scheduler.getSubject());
 
 		CalendarBook newCalendarBook = BookingUtils.mappingCalendar(scheduler, selectedResource, user);
-
+		// TODO Check if exist appointment for resource in date (overlapping)
 		newCalendarBook = calendarBookRepo.save(newCalendarBook);
 		LOGGER.info("Generate new Calendar: {}", newCalendarBook.toString());
 
