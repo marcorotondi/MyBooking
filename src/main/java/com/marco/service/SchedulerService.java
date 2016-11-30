@@ -3,7 +3,6 @@
  */
 package com.marco.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -18,13 +17,9 @@ public interface SchedulerService {
 
 	List<SchedulerMappingData> findAllScheduler();
 
-	List<SchedulerMappingData> findAllByRangeDate(LocalDateTime startDate, LocalDateTime endDate);
-
-	List<SchedulerMappingData> findByDate(LocalDateTime currentDate);
-
 	List<SchedulerMappingData> findAllResource();
 
-	SchedulerMappingData createScheduler(SchedulerMappingData scheduler) throws MessagingException;
+	SchedulerMappingData createScheduler(SchedulerMappingData scheduler) throws MessagingException, IllegalStateException;
 
 	void deleteScheduler(String appointnemtID, String checkCode) throws IllegalStateException;
 

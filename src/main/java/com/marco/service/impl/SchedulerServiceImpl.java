@@ -3,13 +3,8 @@
  */
 package com.marco.service.impl;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.mail.MessagingException;
 
@@ -63,28 +58,6 @@ public class SchedulerServiceImpl implements SchedulerService {
 	}
 
 	@Override
-	public List<SchedulerMappingData> findAllByRangeDate(LocalDateTime startDate, LocalDateTime endDate) {
-		final List<SchedulerMappingData> appointmentCalendars = new LinkedList<>();
-		if (Objects.isNull(endDate)) {
-			endDate = startDate.plusDays(5L);
-		}
-
-		List<CalendarBook> appointments = calendarBookRepo.findByStartToEnd(GregorianCalendar.from(ZonedDateTime.of(startDate, ZoneId.systemDefault())),
-				GregorianCalendar.from(ZonedDateTime.of(endDate, ZoneId.systemDefault())));
-
-		if (!appointments.isEmpty()) {
-			appointments.forEach(calBook -> appointmentCalendars.add(BookingUtils.prepareCalendarData(calBook)));
-		}
-		return appointmentCalendars;
-	}
-
-	@Override
-	public List<SchedulerMappingData> findByDate(LocalDateTime currentDate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<SchedulerMappingData> findAllResource() {
 		final List<SchedulerMappingData> resourceCalendars = new LinkedList<>();
 		BookingUtils.mappingResourceData(resourceCalendars, resourceRepo.findAllByOrderByTypeDescIdAsc());
@@ -94,17 +67,21 @@ public class SchedulerServiceImpl implements SchedulerService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public SchedulerMappingData createScheduler(SchedulerMappingData scheduler) throws MessagingException {
+	public SchedulerMappingData createScheduler(SchedulerMappingData scheduler) throws MessagingException, IllegalStateException {
 		final Resource selectedResource = resourceRepo.findOne(NumberUtils.parseNumber(scheduler.getCalendar(), Long.class));
 		final User user = userRepo.findByEmail(scheduler.getSubject());
 
 		CalendarBook newCalendarBook = BookingUtils.mappingCalendar(scheduler, selectedResource, user);
-		// TODO Check if exist appointment for resource in date (overlapping)
-		newCalendarBook = calendarBookRepo.save(newCalendarBook);
-		LOGGER.info("Generate new Calendar: {}", newCalendarBook.toString());
+		
+		if (!calendarBookRepo.existOverlapping(newCalendarBook)) {
+			newCalendarBook = calendarBookRepo.save(newCalendarBook);
+			LOGGER.info("Generate new Calendar: {}", newCalendarBook.toString());
 
-		LOGGER.info("Try to send Mail for confirm Scheduler");
-		mailService.sendCreationConfirmation(newCalendarBook);
+			LOGGER.info("Try to send Mail for confirm Scheduler");
+			mailService.sendCreationConfirmation(newCalendarBook);
+		} else {
+			throw new IllegalStateException("Appoitment is in overlapping");
+		}
 
 		return BookingUtils.prepareCalendarData(newCalendarBook);
 	}

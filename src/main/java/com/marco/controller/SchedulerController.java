@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -56,7 +57,7 @@ public class SchedulerController {
 		LOGGER.info("Try to create new appointment: {}", appoitment.toString());
 		try {
 			appoitment = schedulerService.createScheduler(appoitment);
-		} catch (Exception e) {
+		} catch (MessagingException | IllegalStateException e) {
 			LOGGER.error("Fail to save new Scheduler");
 			return new ResponseEntity<>(appoitment, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
