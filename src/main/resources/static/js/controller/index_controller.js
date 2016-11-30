@@ -160,6 +160,11 @@
 					},
 					function(errResponse){
 						self.internalError = true;
+						if (errResponse.data.errorMessage) {
+							self.errorMessage = errResponse.data.errorMessage;
+						} else {
+							self.errorMessage = "Fail To Create new Appoitment";
+						}
 			        }
 				);
 			}

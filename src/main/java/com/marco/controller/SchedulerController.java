@@ -5,7 +5,6 @@ package com.marco.controller;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
@@ -53,13 +52,13 @@ public class SchedulerController {
 	}
 
 	@PostMapping(value = "/appointment/create")
-	public ResponseEntity<SchedulerMappingData> createAppointment(@RequestBody @Valid SchedulerMappingData appoitment) {
+	public ResponseEntity<?> createAppointment(@RequestBody @Valid SchedulerMappingData appoitment) {
 		LOGGER.info("Try to create new appointment: {}", appoitment.toString());
 		try {
 			appoitment = schedulerService.createScheduler(appoitment);
 		} catch (MessagingException | IllegalStateException e) {
 			LOGGER.error("Fail to save new Scheduler");
-			return new ResponseEntity<>(appoitment, HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("errorMessage", e.getMessage()));
 		}
 
 		LOGGER.info("Succesfully create new appointment: {}", appoitment.getId());
@@ -67,13 +66,13 @@ public class SchedulerController {
 	}
 
 	@DeleteMapping(value = "/appointment/delete/{appointmentId}/{checkCode}")
-	public ResponseEntity<Map<String, String>> deleteAppointment(@PathVariable("appointmentId") String appoitmentId,
+	public ResponseEntity<?> deleteAppointment(@PathVariable("appointmentId") String appoitmentId,
 			@PathVariable("checkCode") final String checkCode) {
 		LOGGER.info("Fetching & Deleting Appoitment with id: {}", appoitmentId);
 		try {
 			schedulerService.deleteScheduler(appoitmentId, checkCode);
 		} catch (IllegalStateException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
 		return new ResponseEntity<>(Collections.singletonMap("id", appoitmentId), HttpStatus.OK);
 	}

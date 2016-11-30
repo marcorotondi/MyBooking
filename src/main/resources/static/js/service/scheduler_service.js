@@ -56,7 +56,7 @@
 	                deferred.resolve(response.data);
 	            },
 	            function(errResponse){
-	                console.error('Error while creating or update Appoitment');
+	                console.error(errResponse.data.errorMessage);
 	                deferred.reject(errResponse);
 	            }
 	        );
