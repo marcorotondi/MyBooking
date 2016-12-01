@@ -8,7 +8,21 @@
 		var REST_SERVICE_URI = '/admin/api/';
 		 
 	    var factory = {
-	        fetchAllResource: fetchAllResource,
+	        resources: function() {
+	        	var deferred = $q.defer();
+	        	
+	        	$http.get(REST_SERVICE_URI + "resourcesType.json").then(
+	        		function (response){
+		                deferred.resolve(response);
+	        		},
+	        		function (errResponse){
+	        			console.error('Error while fetching Resource');
+		                deferred.reject(errResponse);
+	        		});
+	        	
+	        	return deferred.promise;
+	        },
+	    	fetchAllResource: fetchAllResource,
 	        createUpdateResource: createUpdateResource,
 	        deleteResource: deleteResource,
 	        summary: summary

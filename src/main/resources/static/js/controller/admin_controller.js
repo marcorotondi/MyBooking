@@ -23,7 +23,7 @@
 			            	params.total(d.length);
 			            	var rows = $filter('orderBy')(d, params.orderBy());
 				        	rows = rows.slice((params.page() - 1) * params.count(), params.page() * params.count());
-				        	 
+				        	
 				        	return rows;
 			             },
 			             function(errResponse){
@@ -32,6 +32,8 @@
 		        	);
 		        }
 		    });
+			
+			self.resourceTypes = ResourceService.resources();
 		
 			self.addResource = function(isValid) {
 				if (isValid) {
