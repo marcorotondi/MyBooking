@@ -11,6 +11,12 @@
 			var self = this;	
 				
 			self.showForm = false;
+			self.resourceTypes = [];
+			
+			ResourceService.resources().then(function(data) {
+				self.resourceTypes = data;
+			});
+			
 			self.tableParams = new NgTableParams({ 
 		    	sorting: {
 		    		description: 'asc'     
@@ -32,10 +38,6 @@
 		        	);
 		        }
 		    });
-			
-			self.resourceTypes = ResourceService.resources().then(function(data) {
-				return data;
-			});
 		
 			self.addResource = function(isValid) {
 				if (isValid) {
