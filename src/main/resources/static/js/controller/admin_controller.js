@@ -33,7 +33,9 @@
 		        }
 		    });
 			
-			self.resourceTypes = ResourceService.resources();
+			self.resourceTypes = ResourceService.resources().then(function(data) {
+				return data;
+			});
 		
 			self.addResource = function(isValid) {
 				if (isValid) {

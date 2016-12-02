@@ -74,7 +74,7 @@
             						<span ng-switch-default class="editable-text">{{row.type}}</span>
             						<div class="controls" ng-class="type.$invalid && type.$dirty ? 'has-error' : ''" ng-switch-when="true">
               							<select ng-model="row.type" required autofocus class="editable-input form-control input-sm"> 
-              								<option ng-repeat="type in adminResCnt.resourceTypes" value="{{type}}">{{type.defaultName}}</option>	
+              								<option ng-repeat="resType in adminResCnt.resourceTypes" value="{{resType.key}}">{{resType.value}}</option>	
 										</select>
             						</div>
           						</td>

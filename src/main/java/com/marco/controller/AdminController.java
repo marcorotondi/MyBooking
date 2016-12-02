@@ -5,8 +5,8 @@ package com.marco.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.marco.data.TypeData;
 import com.marco.model.Resource;
 import com.marco.service.ResourceRepository;
 import com.marco.type.ResourceType;
@@ -82,10 +83,11 @@ public class AdminController {
 	}
 
 	@GetMapping(value = "/admin/api/resourcesType.json")
-	public ResponseEntity<Map<String, ResourceType>> resourcesType(){
-		final Map<String, ResourceType> types = new LinkedHashMap<>();
+	public ResponseEntity<List<TypeData>> resourcesType(){
+		final List<TypeData> types = new ArrayList<>();
+		
 		for(ResourceType resType : ResourceType.values()) {
-			types.put(resType.name(), resType);
+			types.add(new TypeData(resType.name(), resType.getDefaultName()));
 		}
 
 		return new ResponseEntity<>(types, OK);
