@@ -6,6 +6,7 @@ package com.marco.controller;
 import static org.springframework.http.HttpStatus.OK;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,5 +79,15 @@ public class AdminController {
 		counterMap.put("resource_obj", resourceRepo.countByType(ResourceType.OBJECT));
 
 		return new ResponseEntity<>(counterMap, OK);
+	}
+
+	@GetMapping(value = "/admin/api/resourcesType.json")
+	public ResponseEntity<Map<String, ResourceType>> resourcesType(){
+		final Map<String, ResourceType> types = new LinkedHashMap<>();
+		for(ResourceType resType : ResourceType.values()) {
+			types.put(resType.name(), resType);
+		}
+
+		return new ResponseEntity<>(types, OK);
 	}
 }

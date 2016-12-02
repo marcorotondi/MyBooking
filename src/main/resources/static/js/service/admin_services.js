@@ -8,6 +8,20 @@
 		var REST_SERVICE_URI = '/admin/api/';
 		 
 	    var factory = {
+	    	resources: function() {
+	    		var deferred = $q.defer();
+	
+	    		$http.get(REST_SERVICE_URI + "resourcesType.json").then(
+	    				function (response){
+	    					deferred.resolve(response.data);
+	    				},
+	    				function (errResponse){
+	    					console.error('Error while fetching Resource');
+	    					deferred.reject(errResponse);
+	    				});
+	
+	    		return deferred.promise;
+	    	},
 	        fetchAllResource: function () {
 		        var deferred = $q.defer();
 		        
@@ -62,7 +76,7 @@
 			    return deferred.promise;
 		    }
 	    };
-	 
+	    
 	    return factory;
 	}]);
 	
