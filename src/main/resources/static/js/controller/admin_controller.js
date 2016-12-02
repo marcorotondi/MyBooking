@@ -105,14 +105,14 @@
 				var confimDel = confirm("Are You Scure to Remove this resource?");
 				if (confimDel) {
 					ResourceService.deleteResource(row.id).then(
-							function() {
-								self.tableParams.reload();
-								row.isEditing = false;
-								MessageService.signalResourceChange();
-							},
-							function(errResponse){
-								console.error('Error while delete Resource');
-							});
+						function() {
+							self.tableParams.reload();
+							row.isEditing = false;
+							MessageService.signalResourceChange();
+						},
+						function(errResponse){
+							console.error('Error while delete Resource');
+						});
 				}
 			}
 	}]);
