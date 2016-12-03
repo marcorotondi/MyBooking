@@ -17,7 +17,7 @@ xmlns:ng="http://angularjs.org">
 			<label for="type" th:text="'Typology'"></label>
 			<select class="form-control" name="type" ng-model="adminResCnt.type" required>
 				<option th:value="''" th:text="'Select a Resource Type'"></option>	
-				<option th:each="type : ${resourceTypes}" th:value="${type}" th:text="${type.defaultName}" />	
+				<option ng-repeat="resType in adminResCnt.resourceTypes" value="{{resType.key}}">{{resType.value}}</option>		
 			</select>
 			<div class="help-block" ng-messages="addForm.type.$error" ng-if="addForm.$submitted">
 				<p ng-message="required">Resource Type is required.</p>

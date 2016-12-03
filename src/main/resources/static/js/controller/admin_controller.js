@@ -38,8 +38,8 @@
 		        	);
 		        }
 		    });
-		
-			self.addResource = function(isValid) {
+			
+			self.addResource = function(form, isValid) {
 				if (isValid) {
 					var resource = {
 							description: self.description,
@@ -57,11 +57,15 @@
 								console.error('Error while creating Resource');
 							}
 					);
-				
-					// Making the fields empty
-					self.description = '';
-					self.type = '';
-					self.id = ''
+					
+					if (form) {
+						form.$setPristine(); 
+						
+						// Making the fields empty
+						self.description = '';
+						self.type = '';
+						self.id = ''
+					}
 				}
 			}
 			
