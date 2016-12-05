@@ -47,11 +47,11 @@
 	          		<div class="col-md-8">
 		          		<div class="btn-group" role="group" aria-label="Main command">
 		  					<button type="button" class="btn btn-primary" th:text="'Add New Resource'" 
-		  						ng-click="adminResCnt.showForm = !adminResCnt.showForm; adminResCnt.resetForm(addForm);"></button>
+		  						ng-click="adminResCnt.showForm = !adminResCnt.showForm; "></button>
 		  				</div>
 		  				<div class="add panel panel-default form-container" ng-show="adminResCnt.showForm">
 	  						<div class="panel-body">
-								<form class="form" role="form" name="addForm" novalidate ng-submit="adminResCnt.addResource(addForm.$valid)">
+								<form class="form" role="form" name="addForm" novalidate ng-submit="adminResCnt.addResource(addForm, addForm.$valid)">
 									<div th:replace="admin/resourceForm :: formInput"></div>	
 								</form>
 							</div>
