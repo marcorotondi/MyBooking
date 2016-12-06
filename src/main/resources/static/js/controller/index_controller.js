@@ -162,6 +162,9 @@
 						self.internalError = true;
 						if (errResponse.data.errorMessage) {
 							self.errorMessage = errResponse.data.errorMessage;
+							$('#schedulerAppoitment').jqxScheduler({
+								source : appointmentAdapter
+							});
 						} else {
 							self.errorMessage = "Fail To Create new Appoitment";
 						}
