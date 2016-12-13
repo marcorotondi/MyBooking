@@ -85,6 +85,7 @@
         	var resourceIndex = parseInt(cell.attributes[1].value);
         	
         	schedulerReference.scheduler = self.scheduler;     
+        	schedulerReference.schedulerSetting = self.settings;
         	schedulerReference.date = event.args.date.toDate();
         	schedulerReference.resource = owner.resources.source.records[resourceIndex - 1];
     		
@@ -105,8 +106,8 @@
          */
         function openSummaryDialog(event) {
         	var schedulerReference = {};
-        	schedulerReference.scheduler = self.scheduler;
         	
+        	schedulerReference.scheduler = self.scheduler;
         	schedulerReference.appointment = event.args.appointment;
     		schedulerReference.resource = self.scheduler.resources.source.records.find(function(resource){
     			return resource.calendar === event.args.appointment.resourceId
@@ -127,7 +128,6 @@
 	
 	appScheduler.controller("editDialogController", ['$scope', 'SchedulerService', function($scope, SchedulerService){
 		var self = this;
-		var scheduler = $scope.ngDialogData.scheduler;
 		var resource = $scope.ngDialogData.resource;
 		
 		self.internalError = false;
@@ -152,8 +152,9 @@
 				SchedulerService.appointment(appointment).then(
 					function(newAppoitment) {
 						var appointmentAdapter = new $.jqx.dataAdapter(SchedulerService.appointmentSource);
-
-						$('#schedulerAppoitment').jqxScheduler({
+						console.info($scope.ngDialogData.schedulerSetting);
+						
+						$scope.ngDialogData.schedulerSetting.jqxScheduler({
 							source : appointmentAdapter
 						});
 						$scope.closeThisDialog();
@@ -162,9 +163,6 @@
 						self.internalError = true;
 						if (errResponse.data.errorMessage) {
 							self.errorMessage = errResponse.data.errorMessage;
-							$('#schedulerAppoitment').jqxScheduler({
-								source : appointmentAdapter
-							});
 						} else {
 							self.errorMessage = "Fail To Create new Appoitment";
 						}
