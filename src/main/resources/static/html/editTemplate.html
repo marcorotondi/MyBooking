@@ -40,12 +40,12 @@
 				</div>
        		</div>
        		<div class="form-group" ng-class="{'has-error': appointmentForm.$submitted && appointmentForm.selectedStartTime.$invalid}">
-    			<label class="control-label">Start Time</label>
+    			<label for="startTime">Start Time</label>
     			<div class="input-group">
-    				<input type="text" class="form-control" size="8" ng-model="dialogCnt.selectedStartTime" name="selectedStartTime"
+    				<input type="text" class="form-control" id="startTime" size="8" ng-model="dialogCnt.selectedStartTime" name="selectedStartTime"
     				data-time-format="HH:mm" data-time-type="number" data-min-time="07:00" data-max-time="20:00" 
     				data-length="1" data-minute-step="30" data-arrow-behavior="picker"
-    				data-autoclose="1" name="timeStart" bs-timepicker required placeholder="Enter Appointment start time" />	
+    				data-autoclose="1" bs-timepicker required placeholder="Enter Appointment start time" />	
     				<span class="input-group-addon">
     					<i class="glyphicon glyphicon-time"></i>
     				</span>
@@ -55,12 +55,12 @@
 				</div>
   			</div>
        		<div class="form-group" ng-class="{'has-error': appointmentForm.$submitted && appointmentForm.selectedEndTime.$invalid}">
-       			<label class="control-label">End Time</label>
+       			<label for="endTime">End Time</label>
        			<div class="input-group">
-	    			<input type="text" class="form-control" size="8" ng-model="dialogCnt.selectedEndTime" name="selectedEndTime"
+	    			<input type="text" class="form-control" id="endTime" size="8" ng-model="dialogCnt.selectedEndTime" name="selectedEndTime"
 	    				data-time-format="HH:mm" data-time-type="number" data-min-time="07:00" data-max-time="20:00" 
 	    				data-length="1" data-minute-step="30" data-arrow-behavior="picker"
-	    				data-autoclose="1" name="timeEnd" bs-timepicker required placeholder="Enter Appointment end time" />
+	    				data-autoclose="1" bs-timepicker required placeholder="Enter Appointment end time" />
 	    			<span class="input-group-addon">
     					<i class="glyphicon glyphicon-time"></i>
     				</span>

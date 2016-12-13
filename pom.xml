@@ -99,7 +99,7 @@
 		<dependency>
 		  <groupId>org.webjars</groupId>
 		  <artifactId>angularjs</artifactId>
-		  <version>1.5.8</version>
+		  <version>1.6.0</version>
 		</dependency>
 		<dependency>
 		  <groupId>org.webjars</groupId>
@@ -130,11 +130,6 @@
     		<groupId>org.webjars.bower</groupId>
     		<artifactId>angular-strap</artifactId>
     		<version>2.3.8</version>
-		</dependency>
-		<dependency>
-    		<groupId>org.webjars.bower</groupId>
-    		<artifactId>angular-messages</artifactId>
-    		<version>1.5.8</version>
 		</dependency>
 		<!-- End WebJars -->
 		
