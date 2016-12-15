@@ -4,10 +4,14 @@ Booking Resource
 Spring Boot webapp for booking a resource
 Use Thymeleaf, Bootstrap, AngularJS
 
-- Permit define new Resource
-- Permit define change Resource
-- Permit delete a Resource
+Base functionality is complete.
 
-After base function I planned to move it to different profile and use DOcker container image
+TODO:
+Plan configure profile for dev and prod
+Plan use docker for product with mysql db container
+Plan add Unit and Integration Test
 
+Note:
+For use application you have to configure a smtp server on configuration.
+For local usage i use smtpFake
 
