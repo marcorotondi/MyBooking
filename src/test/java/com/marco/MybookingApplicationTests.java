@@ -14,7 +14,37 @@ import com.marco.utils.BookingUtils;
 public class MybookingApplicationTests {
 
 	@Test
-	public void CheckCode() {
+	public void resourceRepositoryTest() {
+
+	}
+
+	@Test
+	public void verifyCalendarOverlapping() {
+
+	}
+
+	@Test
+	public void createSchedulerTest() {
+
+	}
+
+	@Test
+	public void deleteSchedulerTest() {
+
+	}
+
+	@Test
+	public void crudResourceAdminControllerTest() {
+
+	}
+
+	@Test
+	public void deleteUserAdminControllerTest() {
+
+	}
+
+	@Test
+	public void verifyGenerationCheckCode() {
 		String checkCode = BookingUtils.generateCheckCode();
 
 		assertNotEquals("", checkCode);

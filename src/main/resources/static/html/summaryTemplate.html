@@ -24,7 +24,7 @@
 			<dt>End Time</dt>
 			<dd>{{summaryCnt.selectedEndTime}}</dd>
 		</dl>
-		<form class="form-horizontal" role="form" name="summaryForm" >
+		<form class="form-horizontal" role="form" name="summaryForm" novalidate >
 			<div class="form-group" ng-show="summaryCnt.checkCodeRequire" 
 				ng-class="{'has-error': summaryForm.checkCode.$touched && summaryForm.checkCode.$invalid}">
 				<label for="checkCode">Chek Code</label>
