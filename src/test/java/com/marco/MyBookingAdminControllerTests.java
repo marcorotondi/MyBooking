@@ -3,22 +3,18 @@
  */
 package com.marco;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-import static org.springframework.http.HttpStatus.OK;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.marco.controller.AdminController;
 import com.marco.model.Resource;
+import com.marco.service.ResourceRepository;
 import com.marco.type.ResourceType;
 
 /**
@@ -33,6 +29,9 @@ public class MyBookingAdminControllerTests {
 	@Autowired
 	private AdminController adminController;
 	
+	@Autowired
+	private ResourceRepository resourceRepo;
+	
 	@Before
 	public void setUp(){
 		final Resource resource = new Resource();
@@ -42,14 +41,11 @@ public class MyBookingAdminControllerTests {
 		resource.setDescription("This is for Test");
 		resource.setType(ResourceType.CAR);
 		
-		Mockito.when(adminController.crudResource(resource)).thenReturn(
-				new ResponseEntity<Void>(OK));
+		Mockito.when(resourceRepo.save(resource)).thenReturn(resource);
 		
-		Mockito.when(adminController.deleteUser(userDelete)).thenReturn(
-				new ResponseEntity<Resource>(NO_CONTENT));
+		Mockito.doNothing().when(resourceRepo).delete(userDelete);
 		
-		Mockito.when(adminController.deleteUser(userDeleteKO)).thenReturn(
-				new ResponseEntity<Resource>(NOT_FOUND));
+		Mockito.doThrow(new RuntimeException()).when(resourceRepo).delete(userDeleteKO);
 	}
 
 	@Test
