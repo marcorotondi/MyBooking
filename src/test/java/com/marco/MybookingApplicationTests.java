@@ -19,21 +19,6 @@ public class MybookingApplicationTests {
 	}
 
 	@Test
-	public void verifyCalendarOverlapping() {
-
-	}
-
-	@Test
-	public void createSchedulerTest() {
-
-	}
-
-	@Test
-	public void deleteSchedulerTest() {
-
-	}
-
-	@Test
 	public void verifyGenerationCheckCode() {
 		String checkCode = BookingUtils.generateCheckCode();
 

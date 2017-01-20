@@ -1,12 +1,13 @@
 /**
  * 
  */
-package com.marco;
+package com.marco.configuration;
 
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 
 import com.marco.controller.AdminController;
+import com.marco.controller.SchedulerController;
 import com.marco.service.ResourceRepository;
 
 /**
@@ -23,6 +24,11 @@ public class ControllerConfigTestConfiguration {
 	@Bean
 	public AdminController adminController() {
 		return new AdminController();
+	}
+	
+	@Bean
+	public SchedulerController schedulerController() {
+		return new SchedulerController();
 	}
 
 }

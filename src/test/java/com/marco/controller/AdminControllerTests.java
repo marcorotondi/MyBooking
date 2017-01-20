@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.marco;
+package com.marco.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.marco.configuration.ControllerConfigTestConfiguration;
 import com.marco.controller.AdminController;
 import com.marco.model.Resource;
 import com.marco.service.ResourceRepository;
@@ -33,7 +34,7 @@ import com.marco.utils.TestUtils;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = {ControllerConfigTestConfiguration.class})
-public class MyBookingAdminControllerTests {
+public class AdminControllerTests {
 	
 	@Autowired
 	private AdminController adminController;
