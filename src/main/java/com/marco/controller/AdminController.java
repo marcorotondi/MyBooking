@@ -51,7 +51,7 @@ public class AdminController {
 	}
 
 	@DeleteMapping(value = "/admin/api/delete/resource/{id}")
-	public ResponseEntity<Resource> deleteUser(@PathVariable("id") long id) {
+	public ResponseEntity<Void> deleteResource(@PathVariable("id") long id) {
 		LOGGER.info("Fetching & Deleting Resource with id: {}", id);
 
 		final Resource res = resourceRepo.findOne(id);

@@ -3,19 +3,28 @@
  */
 package com.marco;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.marco.controller.AdminController;
 import com.marco.model.Resource;
 import com.marco.service.ResourceRepository;
 import com.marco.type.ResourceType;
+import com.marco.utils.TestUtils;
 
 /**
  * @author marco.rotondi
@@ -35,25 +44,46 @@ public class MyBookingAdminControllerTests {
 	@Before
 	public void setUp(){
 		final Resource resource = new Resource();
-		final long userDelete = 1L;
-		final long userDeleteKO = -1L;
+		final long resourceToDelete = 1L;
+		final long resourceKoDelete = -1L;
 		
+		resource.setId(999L);
 		resource.setDescription("This is for Test");
 		resource.setType(ResourceType.CAR);
 		
-		Mockito.when(resourceRepo.save(resource)).thenReturn(resource);
+		Mockito.when(resourceRepo.save(resource)).thenReturn(new Resource());
+			
+		Mockito.when(resourceRepo.findOne(resourceToDelete)).thenReturn(new Resource());
 		
-		Mockito.doNothing().when(resourceRepo).delete(userDelete);
+		Mockito.doNothing().when(resourceRepo).delete(resourceToDelete);
 		
-		Mockito.doThrow(new RuntimeException()).when(resourceRepo).delete(userDeleteKO);
+		Mockito.doThrow(new RuntimeException()).when(resourceRepo).delete(resourceKoDelete);
 	}
 
 	@Test
-	public void crudResourceAdminControllerTest() {
+	public void testCrudAdminController() throws Exception {
+		final MockMvc mockMvc = MockMvcBuilders.standaloneSetup(adminController).build();
+		final Resource resource = new Resource();
+		resource.setId(999L);
+		resource.setDescription("This is for Test");
+		resource.setType(ResourceType.CAR);
+		
+		mockMvc.perform(post("/admin/api/crudResource")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtils.asJsonString(resource)))
+				.andDo(print())
+				.andExpect(status().isOk());
 	}
 
 	@Test
-	public void deleteUserAdminControllerTest() {
-
+	public void testDeleteUserController() throws Exception {
+		MockMvc mokMvc = MockMvcBuilders.standaloneSetup(adminController).build();
+		mokMvc.perform(delete("/admin/api/delete/resource/1"))
+			.andDo(print())
+			.andExpect(status().is2xxSuccessful());
+		
+		mokMvc.perform(delete("/admin/api/delete/resource/-1"))
+			.andDo(print())
+			.andExpect(status().is4xxClientError());
 	}
 }
