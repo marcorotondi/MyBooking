@@ -5,23 +5,16 @@ package com.marco.controller;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import com.marco.configuration.MyBookingTestConfiguration;
+import com.marco.MybookingApplicationTests;
 import com.marco.service.ResourceRepository;
 
 /**
  * @author marco.rotondi
  *
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@ContextConfiguration(classes = {MyBookingTestConfiguration.class})
-public class SchedulerControllerTests {
+public class SchedulerControllerTests extends MybookingApplicationTests {
 
 	@Autowired
 	private SchedulerController schedulerController;

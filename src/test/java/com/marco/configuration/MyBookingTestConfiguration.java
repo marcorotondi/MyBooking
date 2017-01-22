@@ -4,23 +4,35 @@
 package com.marco.configuration;
 
 import org.mockito.Mockito;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import com.marco.controller.AdminController;
 import com.marco.controller.SchedulerController;
 import com.marco.service.CalendarBookRepository;
+import com.marco.service.ResourceRepository;
+import com.marco.service.SchedulerService;
 
 /**
  * @author marco.rotondi
  *
  */
-@Configuration
+@TestConfiguration
 public class MyBookingTestConfiguration {
 
 	@Bean
 	public CalendarBookRepository calendarBookRepo() {
 		return Mockito.mock(CalendarBookRepository.class);
+	}
+
+	@Bean
+	public ResourceRepository resourceRepo() {
+		return Mockito.mock(ResourceRepository.class);
+	}
+
+	@Bean
+	public SchedulerService schedulerService() {
+		return Mockito.mock(SchedulerService.class);
 	}
 
 	@Bean

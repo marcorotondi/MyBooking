@@ -7,24 +7,17 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import com.marco.configuration.MyBookingTestConfiguration;
+import com.marco.MybookingApplicationTests;
 import com.marco.model.CalendarBook;
 
 /**
  * @author Marco
  *
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@ContextConfiguration(classes = {MyBookingTestConfiguration.class})
-public class ServiceTests {
+public class ServiceTests extends MybookingApplicationTests {
 
 	@Autowired
 	private CalendarBookRepository calendarBookRepo;
