@@ -14,11 +14,6 @@ import com.marco.utils.BookingUtils;
 public class MybookingApplicationTests {
 
 	@Test
-	public void resourceRepositoryTest() {
-
-	}
-
-	@Test
 	public void verifyGenerationCheckCode() {
 		String checkCode = BookingUtils.generateCheckCode();
 

@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.marco.configuration.ControllerConfigTestConfiguration;
+import com.marco.configuration.MyBookingTestConfiguration;
 import com.marco.controller.AdminController;
 import com.marco.model.Resource;
 import com.marco.service.ResourceRepository;
@@ -33,7 +33,7 @@ import com.marco.utils.TestUtils;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(classes = {ControllerConfigTestConfiguration.class})
+@ContextConfiguration(classes = {MyBookingTestConfiguration.class})
 public class AdminControllerTests {
 	
 	@Autowired

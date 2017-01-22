@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.marco.controller;
 
@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.marco.configuration.ControllerConfigTestConfiguration;
+import com.marco.configuration.MyBookingTestConfiguration;
 import com.marco.service.ResourceRepository;
 
 /**
@@ -20,22 +20,17 @@ import com.marco.service.ResourceRepository;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(classes = {ControllerConfigTestConfiguration.class})
+@ContextConfiguration(classes = {MyBookingTestConfiguration.class})
 public class SchedulerControllerTests {
-	
+
 	@Autowired
 	private SchedulerController schedulerController;
-	
+
 	@Autowired
 	private ResourceRepository resourceRepo;
-	
+
 	@Before
 	public void setUp() {
-		
-	}
-	
-	@Test
-	public void testVerifyCalendarOverlapping() {
 
 	}
 
