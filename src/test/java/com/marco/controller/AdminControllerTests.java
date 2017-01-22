@@ -10,13 +10,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
-import com.marco.MybookingApplicationTests;
 import com.marco.model.Resource;
 import com.marco.service.ResourceRepository;
 import com.marco.type.ResourceType;
@@ -26,16 +30,22 @@ import com.marco.utils.TestUtils;
  * @author marco.rotondi
  *
  */
-public class AdminControllerTests extends MybookingApplicationTests {
+@RunWith(SpringRunner.class)
+@WebMvcTest(controllers = AdminController.class)
+public class AdminControllerTests {
+
+	private MockMvc mockMvc;
 
 	@Autowired
-	private AdminController adminController;
+	private WebApplicationContext webApplicationContext;
 
-	@Autowired
+	@MockBean
 	private ResourceRepository resourceRepo;
 
 	@Before
 	public void setUp(){
+		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
 		final Resource resource = new Resource();
 		final long resourceToDelete = 1L;
 		final long resourceKoDelete = -1L;
@@ -55,7 +65,6 @@ public class AdminControllerTests extends MybookingApplicationTests {
 
 	@Test
 	public void testCrudAdminController() throws Exception {
-		final MockMvc mockMvc = MockMvcBuilders.standaloneSetup(adminController).build();
 		final Resource resource = new Resource();
 		resource.setId(999L);
 		resource.setDescription("This is for Test");
@@ -70,12 +79,11 @@ public class AdminControllerTests extends MybookingApplicationTests {
 
 	@Test
 	public void testDeleteUserController() throws Exception {
-		MockMvc mokMvc = MockMvcBuilders.standaloneSetup(adminController).build();
-		mokMvc.perform(delete("/admin/api/delete/resource/1"))
+		mockMvc.perform(delete("/admin/api/delete/resource/1"))
 		.andDo(print())
 		.andExpect(status().is2xxSuccessful());
 
-		mokMvc.perform(delete("/admin/api/delete/resource/-1"))
+		mockMvc.perform(delete("/admin/api/delete/resource/-1"))
 		.andDo(print())
 		.andExpect(status().is4xxClientError());
 	}
