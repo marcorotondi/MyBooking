@@ -3,8 +3,11 @@
  */
 package com.marco.controller;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Matchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
@@ -15,8 +18,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -48,42 +49,20 @@ public class SchedulerControllerTests {
 
 	@MockBean
 	private SchedulerService schedulerService;
-	
+
 	@MockBean
 	private ResourceRepository resourceRepo;
-	
+
 	@MockBean
 	private UserRepository userRepo;
-	
+
 	@MockBean
 	private MailService mailService;
-	
-	private SchedulerMappingData scheduler;
 
 	@Before
 	public void setUp() throws IllegalStateException, MessagingException {
-		scheduler = new SchedulerMappingData();
-		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-		
-		Mockito.when(schedulerService.createScheduler(scheduler)).then(new Answer<Object>() {
-
-			@Override
-			public Object answer(InvocationOnMock invocation) throws Throwable {
-				SchedulerMappingData result = invocation.getArgumentAt(0,  SchedulerMappingData.class);
-				result.setId("AAAA");
-				return result;
-			}
-		});
-	}
-
-	@Test
-	public void testCreateScheduler() throws Exception {
-		mockMvc.perform(post("/public/api//appointment/create")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(TestUtils.asJsonString(scheduler)))
-		.andDo(print())
-		.andExpect(status().is4xxClientError());
-		
+		final SchedulerMappingData scheduler = new SchedulerMappingData();
+		scheduler.setId("999");
 		scheduler.setCalendar("5");
 		scheduler.setDescription("username");
 		scheduler.setDraggable(Boolean.FALSE);
@@ -92,12 +71,37 @@ public class SchedulerControllerTests {
 		scheduler.setSubject("Test-Test");
 		scheduler.setStart(LocalDateTime.now());
 		scheduler.setEnd(LocalDateTime.now().plusHours(3));
-		
+
+		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
+		Mockito.when(schedulerService.createScheduler(any(SchedulerMappingData.class))).thenReturn(scheduler);
+	}
+
+	@Test
+	public void testCreateScheduler() throws Exception {
+		mockMvc.perform(post("/public/api//appointment/create")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtils.asJsonString(new SchedulerMappingData())))
+		.andDo(print())
+		.andExpect(status().is4xxClientError());
+
+		final SchedulerMappingData scheduler = new SchedulerMappingData();
+		scheduler.setCalendar("5");
+		scheduler.setDescription("username");
+		scheduler.setDraggable(Boolean.FALSE);
+		scheduler.setLocation("Unit Test");
+		scheduler.setResizable(Boolean.FALSE);
+		scheduler.setSubject("Test-Test");
+		scheduler.setStart(LocalDateTime.now());
+		scheduler.setEnd(LocalDateTime.now().plusHours(3));
+
 		mockMvc.perform(post("/public/api//appointment/create")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(TestUtils.asJsonString(scheduler)))
 		.andDo(print())
-		.andExpect(status().isOk());
+		.andExpect(status().is2xxSuccessful())
+		.andExpect(jsonPath("$.id", is("999")))
+		.andExpect(jsonPath("$.subject", is("Test-Test")));
 	}
 
 	@Test
