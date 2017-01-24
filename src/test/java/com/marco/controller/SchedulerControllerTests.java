@@ -28,10 +28,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.marco.data.SchedulerMappingData;
-import com.marco.service.MailService;
-import com.marco.service.ResourceRepository;
 import com.marco.service.SchedulerService;
-import com.marco.service.UserRepository;
 import com.marco.utils.TestUtils;
 
 /**
@@ -49,15 +46,6 @@ public class SchedulerControllerTests {
 
 	@MockBean
 	private SchedulerService schedulerService;
-
-	@MockBean
-	private ResourceRepository resourceRepo;
-
-	@MockBean
-	private UserRepository userRepo;
-
-	@MockBean
-	private MailService mailService;
 
 	@Before
 	public void setUp() throws IllegalStateException, MessagingException {
