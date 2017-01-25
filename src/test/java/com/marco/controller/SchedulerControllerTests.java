@@ -5,6 +5,7 @@ package com.marco.controller;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Matchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -63,6 +64,9 @@ public class SchedulerControllerTests {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
 		Mockito.when(schedulerService.createScheduler(any(SchedulerMappingData.class))).thenReturn(scheduler);
+		
+		Mockito.doNothing().when(schedulerService).deleteScheduler("TO_DEL", "DE");
+		Mockito.doThrow(IllegalStateException.class).when(schedulerService).deleteScheduler("NO_ID", "CCCCCCC");
 	}
 
 	@Test
@@ -93,8 +97,17 @@ public class SchedulerControllerTests {
 	}
 
 	@Test
-	public void testDeleteScheduler() {
-
+	public void testDeleteScheduler() throws Exception {
+		mockMvc.perform(delete("/appointment/delete/TO_DEL/DE")
+				.contentType(MediaType.APPLICATION_JSON))
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.id", is("TO_DEL")));
+		
+		mockMvc.perform(delete("/appointment/delete/NO_ID/CCCCCCC")
+				.contentType(MediaType.APPLICATION_JSON))
+		.andDo(print())
+		.andExpect(status().isBadRequest());
 	}
 
 }
