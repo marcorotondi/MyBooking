@@ -65,8 +65,7 @@ public class SchedulerControllerTests {
 
 		Mockito.when(schedulerService.createScheduler(any(SchedulerMappingData.class))).thenReturn(scheduler);
 		
-		Mockito.doNothing().when(schedulerService).deleteScheduler("TO_DEL", "DE");
-		Mockito.doThrow(IllegalStateException.class).when(schedulerService).deleteScheduler("NO_ID", "CCCCCCC");
+		Mockito.doThrow(IllegalStateException.class).when(schedulerService).deleteScheduler("-1", "CCCCCCC");
 	}
 
 	@Test
@@ -87,7 +86,7 @@ public class SchedulerControllerTests {
 		scheduler.setStart(LocalDateTime.now());
 		scheduler.setEnd(LocalDateTime.now().plusHours(3));
 
-		mockMvc.perform(post("/public/api//appointment/create")
+		mockMvc.perform(post("/public/api/appointment/create")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(TestUtils.asJsonString(scheduler)))
 		.andDo(print())
@@ -98,13 +97,13 @@ public class SchedulerControllerTests {
 
 	@Test
 	public void testDeleteScheduler() throws Exception {
-		mockMvc.perform(delete("/appointment/delete/TO_DEL/DE")
+		mockMvc.perform(delete("/public/api/appointment/delete/999/DEC")
 				.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
 		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.id", is("TO_DEL")));
-		
-		mockMvc.perform(delete("/appointment/delete/NO_ID/CCCCCCC")
+		.andExpect(jsonPath("$.id", is("999")));
+
+		mockMvc.perform(delete("/public/api/appointment/delete/-1/CCCCCCC")
 				.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
 		.andExpect(status().isBadRequest());
