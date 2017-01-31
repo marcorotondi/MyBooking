@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:th="http://www.thymeleaf.org"
+xmlns:ng="http://angularjs.org">
+<body>
+	<div class="col-md-3" th:fragment="summarySection">
+		<div class="page-header">
+  			<h4>Resource</h4>
+		</div>
+		<ul class="list-group">
+			<li class="list-group-item">
+				<span class="badge" ng-bind="adminCnt.resource.count_res"></span>
+				Number of resource:
+			</li>
+			<li class="list-group-item">
+				<span class="badge" ng-bind="adminCnt.resource.count_room"></span>
+				Number of Rooms:
+			</li>
+			<li class="list-group-item">
+				<span class="badge" ng-bind="adminCnt.resource.count_car"></span>
+				Number of Cars:
+			</li>
+			<li class="list-group-item">
+				<span class="badge" ng-bind="adminCnt.resource.count_obj"></span>
+				Number of Objects:
+			</li>
+		</ul>	
+	</div>
+</body>
+</html>

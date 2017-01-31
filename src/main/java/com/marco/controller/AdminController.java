@@ -9,12 +9,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.marco.data.TypeData;
 import com.marco.model.Resource;
+import com.marco.service.CalendarBookRepository;
 import com.marco.service.ResourceRepository;
 import com.marco.type.ResourceType;
 
@@ -39,6 +43,9 @@ public class AdminController {
 
 	@Autowired
 	private ResourceRepository resourceRepo;
+	
+	@Autowired
+	private CalendarBookRepository calendarBookRepo;
 
 	@PostMapping(value = "/admin/api/crudResource")
 	public ResponseEntity<Void> crudResource(@RequestBody @Valid Resource resource) {
@@ -91,5 +98,25 @@ public class AdminController {
 		}
 
 		return new ResponseEntity<>(types, OK);
+	}
+	
+	@GetMapping(value = "/admin/api/summary/booking.json")
+	public ResponseEntity<Map<String, Long>> getSummaryBookingCounters() {
+		final Map<String, Long> counterMap = new TreeMap<>();
+		final List<Resource> resources = resourceRepo.findAll(new Sort(Sort.Direction.DESC, "type"));
+		
+		counterMap.put("Total Booking", calendarBookRepo.count());
+		resources.forEach(res -> {
+			final String key = StringUtils.capitalize(res.getType().name().toLowerCase()) + " Booking";
+			final Long counter = calendarBookRepo.countByResource(res);
+			
+			if (counterMap.containsKey(key)) {
+				counterMap.put(key, counterMap.get(key) + counter); 
+			} else {
+				counterMap.put(key, counter);
+			}
+		});
+		
+		return new ResponseEntity<>(counterMap, OK);
 	}
 }

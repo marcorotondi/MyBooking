@@ -137,9 +137,25 @@
 					console.error('Error while fetch Summary data');
 				}
 			);
-		}
+		};
+		
+		function loadSchedulerCounter() {
+			ResourceService.scheduler().then(
+					function(data) {
+						self.scheduler = { };
+						
+						Object.keys(data).forEach(function(key) {
+							self.scheduler[key] = data[key];
+						});
+					},
+					function(errResponse) {
+						console.error("Error while fetsh Scheduler Summary Data")
+					}
+			);
+		};
 		
 		loadCounter();
+		loadSchedulerCounter();
 		
 		$scope.$on('handleResource', function() {
 			loadCounter();

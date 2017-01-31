@@ -74,6 +74,19 @@
 		            }
 			    );
 			    return deferred.promise;
+		    },
+		    scheduler: function() {
+		    	var deferred = $q.defer();
+		    	$http.get(REST_SERVICE_URI + "summary/booking.json").then(
+	    			function(response) {
+	    				deferred.resolve(response.data)
+	    			},
+	    			function(errResponse) {
+	    				 console.error('Error while fetching Booking');
+			                deferred.reject(errResponse);
+	    			}
+		    	);
+		    	return deferred.promise;
 		    }
 	    };
 	    

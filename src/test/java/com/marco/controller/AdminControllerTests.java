@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.marco.model.Resource;
+import com.marco.service.CalendarBookRepository;
 import com.marco.service.ResourceRepository;
 import com.marco.type.ResourceType;
 import com.marco.utils.TestUtils;
@@ -41,6 +42,9 @@ public class AdminControllerTests {
 
 	@MockBean
 	private ResourceRepository resourceRepo;
+	
+	@MockBean
+	private CalendarBookRepository calendarBookRepo;
 
 	@Before
 	public void setUp(){

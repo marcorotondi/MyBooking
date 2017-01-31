@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.marco.model.CalendarBook;
+import com.marco.model.Resource;
 
 /**
  * @author Marco
@@ -28,4 +29,8 @@ public interface CalendarBookRepository extends JpaRepository<CalendarBook, Long
 		List<CalendarBook> overlappingList = findByStartToEnd(ncb.getStart(), ncb.getEnd(), ncb.getResource().getId());	
 		return !overlappingList.isEmpty();
 	}
+	
+	long count();
+	
+	long countByResource(Resource res);
 }

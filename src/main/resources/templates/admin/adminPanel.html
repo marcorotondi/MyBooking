@@ -19,26 +19,8 @@
 			 <div class="tab-pane active" id="1">
        			<h3>Summary</h3>
        			<div class="row" ng-controller="adminSummaryController as adminCnt">
-       				<div class="col-md-3">
-       					<ul class="list-group">
-       						<li class="list-group-item">
-       							<span class="badge" ng-bind="adminCnt.resource.count_res"></span>
-       							Number of resource:
-       						</li>
-       						<li class="list-group-item">
-       							<span class="badge" ng-bind="adminCnt.resource.count_room"></span>
-       							Number of Rooms:
-       						</li>
-       						<li class="list-group-item">
-       							<span class="badge" ng-bind="adminCnt.resource.count_car"></span>
-       							Number of Cars:
-       						</li>
-       						<li class="list-group-item">
-       							<span class="badge" ng-bind="adminCnt.resource.count_obj"></span>
-       							Number of Objects:
-       						</li>
-       					</ul>
-       				</div>
+					<div th:replace="admin/summary_section :: summarySection"></div>
+       				<div th:replace="admin/summary_scheduler :: summaryScheduler"></div>
        			</div>
 			</div>
 			<div class="tab-pane" id="2">
