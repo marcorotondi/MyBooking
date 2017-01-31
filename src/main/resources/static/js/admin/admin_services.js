@@ -102,4 +102,11 @@
 		
 		return messageService;
 	}]);
+	
+	appAdmin.factory('AdminBookingService', ['$rootScope', function($rootScope) {
+		var adminBookingService = {};
+		
+		
+		return adminBookingService;
+	}]);
 })();

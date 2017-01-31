@@ -162,4 +162,8 @@
 		});
 	}]);
 	
+	appAdmin.controller("adminBookingController", ['$scope', 'AdminBookingService', function($scope, AdminBookingService) {
+		
+	}]);
+	
 })();
