@@ -4,9 +4,13 @@
 package com.marco.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,10 +25,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.marco.model.CalendarBook;
 import com.marco.model.Resource;
+import com.marco.model.User;
 import com.marco.service.CalendarBookRepository;
 import com.marco.service.ResourceRepository;
 import com.marco.type.ResourceType;
+import com.marco.utils.GenericBuilder;
 import com.marco.utils.TestUtils;
 
 /**
@@ -42,7 +49,7 @@ public class AdminControllerTests {
 
 	@MockBean
 	private ResourceRepository resourceRepo;
-	
+
 	@MockBean
 	private CalendarBookRepository calendarBookRepo;
 
@@ -53,6 +60,18 @@ public class AdminControllerTests {
 		final Resource resource = new Resource();
 		final long resourceToDelete = 1L;
 		final long resourceKoDelete = -1L;
+		final CalendarBook booking1 = GenericBuilder.of(CalendarBook::new)
+				.with(CalendarBook::setId, 1L)
+				.with(CalendarBook::setResource, GenericBuilder.of(Resource::new)
+						.with(Resource::setType, ResourceType.CAR).build())
+				.with(CalendarBook::setUserRef, new User())
+				.build();
+		final CalendarBook booking2 = GenericBuilder.of(CalendarBook::new)
+				.with(CalendarBook::setId, 5L)
+				.with(CalendarBook::setResource, GenericBuilder.of(Resource::new)
+						.with(Resource::setType, ResourceType.ROOM).build())
+				.with(CalendarBook::setUserRef, new User())
+				.build();
 
 		resource.setId(999L);
 		resource.setDescription("This is for Test");
@@ -65,6 +84,8 @@ public class AdminControllerTests {
 		Mockito.doNothing().when(resourceRepo).delete(resourceToDelete);
 
 		Mockito.doThrow(new RuntimeException()).when(resourceRepo).delete(resourceKoDelete);
+
+		Mockito.when(calendarBookRepo.findAll()).thenReturn(Arrays.asList(booking1, booking2));
 	}
 
 	@Test
@@ -90,5 +111,14 @@ public class AdminControllerTests {
 		mockMvc.perform(delete("/admin/api/delete/resource/-1"))
 		.andDo(print())
 		.andExpect(status().is4xxClientError());
+	}
+
+	@Test
+	public void testResultList() throws Exception {
+		mockMvc.perform(get("/admin/api/booking/list"))
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(content().json("[{\"id\":1,\"user\":\"null null\",\"resource\":null,\"resourceType\":\"Car\",\"from\":null,\"to\":null},"
+				+ "{\"id\":5,\"user\":\"null null\",\"resource\":null,\"resourceType\":\"Room\",\"from\":null,\"to\":null}]"));
 	}
 }

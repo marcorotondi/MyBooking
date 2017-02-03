@@ -162,8 +162,34 @@
 		});
 	}]);
 	
-	appAdmin.controller("adminBookingController", ['$scope', 'AdminBookingService', function($scope, AdminBookingService) {
+	appAdmin.controller("adminBookingController", ['$scope', 'AdminBookingService', '$filter', 'NgTableParams', function($scope, AdminBookingService, $filter, NgTableParams) {
+		var self = this;	
 		
+		self.tableParams = new NgTableParams({ 
+	    	sorting: {
+	    		from: 'desc'     
+	        }
+	    },{
+	    	total: 0,
+	        getData: function(params) {
+	        	return AdminBookingService.getBookingList().then(
+        			function(d) {
+		            	params.total(d.length);
+		            	var rows = $filter('orderBy')(d, params.orderBy());
+			        	rows = rows.slice((params.page() - 1) * params.count(), params.page() * params.count());
+			        	
+			        	return rows;
+		             },
+		             function(errResponse){
+		            	console.error(response);
+		             }
+	        	);
+	        }
+	    });
+		
+		self.deleteBooking = function(id) {
+			console.info(id);
+		}
 	}]);
 	
 })();

@@ -27,11 +27,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.marco.data.BookingBean;
 import com.marco.data.TypeData;
 import com.marco.model.Resource;
 import com.marco.service.CalendarBookRepository;
 import com.marco.service.ResourceRepository;
 import com.marco.type.ResourceType;
+import com.marco.utils.BookingUtils;
 
 /**
  * @author Marco
@@ -43,7 +45,7 @@ public class AdminController {
 
 	@Autowired
 	private ResourceRepository resourceRepo;
-	
+
 	@Autowired
 	private CalendarBookRepository calendarBookRepo;
 
@@ -92,31 +94,40 @@ public class AdminController {
 	@GetMapping(value = "/admin/api/resourcesType.json")
 	public ResponseEntity<List<TypeData>> resourcesType(){
 		final List<TypeData> types = new ArrayList<>();
-		
+
 		for(ResourceType resType : ResourceType.values()) {
 			types.add(new TypeData(resType.name(), resType.getDefaultName()));
 		}
 
 		return new ResponseEntity<>(types, OK);
 	}
-	
+
 	@GetMapping(value = "/admin/api/summary/booking.json")
 	public ResponseEntity<Map<String, Long>> getSummaryBookingCounters() {
 		final Map<String, Long> counterMap = new TreeMap<>();
 		final List<Resource> resources = resourceRepo.findAll(new Sort(Sort.Direction.DESC, "type"));
-		
+
 		counterMap.put("Total Booking", calendarBookRepo.count());
 		resources.forEach(res -> {
 			final String key = StringUtils.capitalize(res.getType().name().toLowerCase()) + " Booking";
 			final Long counter = calendarBookRepo.countByResource(res);
-			
+
 			if (counterMap.containsKey(key)) {
-				counterMap.put(key, counterMap.get(key) + counter); 
+				counterMap.put(key, counterMap.get(key) + counter);
 			} else {
 				counterMap.put(key, counter);
 			}
 		});
-		
+
 		return new ResponseEntity<>(counterMap, OK);
+	}
+
+	@GetMapping(value = "/admin/api/booking/list")
+	public ResponseEntity<List<BookingBean>> getBookingDataList() {
+		final List<BookingBean> bookings = new ArrayList<>();
+
+		calendarBookRepo.findAll().forEach(booking -> bookings.add(BookingUtils.convertBooking2Bean(booking)));
+
+		return new ResponseEntity<>(bookings, OK);
 	}
 }

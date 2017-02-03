@@ -4,8 +4,9 @@
 'use strict';
 
 (function() {
+	var REST_SERVICE_URI = '/admin/api/'; 
+	
 	appAdmin.factory('ResourceService', ['$http', '$q', function($http, $q){
-		var REST_SERVICE_URI = '/admin/api/';
 		 
 	    var factory = {
 	    	resources: function() {
@@ -83,7 +84,7 @@
 	    			},
 	    			function(errResponse) {
 	    				 console.error('Error while fetching Booking');
-			                deferred.reject(errResponse);
+			             deferred.reject(errResponse);
 	    			}
 		    	);
 		    	return deferred.promise;
@@ -103,8 +104,23 @@
 		return messageService;
 	}]);
 	
-	appAdmin.factory('AdminBookingService', ['$rootScope', function($rootScope) {
-		var adminBookingService = {};
+	appAdmin.factory('AdminBookingService', ['$http', '$q', function($http, $q) {
+		var adminBookingService = {
+				getBookingList: function() {
+					var deferred = $q.defer();
+					$http.get(REST_SERVICE_URI + "booking/list").then(
+							function(response) {
+								deferred.resolve(response.data);
+							},
+							function(errResponse) {
+								console.error('Error while fetching Booking data');
+					            deferred.reject(errResponse);
+							}
+					
+					);
+					return deferred.promise;
+				}
+			};
 		
 		
 		return adminBookingService;

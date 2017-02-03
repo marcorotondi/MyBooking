@@ -59,7 +59,7 @@
 	              							<input type="text" name="description" ng-model="row.description" class="editable-input form-control input-sm" required />
 	            						</div>
 	          						</td>
-	          						<td title="'Type'" sortable="'Type'" ng-switch="row.isEditing" ng-class="name.$dirty ? 'bg-warning' : ''" 
+	          						<td title="'Type'" sortable="'type'" ng-switch="row.isEditing" ng-class="name.$dirty ? 'bg-warning' : ''" 
 		        						ng-form="Type">
 	            						<span ng-switch-default class="editable-text">{{row.type}}</span>
 	            						<div class="controls" ng-class="type.$invalid && type.$dirty ? 'has-error' : ''" ng-switch-when="true">
@@ -95,8 +95,29 @@
 				</div>
 				<div class="row" ng-controller="adminBookingController as adminBookingCnt">
 					<div class="col-md-8">
-						<table class="table table-bordered table-hover table-condensed editable-table">
-						
+						<table ng-table="adminBookingCnt.tableParams" class="table table-bordered table-hover table-condensed editable-table">
+							<tr ng-repeat="booking in $data">
+								<td title="'User'" sortable="'user'">
+									<span class="editable-text">{{booking.user}}</span>
+								</td>
+								<td title="'Resource'" sortable="'resource'">
+									<span class="editable-text">{{booking.resource}}</span>
+								</td>
+								<td title="'Resource Type'" sortable="'resourceType'">
+									<span class="editable-text">{{booking.resourceType}}</span>
+								</td>
+								<td title="'From'" sortable="'from'">
+									<span class="editable-text">{{booking.from}}</span>
+								</td>
+								<td title="'To'" sortable="'to'">
+									<span class="editable-text">{{booking.to}}</span>
+								</td>
+								<td th:class="command">
+									<button class="btn btn-default btn-sm" ng-click="adminBookingCnt.deleteBooking(booking.id)">
+							        	<span class="glyphicon glyphicon-remove"></span>
+							        </button>	
+								</td>
+							</tr>
 						</table>	
 					</div>	
 				</div>

@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.util.NumberUtils;
 
+import com.marco.data.BookingBean;
 import com.marco.data.SchedulerMappingData;
 import com.marco.model.CalendarBook;
 import com.marco.model.Resource;
@@ -67,5 +68,16 @@ public final class BookingUtils {
 
 	public static String generateCheckCode() {
 		return RandomStringUtils.randomAlphanumeric(5).toUpperCase();
+	}
+
+	public static BookingBean convertBooking2Bean(final CalendarBook booking) {
+		return GenericBuilder.of(BookingBean::new)
+				.with(BookingBean::setId, booking.getId())
+				.with(BookingBean::setUser, booking.getUserRef().getSurname() + " " + booking.getUserRef().getName())
+				.with(BookingBean::setResource, booking.getResource().getDescription())
+				.with(BookingBean::setResourceType, booking.getResource().getType().getDefaultName())
+				.with(BookingBean::setFrom, booking.getStart())
+				.with(BookingBean::setTo, booking.getEnd())
+				.build();
 	}
 }
