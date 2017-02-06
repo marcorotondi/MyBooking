@@ -119,6 +119,20 @@
 					
 					);
 					return deferred.promise;
+				},
+				adminDelete: function(bookingId) {
+					var deferred = $q.defer();
+					$http.delete(REST_SERVICE_URI + "booking/force/delete/" + bookingId).then(
+							function(response) {
+								deferred.resolve(response);
+							},
+							function(errResponse) {
+								console.error('Error while delete Booking data');
+					            deferred.reject(errResponse);
+							}
+					);
+					
+					return deferred.promise;
 				}
 			};
 		

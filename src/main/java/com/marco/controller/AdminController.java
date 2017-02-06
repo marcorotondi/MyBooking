@@ -130,4 +130,14 @@ public class AdminController {
 
 		return new ResponseEntity<>(bookings, OK);
 	}
+	
+	@DeleteMapping(value = "/admin/api/booking/force/delete/{id}")
+	public ResponseEntity<Void> deleteBookingByAdmin(@PathVariable("id") long id) {
+		if (!calendarBookRepo.exists(id)) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		calendarBookRepo.delete(id);
+		return new ResponseEntity<>(OK);
+	}
 }

@@ -188,7 +188,18 @@
 	    });
 		
 		self.deleteBooking = function(id) {
-			console.info(id);
+			var confimDel = confirm("Are You Scure to Remove this booking?");
+			if (confimDel) {
+				AdminBookingService.adminDelete(id).then(
+						function(response) {
+							if (200 === response.status) {
+								self.tableParams.reload();
+							}
+						},
+						function(errResponse){
+							console.error('Error while delete Booking');
+						});
+			}
 		}
 	}]);
 	
