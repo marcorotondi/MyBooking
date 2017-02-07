@@ -210,7 +210,7 @@
 			            			<alias>BookingApp</alias>
 		                  			<name>${project.artifactId}:${project.version}</name>
 		                  			<build>
-					                    <from>frolvlad:alpine-oraclejdk8</from>
+					                    <from>frolvlad/alpine-oraclejdk8</from>
 					                    <!-- Assembly descriptor holds the reference to the created artifact-->
 					                    <assembly>
 					                      <!-- Normally, one would only use 'assembly.xml' if we could put the assembly descriptor
