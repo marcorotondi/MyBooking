@@ -10,7 +10,6 @@ TODO:
 <ul>
 <li>Plan configure profile for dev and prod</li>
 <li>Plan use docker for product with mysql db container</li>
-<li>Plan add Unit and Integration Test</li>
 </ul>
 
 Note:
