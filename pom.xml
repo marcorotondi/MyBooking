@@ -142,6 +142,21 @@
     		<version>2.3.8</version>
 		</dependency>
 		<!-- End WebJars -->
+		<!-- Postgresql -->
+		<dependency>
+		    <groupId>org.postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <version>9.4.1212.jre7</version>
+		</dependency>
+		
+		
+		<!-- Docker -->
+		<dependency>
+    		<groupId>io.fabric8</groupId>
+    		<artifactId>docker-maven-plugin</artifactId>
+    		<version>0.19.0</version>
+		</dependency>
+		<!-- End Docker -->
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -159,8 +174,87 @@
 					<addResources>true</addResources>
 				</configuration>
 			</plugin>
-		</plugins>
+	    </plugins>
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>prod</id>
+			<build>
+				<plugins>
+					<plugin>
+			            <groupId>io.fabric8</groupId>
+			            <artifactId>docker-maven-plugin</artifactId>
+			            <version>0.19.0</version>
+			            <configuration>
+			            	<logDate>default</logDate>
+		              		<autoPull>true</autoPull>	
+		              		<images>
+		              			<!-- Postgres Image is used 'as-is' and is linked into the service image -->
+			            		<image>
+			            			<alias>db</alias>
+				                  	<name>postgres:latest</name>
+				                  	<run>
+				                    	<wait>
+				                      		<log>database system is ready to accept connections</log>
+				                      		<time>20000</time>
+				                    	</wait>
+					                    <log>
+					                      <prefix>DB</prefix>
+					                      <color>yellow</color>
+					                    </log>
+				                  	</run>
+			            		</image>
+			            		<!-- Image holding the artifact of this build -->
+			            		<image>
+			            			<alias>BookingApp</alias>
+		                  			<name>${project.artifactId}:${project.version}</name>
+		                  			<build>
+					                    <from>frolvlad:alpine-oraclejdk8</from>
+					                    <!-- Assembly descriptor holds the reference to the created artifact-->
+					                    <assembly>
+					                      <!-- Normally, one would only use 'assembly.xml' if we could put the assembly descriptor
+					                           into src/main/docker But this confuses the alexec plugin, so we put it into another
+					                           directory and use an absolute pathe -->
+					                      <descriptor>${basedir}/src/main/docker/assembly.xml</descriptor>
+					                    </assembly>
+					                    <!-- Expose ports -->
+					                    <ports>
+					                      <port>8080</port>
+					                    </ports>
+					                    <!-- Default command for the build image -->
+					                    <cmd>java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=prod -jar /opt/mybooking.jar</cmd>
+					                </build>
+					                <run>
+					                	<!-- Assign dynamically mapped ports to maven variables (which can be reused in integration tests) -->
+					                    <ports>
+					                      <port>tomcat.port:8080</port>
+					                    </ports>
+					                    <wait>
+					                      <!-- Check for this URL to return a 200 return code .... -->
+					                      <url>http://${docker.host.address}:${tomcat.port}/login.html</url>
+					                      <!-- ... but at max 10 seconds -->
+					                      <time>10000</time>
+					                    </wait>
+					                    <links>
+					                      <!-- Links can be referenced via alias (db) or name (postgres:9). If no link-alias (second "db")
+					                           is given it takes the first part (first "db") as link alias. So, <link>db</link> would be
+					                           enough here -->
+					                      <link>db:db</link>
+					                    </links>
+					                    <log>
+					                      <prefix>TC</prefix>
+					                      <color>cyan</color>
+					                    </log>
+					                </run>
+			            		</image>
+			            	</images>
+			            </configuration>
+			        </plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 
 </project>
