@@ -142,12 +142,12 @@
     		<version>2.3.8</version>
 		</dependency>
 		<!-- End WebJars -->
-		<!-- Postgresql -->
+		<!-- MariaDB drivers -->
 		<dependency>
-		    <groupId>org.postgresql</groupId>
-		    <artifactId>postgresql</artifactId>
+			<groupId>org.mariadb.jdbc</groupId>
+    		<artifactId>mariadb-java-client</artifactId>
+   			<version>1.2.0</version>	
 		</dependency>
-		
 		
 		<!-- Docker -->
 		<dependency>
@@ -192,12 +192,15 @@
 		              		<images>
 		              			<!-- Postgres Image is used 'as-is' and is linked into the service image -->
 			            		<image>
-			            			<alias>db</alias>
-				                  	<name>postgres:latest</name>
+			            			<alias>mariadbBooking</alias>
+				                  	<name>mariadb:latest</name>
 				                  	<run>
+				                  		<env>
+				                  			<MYSQL_ROOT_PASSWORD>b00king$</MYSQL_ROOT_PASSWORD>
+				                  		</env>
 				                    	<wait>
-				                      		<log>database system is ready to accept connections</log>
-				                      		<time>20000</time>
+				                      		<log>mysqld: ready for connections</log>
+				                      		<time>70000</time>
 				                    	</wait>
 					                    <log>
 					                      <prefix>DB</prefix>
@@ -210,7 +213,7 @@
 			            			<alias>BookingApp</alias>
 		                  			<name>${project.artifactId}:${project.version}</name>
 		                  			<build>
-					                    <from>frolvlad/alpine-oraclejdk8</from>
+					                    <from>java:8-alpine</from>
 					                    <!-- Assembly descriptor holds the reference to the created artifact-->
 					                    <assembly>
 					                      <!-- Normally, one would only use 'assembly.xml' if we could put the assembly descriptor
@@ -230,20 +233,20 @@
 					                    <ports>
 					                      <port>tomcat.port:8080</port>
 					                    </ports>
+					                    <!-- 
 					                    <wait>
-					                      <!-- Check for this URL to return a 200 return code .... -->
 					                      <url>http://${docker.host.address}:${tomcat.port}/login.html</url>
-					                      <!-- ... but at max 10 seconds -->
 					                      <time>10000</time>
 					                    </wait>
+					                    -->
 					                    <links>
 					                      <!-- Links can be referenced via alias (db) or name (postgres:9). If no link-alias (second "db")
 					                           is given it takes the first part (first "db") as link alias. So, <link>db</link> would be
 					                           enough here -->
-					                      <link>db:db</link>
+					                      <link>mariadbBooking:mariadb</link>
 					                    </links>
 					                    <log>
-					                      <prefix>TC</prefix>
+					                      <prefix>BA</prefix>
 					                      <color>cyan</color>
 					                    </log>
 					                </run>
