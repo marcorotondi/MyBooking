@@ -197,6 +197,7 @@
 				                  		<envPropertyFile></envPropertyFile>
 				                  		<env>
 				                  			<MYSQL_ROOT_PASSWORD>b00king$</MYSQL_ROOT_PASSWORD>
+				                  			<MYSQL_PASSWORD>b00king$</MYSQL_PASSWORD>
 				                  		</env>
 				                    	<wait>
 				                      		<log>mysqld: ready for connections</log>
