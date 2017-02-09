@@ -146,7 +146,6 @@
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
     		<artifactId>mariadb-java-client</artifactId>
-   			<version>1.2.0</version>	
 		</dependency>
 		
 		<!-- Docker -->
@@ -195,6 +194,7 @@
 			            			<alias>mariadbBooking</alias>
 				                  	<name>mariadb:latest</name>
 				                  	<run>
+				                  		<envPropertyFile></envPropertyFile>
 				                  		<env>
 				                  			<MYSQL_ROOT_PASSWORD>b00king$</MYSQL_ROOT_PASSWORD>
 				                  		</env>
