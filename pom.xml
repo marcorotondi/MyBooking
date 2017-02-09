@@ -198,6 +198,8 @@
 				                  		<env>
 				                  			<MYSQL_ROOT_PASSWORD>b00king$</MYSQL_ROOT_PASSWORD>
 				                  			<MYSQL_PASSWORD>b00king$</MYSQL_PASSWORD>
+				                  			<MYSQL_DATABASE>public</MYSQL_DATABASE>
+				                  			<MYSQL_USER>root</MYSQL_USER>
 				                  		</env>
 				                    	<wait>
 				                      		<log>mysqld: ready for connections</log>
