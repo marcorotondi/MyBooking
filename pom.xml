@@ -189,18 +189,15 @@
 			            	<logDate>default</logDate>
 		              		<autoPull>true</autoPull>	
 		              		<images>
-		              			<!-- Postgres Image is used 'as-is' and is linked into the service image -->
 			            		<image>
-			            			<alias>mariadbBooking</alias>
-				                  	<name>mariadb:latest</name>
+			            			<alias>bookingDB</alias>
+				                  	<name>mariadb:10.1.21</name>
 				                  	<run>
-				                  		<envPropertyFile></envPropertyFile>
 				                  		<env>
 				                  			<MYSQL_ROOT_PASSWORD>b00king$</MYSQL_ROOT_PASSWORD>
-				                  			<MYSQL_PASSWORD>b00king$</MYSQL_PASSWORD>
 				                  			<MYSQL_DATABASE>public</MYSQL_DATABASE>
-				                  			<MYSQL_USER>root</MYSQL_USER>
 				                  		</env>
+				                  		<net>booking-net</net>
 				                    	<wait>
 				                      		<log>mysqld: ready for connections</log>
 				                      		<time>70000</time>
@@ -242,14 +239,9 @@
 					                      <time>10000</time>
 					                    </wait>
 					                    -->
-					                    <links>
-					                      <!-- Links can be referenced via alias (db) or name (postgres:9). If no link-alias (second "db")
-					                           is given it takes the first part (first "db") as link alias. So, <link>db</link> would be
-					                           enough here -->
-					                      <link>mariadbBooking:mariadb</link>
-					                    </links>
+					                    <net>booking-net</net>
 					                    <log>
-					                      <prefix>BA</prefix>
+					                      <prefix>Booking</prefix>
 					                      <color>cyan</color>
 					                    </log>
 					                </run>
