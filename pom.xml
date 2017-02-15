@@ -194,9 +194,9 @@
 				                  	<name>mariadb:10.1.21</name>
 				                  	<run>
 				                  		<env>
-				                  			<MYSQL_USER>root</MYSQL_USER>
 				                  			<MYSQL_ROOT_PASSWORD>b00king$</MYSQL_ROOT_PASSWORD>
 				                  			<MYSQL_DATABASE>booking</MYSQL_DATABASE>
+				                  			<MYSQL_PASSWORD>b00king$</MYSQL_PASSWORD>
 				                  		</env>
 				                  		<net>booking-net</net>
 				                    	<wait>
