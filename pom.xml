@@ -98,7 +98,7 @@
 		<dependency>
     		<groupId>org.flywaydb</groupId>
     		<artifactId>flyway-core</artifactId>
-    		<version>4.0.3</version><!--$NO-MVN-MAN-VER$-->
+    		<version>4.1.0</version><!--$NO-MVN-MAN-VER$-->
     	</dependency>
     	<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -196,7 +196,6 @@
 				                  		<env>
 				                  			<MYSQL_ROOT_PASSWORD>b00king$</MYSQL_ROOT_PASSWORD>
 				                  			<MYSQL_DATABASE>booking</MYSQL_DATABASE>
-				                  			<MYSQL_PASSWORD>b00king$</MYSQL_PASSWORD>
 				                  		</env>
 				                  		<net>booking-net</net>
 				                    	<wait>
