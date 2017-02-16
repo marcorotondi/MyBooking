@@ -142,6 +142,7 @@
     		<version>2.3.8</version>
 		</dependency>
 		<!-- End WebJars -->
+		
 		<!-- MariaDB drivers -->
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
