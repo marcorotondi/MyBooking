@@ -201,6 +201,12 @@
 				                  		</env>
 				                  		<net>booking-net</net>
 				                    	<wait>
+				                    		<tcp>
+				                    			<host>${docker.host.address}</host>
+				                    			<ports>
+				                    				<port>3306</port>
+				                    			</ports>
+				                    		</tcp>
 				                      		<log>mysqld: ready for connections</log>
 				                      		<time>70000</time>
 				                    	</wait>
@@ -234,13 +240,13 @@
 					                	<namingStrategy>alias</namingStrategy>
 					                	<!-- Assign dynamically mapped ports to maven variables (which can be reused in integration tests) -->
 					                    <ports>
-					                      <port>tomcat.port:8080</port>
+					                      <port>8080:8080</port>
 					                    </ports>
-					                    <wait>
-					                      <url>http://${docker.host.address}:8080/login.html</url>
-					                      <time>55000</time>
-					                    </wait>
 					                    <net>booking-net</net>
+					                    <wait>
+					                    	<log>Started MybookingApplication</log>
+					                    	<time>20000</time>
+					                    </wait>
 					                    <log>
 					                      <prefix>Booking</prefix>
 					                      <color>cyan</color>
