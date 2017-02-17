@@ -184,16 +184,17 @@
 					<plugin>
 			            <groupId>io.fabric8</groupId>
 			            <artifactId>docker-maven-plugin</artifactId>
-			            <version>0.19.0</version>
+			            <version>0.19.1</version>
 			            <configuration>
 			            	<dockerDir>src/main/docker</dockerDir>
 			            	<logDate>default</logDate>
 		              		<autoPull>true</autoPull>	
 		              		<images>
 			            		<image>
-			            			<alias>bookingDB</alias>
+			            			<alias>bookingdb</alias>
 				                  	<name>mariadb:10.1.21</name>
 				                  	<run>
+				                  		<namingStrategy>alias</namingStrategy>
 				                  		<env>
 				                  			<MYSQL_ROOT_PASSWORD>b00king$</MYSQL_ROOT_PASSWORD>
 				                  			<MYSQL_DATABASE>booking</MYSQL_DATABASE>
@@ -211,7 +212,7 @@
 			            		</image>
 			            		<!-- Image holding the artifact of this build -->
 			            		<image>
-			            			<alias>BookingApp</alias>
+			            			<alias>bookingApp</alias>
 		                  			<name>${project.artifactId}:${project.version}</name>
 		                  			<build>
 					                    <from>java:8-alpine</from>
@@ -230,16 +231,15 @@
 					                    <cmd>java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=prod -jar /maven/mybooking.jar</cmd>
 					                </build>
 					                <run>
+					                	<namingStrategy>alias</namingStrategy>
 					                	<!-- Assign dynamically mapped ports to maven variables (which can be reused in integration tests) -->
 					                    <ports>
 					                      <port>tomcat.port:8080</port>
 					                    </ports>
-					                    <!-- 
 					                    <wait>
-					                      <url>http://${docker.host.address}:${tomcat.port}/login.html</url>
-					                      <time>10000</time>
+					                      <url>http://${docker.host.address}:8080/login.html</url>
+					                      <time>55000</time>
 					                    </wait>
-					                    -->
 					                    <net>booking-net</net>
 					                    <log>
 					                      <prefix>Booking</prefix>

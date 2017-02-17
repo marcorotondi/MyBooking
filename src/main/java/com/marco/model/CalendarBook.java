@@ -23,7 +23,7 @@ import javax.persistence.Version;
  *
  */
 @Entity
-@Table(name = "CALENDAR_BOOK")
+@Table(name = "CALENDAR_BOOK", schema = "booking")
 public class CalendarBook implements Serializable {
 
 	private static final long serialVersionUID = 1L;

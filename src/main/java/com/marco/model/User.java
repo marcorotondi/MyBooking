@@ -18,7 +18,7 @@ import javax.persistence.Version;
  *
  */
 @Entity
-@Table(name = "USER")
+@Table(name = "USER", schema = "booking")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -25,7 +25,7 @@ import com.marco.type.ResourceType;
  *
  */
 @Entity
-@Table(name = "resource")
+@Table(name = "RESOURCE", schema = "booking")
 public class Resource implements Serializable {
 
 	private static final long serialVersionUID = 1L;
