@@ -199,6 +199,11 @@
 				                  			<MYSQL_DATABASE>booking</MYSQL_DATABASE>
 				                  		</env>
 				                  		<net>booking-net</net>
+				                  		<volumes>
+				                  			<bind>
+				                  				<volume>/var/storage/docker/mysql-datadir:/var/lib/mysql</volume>
+				                  			</bind>
+				                  		</volumes>
 				                    	<wait>
 				                    		<tcp>
 				                    			<host>${docker.host.address}</host>
@@ -244,7 +249,7 @@
 					                    <net>booking-net</net>
 					                    <wait>
 					                    	<log>Started MybookingApplication</log>
-					                    	<time>20000</time>
+					                    	<time>35000</time>
 					                    </wait>
 					                    <log>
 					                      <prefix>Booking</prefix>
